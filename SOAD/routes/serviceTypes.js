@@ -10,6 +10,11 @@ router.get('/all',async(req, res) => {
 	res.send(types);
 });
 
+router.get('/:name',async(req, res) => {
+	const types = await ServiceType.find({"service.name":req.params.name});
+	res.send(types);
+});
+
 router.post('/addType',async(req, res) => {
 	let type =await Service.findOne({name:req.body.name});
 	console.log(req.body.name);
