@@ -10,6 +10,9 @@ const serviceTypes=require('./routes/serviceTypes');
 const order=require('./routes/order');
 const express = require('express');
 const app = express();
+var cors = require('cors');
+
+app.use(cors());
 
 if (!config.get('jwtPrivateKey')){
   console.error('FATAL ERROR:jwtPrivateKey is not defined' );
