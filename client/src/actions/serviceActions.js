@@ -13,9 +13,6 @@ console.log('working')
   }
   var url = '/api/service/';
   const ser = url.concat(service);
-  console.log('hello');
-  console.log('hello');
-  console.log(ser);
   axios.get(ser,config)
     .then(res => dispatch({
       type: GET_SERVICE,

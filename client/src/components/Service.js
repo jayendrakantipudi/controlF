@@ -27,7 +27,7 @@ class Service extends React.Component{
 
 		this.props.loadUser();
 		const {name} = this.props.match.params;
-		this.setState({get_ser: name});
+		// this.setState({get_ser: name});
 		console.log(this.props)
 		console.log(name)
 		this.props.get_service(name);
@@ -61,6 +61,16 @@ class Service extends React.Component{
 	 toggle = tab => {
 		if(this.state.activeTab !== tab) this.setState({activeTab:tab});
 		}
+
+
+	onClickbutton = () => {
+		const { name } = this.props.match.params;
+		const url1 = '/service/';
+		const url2 = name;
+		const url3 = '/services';
+		const ser = url1.concat(url2).concat(url3)
+	    window.location.href=ser;
+	}
 			   		 	  	  	   	
 	render(){
 		const service=this.props.service.ser?this.props.service.ser.name:null;
@@ -209,7 +219,7 @@ class Service extends React.Component{
 						<Card body>
 							<CardTitle>Need {service?service:null} for	</CardTitle>
 							
-								<Button>Choose Services</Button>
+								<Button onClick={this.onClickbutton}>Choose Services</Button>
 						</Card>
 					</Col>
 				</Row>
