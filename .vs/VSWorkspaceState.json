@@ -1,15 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\client",
-    "\\client\\src",
-    "\\client\\src\\components",
-    "\\client\\src\\components\\auth",
-    "\\client\\src\\reducers",
+    "\\SOAD",
     "\\SOAD\\middleware",
     "\\SOAD\\Models",
     "\\SOAD\\routes"
   ],
-  "SelectedNode": "\\client\\src\\App.js",
+  "SelectedNode": "\\SOAD\\routes\\professional.js",
   "PreviewInSolutionExplorer": false
 }

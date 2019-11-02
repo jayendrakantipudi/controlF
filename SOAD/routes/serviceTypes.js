@@ -29,4 +29,10 @@ router.post('/addType',async(req, res) => {
 	res.send(Type);
 });
 
+router.post('/delete/:name', async(req, res) => {
+	const result = await ServiceType.deleteOne({ service_type:req.params.name });
+	const services_left = await ServiceType.find();
+	res.send(services_left);
+});
+
 module.exports = router;

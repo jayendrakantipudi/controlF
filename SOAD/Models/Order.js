@@ -4,7 +4,8 @@ const order = new mongoose.Schema({
 //	user:{
 //	  _id:{
 //		  type:String,
-//		  required:true},
+//		  required:true
+	  // },
 //	  name:{
 //		type:String,
 //		required:true,

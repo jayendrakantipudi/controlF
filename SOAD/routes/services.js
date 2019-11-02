@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Service = require('../Models/service').Service;
+const ServiceType = require('../Models/serviceType').ServiceType;
 
 router.get('/all', async(req, res) => {
 	const services = await Service.find();
@@ -24,6 +25,14 @@ router.post('/', async(req, res) => {
 	});
 	await service.save()
 	 res.send(service);
+});
+
+router.post('/delete/:name', async(req, res) => {
+	const result = await Service.deleteOne({ name:req.params.name });
+	const services_related = await ServiceType.find();
+	const result2 = await ServiceType.deleteMany({ "service.name": req.params.name })
+	const services_left = await Service.find();
+	res.send(services_left);
 });
 
 module.exports = router;
