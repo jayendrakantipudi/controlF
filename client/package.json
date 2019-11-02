@@ -10,6 +10,7 @@
     "react": "^16.9.0",
     "react-alice-carousel": "^1.15.3",
     "react-dom": "^16.9.0",
+    "react-icons": "^3.8.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.2",
@@ -18,6 +19,7 @@
     "reactstrap": "^8.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "style-it": "^2.1.4",
     "uuid": "^3.3.3"
   },
   "scripts": {

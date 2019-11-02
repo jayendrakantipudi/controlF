@@ -76,7 +76,7 @@ toggle=()=>{
     )
 
     return(
-      <div>
+      <div  className='navBar'>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">CtrlF </NavbarBrand>
