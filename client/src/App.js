@@ -31,7 +31,6 @@ class App extends Component{
           <Router>
         <div className="App">
           <AppNavbar/>
-          <Home/>
           <Switch>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>

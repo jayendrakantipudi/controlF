@@ -23,6 +23,7 @@
     "node-pre-gyp": "^0.13.0",
     "package.json": "^2.0.1",
     "react": "^16.9.0",
+    "socket.io": "^2.3.0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
