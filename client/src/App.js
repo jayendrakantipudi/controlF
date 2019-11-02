@@ -35,7 +35,7 @@ class App extends Component{
           <Switch>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
-				<Route exact path='/profile' component={ShowProfile}/>			
+				<Route exact path='/profile' component={ShowProfile}/>
           </Switch>
         </div>
             </Router>

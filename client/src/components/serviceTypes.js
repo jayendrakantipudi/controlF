@@ -63,10 +63,10 @@ render(){
   if(this.state.count===0){
     const services=this.props.service;
     var data_services = [];
-    
+
     for (var i in services.ser){
       data_services.push(services.ser[i]);
-    }    
+    }
 
     for (var i = data_services.length - 1; i >= 0; i--) {
       data_services[i]['quantity'] = 0
@@ -118,7 +118,7 @@ return(
             <button variant="light"
             onClick={() => { this.changeQuantityminus(this.state.data_ser, item.service_type); }}
             >-</button>
-            
+
                {' '}{item.quantity}{' '}
             <button variant="light"
               onClick={() => { this.changeQuantityplus(this.state.data_ser, item.service_type); }}
@@ -132,9 +132,9 @@ return(
         <td>{item.service_type}</td>
         <td><FaRupeeSign />{item.cost}</td>
         <td>
-            <button variant="light" 
+            <button variant="light"
             onClick={() => { this.changeQuantityminus(data_services, item.service_type); }}>-</button>
-            
+
                {' '}{item.quantity}{' '}
             <button variant="light"
               onClick={() => { this.changeQuantityplus(data_services, item.service_type); }}
@@ -155,7 +155,7 @@ return(
       <h3>Order</h3>
       <hr className="summary_stype_underline" />
         <b>Total Cost : {total}</b><br/><br/>
-        <Button>Continue to Checkout</Button> 
+        <Button>Continue to Checkout</Button>
       </div>
       </Col>
     </Row>
@@ -165,14 +165,14 @@ return(
 
 
 
-      
 
 
 
 
 
 
-      
+
+
   </div>
 )
 }
