@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import AppNavbar from'./components/AppNavbar';
 import ShowProfile from './components/ShowProfile';
+import Service from './components/Service';
+import ServiceTypes from './components/serviceTypes';
 import ItemModal from './components/ItemModal'
 import {Provider} from 'react-redux'
 import store from './store'
@@ -15,6 +17,8 @@ import {
   Redirect
 } from "react-router-dom";
 
+import Home from './components/Home';
+
 class App extends Component{
 
   componentDidMount(){
@@ -27,8 +31,11 @@ class App extends Component{
           <Router>
         <div className="App">
           <AppNavbar/>
+          <Home/>
           <Switch>
-            <Route exact path='/profile' component={ShowProfile}/>
+		    <Route exact path='/service/:name' component={Service}/>
+        <Route exact path='/service/:name/services' component={ServiceTypes}/>
+				<Route exact path='/profile' component={ShowProfile}/>			
           </Switch>
         </div>
             </Router>
