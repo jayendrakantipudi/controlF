@@ -12,10 +12,12 @@ import PropTypes from 'prop-types'
 
 
 
-class ShowProfile extends Component{
+class Service extends Component{
   componentDidMount(){
-    console.log('mounted');
-     this.props.loadUser()
+    // console.log('mounted');
+
+     //this.props.loadUser()
+
   }
 
 
@@ -45,7 +47,7 @@ return(
 }
 }
 
-ShowProfile.propTypes={
+Service.propTypes={
   user:PropTypes.object.isRequired,
   loadUser:PropTypes.func.isRequired,
   token:PropTypes.string
@@ -55,4 +57,4 @@ const mapStateToProps=state=>({
 user:state.auth.user,
 token:state.auth.token
 })
-export default connect(mapStateToProps,{loadUser})(ShowProfile)
+export default connect(mapStateToProps,{loadUser})(Service)

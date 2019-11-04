@@ -13,6 +13,7 @@ REGISTER_FAIL
 
 export const loadUser = () => (dispatch,getState) => {
   // User Loading
+  console.log('running')
   dispatch({type:USER_LOADING})
   axios.get('/api/users/loggedin',tokenConfig(getState))
     .then(res => dispatch({

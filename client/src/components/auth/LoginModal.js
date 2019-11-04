@@ -115,7 +115,7 @@ render(){
 
 const mapStateToProps = state =>({
   isAuthenticated:state.auth.isAuthenticated,
-  error:state.error
+  error:state.error,
 })
 
 export default connect(mapStateToProps,{ login, clearErrors })(LoginModal)
