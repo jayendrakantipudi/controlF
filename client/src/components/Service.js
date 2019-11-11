@@ -14,17 +14,15 @@ import PropTypes from 'prop-types'
 
 
 class Service extends React.Component{
-	
+
 
 	state = {
 		service:[],
 		services: [],
-		activeTab: '1'	
+		activeTab: '1'
 	}
 
 	componentDidMount(){
-		console.log('Mounted');
-
 		this.props.loadUser();
 		const {name} = this.props.match.params;
 		// this.setState({get_ser: name});
@@ -35,8 +33,8 @@ class Service extends React.Component{
 		this.getServices(name);
 	}
 
-	
-	
+
+
 
 
 
@@ -71,7 +69,7 @@ class Service extends React.Component{
 		const ser = url1.concat(url2).concat(url3)
 	    window.location.href=ser;
 	}
-			   		 	  	  	   	
+
 	render(){
 		const service=this.props.service.ser?this.props.service.ser.name:null;
 		const use_service=this.props.service.ser;
@@ -87,7 +85,7 @@ class Service extends React.Component{
 		const Style = {
 			textAlign:'left'
 		};
-		
+
 
 		return(
 			<div>
@@ -149,7 +147,7 @@ class Service extends React.Component{
       </Nav>
       <TabContent activeTab={this.state.activeTab}>
         <TabPane tabId="1">
-		
+
 		<br/>
           <Row>
             <Col sm="4" style={Style}>
@@ -158,7 +156,7 @@ class Service extends React.Component{
 
             <Col sm="11" style={Style}>
              {use_service?use_service.about:null}
-            </Col>			
+            </Col>
 		  </Row>
         </TabPane>
         <TabPane tabId="2">
@@ -181,7 +179,7 @@ class Service extends React.Component{
           </Row>
         </TabPane>
         <TabPane tabId="4">
-		
+
           <Row>
             <Col sm="12">
 
@@ -218,12 +216,12 @@ class Service extends React.Component{
 					<Col sm="3">
 						<Card body>
 							<CardTitle>Need {service?service:null} for	</CardTitle>
-							
+
 								<Button onClick={this.onClickbutton}>Choose Services</Button>
 						</Card>
 					</Col>
 				</Row>
-							
+
 			</div>
 
 			</div>

@@ -113,6 +113,7 @@ render(){
             placeholder ="password"
             onChange={this.onChange}
           />
+          <br/>
           <Button color="dark" block>
           Register
           </Button>

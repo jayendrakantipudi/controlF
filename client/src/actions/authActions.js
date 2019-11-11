@@ -8,7 +8,8 @@ LOGIN_SUCCESS,
 LOGIN_FAIL,
 LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
-REGISTER_FAIL
+REGISTER_FAIL,
+CLEAR_PROFESSIONAL
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
@@ -71,10 +72,13 @@ export const login=({email,password})=>dispatch=>{
 
 }
 
-export const logout =()=> {
-  return{
+export const logout =()=>dispatch=> {
+  dispatch({
+    type:CLEAR_PROFESSIONAL
+  })
+  dispatch({
     type:LOGOUT_SUCCESS
-  }
+  })
 }
 
 

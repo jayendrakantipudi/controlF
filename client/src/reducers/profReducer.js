@@ -2,7 +2,8 @@ import {
 CREATE_PROFESSIONAL_SUCCESS,
 CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
-IS_PROFESSIONAL_FALSE
+IS_PROFESSIONAL_FALSE,
+CLEAR_PROFESSIONAL,
 } from '../actions/types'
 
 const initialState={
@@ -31,6 +32,8 @@ export default function(state=initialState,action){
       ...state,
       isProfessional:action.payload
     }
+    case CLEAR_PROFESSIONAL:
+      return initialState
     default:
       return state
   }
