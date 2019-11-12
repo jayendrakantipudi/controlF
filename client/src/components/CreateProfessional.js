@@ -24,12 +24,6 @@ import {clearErrors} from '../actions/errorActions'
 import {isProf,getProfessions} from '../actions/profActions'
 
 class CreateProfessional extends Component{
-  componentDidMount()
-  {
-    console.log('mounted');
-    this.props.isProf()
-    this.props.getProfessions()
-  }
   state={
     profession:'CARPENTER',
     phonenumber:null,
@@ -45,6 +39,11 @@ class CreateProfessional extends Component{
     clearErrors:PropTypes.func.isRequired,
     getProfessions:PropTypes.func.isRequired,
     professions:PropTypes.array.isRequired
+  }
+
+  componentDidMount(){
+    this.props.isProf();
+    this.props.getProfessions()
   }
 
   componentDidUpdate(prevProps){
@@ -105,7 +104,7 @@ class CreateProfessional extends Component{
         isOpen={this.state.modal}
         toggle={this.toggle}
         >
-        <ModalHeader toggle={this.toggle}>Login</ModalHeader>
+        <ModalHeader toggle={this.toggle}>Enter your professional details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.onSubmit}>
@@ -128,6 +127,7 @@ class CreateProfessional extends Component{
               placeholder ="phonenumber"
               onChange={this.onChange}
             />
+            <br/>
             <Button color="dark" block>
             Become professional
             </Button>

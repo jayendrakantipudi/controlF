@@ -3,6 +3,7 @@ CREATE_PROFESSIONAL_SUCCESS,
 CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
 IS_PROFESSIONAL_FALSE,
+CLEAR_PROFESSIONAL,
 GET_PROFESSIONS,
 PROF_LOCATION
 } from '../actions/types'
@@ -34,6 +35,8 @@ export default function(state=initialState,action){
       ...state,
       isProfessional:action.payload
     }
+    case CLEAR_PROFESSIONAL:
+      return initialState
     case GET_PROFESSIONS:
     return {
       ...state,
