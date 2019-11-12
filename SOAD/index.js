@@ -10,13 +10,16 @@ const serviceTypes=require('./routes/serviceTypes');
 const order=require('./routes/order');
 const express = require('express');
 const app = express();
+var server=require('http').createServer(app);
+var io=require('socket.io').listen(server);
+temp = [];
+connections = [];
 var cors = require('cors');
 const slot = require('./routes/slot');
 const location = require('./routes/location');
 const booking = require('./routes/Booking');
-
-
 app.use(cors());
+
 
 if (!config.get('jwtPrivateKey')){
   console.error('FATAL ERROR:jwtPrivateKey is not defined' );
@@ -38,5 +41,40 @@ app.use('/api/slot',slot);
 app.use('/api/location',location);
 app.use('/api/booking',booking);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+server.listen(process.env.PORT || 3000);
+console.log("server running...");
+
+app.get('/message',function(req,res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.sockets.on('connection', function(socket){
+  connections.push(socket);
+  console.log('Connected: %s sockets connected', connections.length);
+
+  //Disconnect
+  socket.on('disconnect',function(data){
+    // if(!socket.username) return;
+    temp.splice(temp.indexOf(socket.username),1);
+    updateUsernames();
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Disconnected : %s sockets connected', connections.length)
+  });
+
+  //send message
+  socket.on('send message',function(data){
+    io.sockets.emit('new message',{msg:data,user:socket.username});
+  });
+
+  // New User
+  socket.on('new user',function(data, callback){
+    callback(true);
+    socket.username= data;
+    temp.push(socket.username);
+    updateUsernames();
+  })
+
+  function updateUsernames(){
+    io.sockets.emit('get users',temp)
+  }
+})
