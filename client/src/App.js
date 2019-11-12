@@ -3,6 +3,7 @@ import AppNavbar from'./components/AppNavbar';
 import ShowProfile from './components/ShowProfile';
 import Service from './components/Service';
 import ServiceTypes from './components/serviceTypes';
+import admin from './components/admin';
 import ItemModal from './components/ItemModal'
 import {Provider} from 'react-redux'
 import store from './store'
@@ -39,6 +40,7 @@ class App extends Component{
         <div className="App">
           <AppNavbar/>
           <Switch>
+          <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
 				<Route exact path='/profile' component={ShowProfile}/>
