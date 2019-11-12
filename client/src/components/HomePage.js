@@ -8,11 +8,11 @@ class HomePage extends Component{
           <div style={{fontSize:'200px',color:'white',fontFamily: 'Acme, sans-serif'}}>
             ControlF
           </div>
-          <div style={{fontFamily: 'Acme, sans-serif',marginTop:'-3%',color:'white'}}>
-          A Place where you can find all services
+          <div style={{fontFamily: 'Acme, sans-serif',marginTop:'-3%',color:'white',fontSize:'37px'}}>
+          Find Your Service
           </div>
         </div>
-            
+
       </div>
 
 

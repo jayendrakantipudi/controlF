@@ -28,12 +28,16 @@ mongoose.connect('mongodb://localhost:27017/User')
   .catch(err => console.error('Could not connect to MongoDB...'));
 
 app.use(express.json());
+app.use(express.static("uploads"));
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/professional',professional)
 app.use('/api/service', services);
 app.use('/api/serviceType', serviceTypes);
 app.use('/api/order', order);
+
+
+
 
 server.listen(process.env.PORT || 3000);
 console.log("server running...");

@@ -9,7 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap'
-import './homepage.css'
+import '../styles/homepage.css'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import RegisterModal from './auth/RegisterModal'

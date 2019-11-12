@@ -29,13 +29,19 @@ export const loadUser = () => (dispatch,getState) => {
     })
 }
 
-export const register=({name,email,password})=>dispatch=>{
+export const register=({name,email,password,profilepic,profilepicparse})=>dispatch=>{
   const config={
     headers:{
-      'Content-Type':'application/json'
+      'Content-Type':'multipart/form-data'
     }
   }
-  const body=JSON.stringify({name,email,password})
+  let body = new FormData();
+  body.append("profilepicparse",profilepicparse);
+  body.set("name",name);
+  body.set("email",email);
+  body.set("password",password);
+  body.set("profilepic",profilepic);
+//const body=JSON.stringify({name,email,password})
   axios.post('/api/users',body,config)
   .then(res=>dispatch({
     type:REGISTER_SUCCESS,

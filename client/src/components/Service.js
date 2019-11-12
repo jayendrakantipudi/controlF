@@ -33,11 +33,6 @@ class Service extends React.Component{
 		this.getServices(name);
 	}
 
-
-
-
-
-
 	getService = (temp) => {
 		var service_clicked = temp;
 		var url = 'http://localhost:3000/api/service/';

@@ -10,6 +10,7 @@ import {loadUser} from './actions/authActions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer'
 import Dashboard from './Dashboard';
 import HomePage from  './components/HomePage'
 import ServicesDisplay from './components/ServicesDisplay'
@@ -41,6 +42,10 @@ class App extends Component{
 				<Route exact path='/profile' component={ShowProfile}/>
         <Route exact path='/chat' component={Dashboard}/>
           </Switch>
+          <br/><br/>
+          <Footer>
+          <Footer/>
+          </Footer>
         </div>
             </Router>
       </Provider>
