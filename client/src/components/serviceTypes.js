@@ -69,6 +69,7 @@ render(){
   const {name} = this.props.match.params;
   const user_id1=this.props.user?this.props.user._id:null;
   var total = 0;
+  var selected_services = null;
   var to_store_order = {};
   if(this.state.count===0){
     const services=this.props.service;
@@ -94,6 +95,26 @@ render(){
     }
     console.log(to_store_order)
   }
+  if(total!=0){
+    selected_services = []
+    if(this.state.data_ser){
+      for (var i = this.state.data_ser.length - 1; i >= 0; i--) {
+        if(this.state.data_ser[i].quantity > 0){
+          selected_services.push(this.state.data_ser[i])
+        }
+      }
+    }
+    if(selected_services.length===0){
+      selected_services = null
+    }
+    if(selected_services.length>1){
+      for (var i = selected_services.length - 1; i >= selected_services.length/2; i--) {
+        const temp1 = selected_services[i];
+        selected_services[i] = selected_services[selected_services.length-1-i];
+        selected_services[selected_services.length-1-i] = temp1;
+      }
+    }
+  }
 
   if (this.state.flag) {
     
@@ -110,16 +131,12 @@ return(
   <br/>
   <br/>
   <Container className="container_stype">
-  <Row>
-  <Col sm="9">
-    <Row>
-    <Col sm="9"><h1>Services for {name}</h1></Col>
+      <Row>
+    <Col sm="8"><h1>Services for {name}</h1></Col>
     </Row>
-    <Row>
-
-    <Col sm="9"  >
-
-
+  <Row>
+  <Col sm="8">
+    
     <Table borderless hover style={{textAlign:'center'}}>
         <thead className="block-example">
           <tr>
@@ -170,15 +187,33 @@ return(
       </tbody>
     </Table>
     </Col>
-    </Row>
-    </Col>
-      <Col sm="3">
+    
+    
+      <Col sm="4" className="check_stype">
       <div className="summary_stype">
       <br/>
       <h3>Order</h3>
       <hr className="summary_stype_underline" />
+        {(selected_services)?
+        <Table borderless>
+        <thead>
+        <tr><th>Service</th><th>Quantity</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          {selected_services.map((item) => (
+            <tr>
+              <td>{item.service_type}</td>
+              <td>{item.quantity}</td>
+              <td>{item.cost}</td>
+            </tr>
+          ))}
+        </tbody>
+        </Table>
+       :'No Service Selected'}
+       <br/>
         <b>Total Cost : {total}</b><br/><br/>
-        <Button onClick={() => {this.storeOrder(to_store_order)}}>Continue to Checkout</Button> 
+        {(total===0)?' ': <Button className='to_add_break' onClick={() => {this.storeOrder(to_store_order)}}>Continue to Checkout</Button> }
+        <br/>
       </div>
       </Col>
     </Row>

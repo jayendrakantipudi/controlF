@@ -19,21 +19,26 @@ code {
     border: 0;
     text-align: center;
     border-top: 1px solid #ccc;
-    padding: 0;
 }
 
 .block-example {
     border: 1px solid #eee;
 }
+.check_stype{
+  border-left: 1px solid #eee;
+}
 .summary_stype{
-	width: 20%;
-	height: 30%;
-	border: 1px solid #eee;
-	position: fixed;
+	width:100%;
+}
+.to_add_break{
+  margin-bottom: 3%;
 }
 .summary_stype:hover{
 	box-shadow: 5px 5px 15px #888888;
 }
 .temp{
 	margin-top: 10%;
+}
+.card_service:hover{
+  box-shadow: 5px 5px 15px #888888;
 }

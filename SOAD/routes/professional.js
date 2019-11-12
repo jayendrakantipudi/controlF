@@ -49,6 +49,13 @@ router.get('/isProfessional',auth,async(req,res)=>{
   res.send(fact)
 })
 
+
+router.get('/:serviceName',async(req,res)=>{
+  const professionals = await Professional.find({profession:req.params.serviceName});
+  res.send(professionals);
+})
+
+
 router.get('/professions',async(req,res)=>{
   res.send(enumValues)
 })
