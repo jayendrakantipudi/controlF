@@ -9,24 +9,32 @@ import {
   Label,
   Input,
   NavLink,
-  Alert
-} from 'reactstrap'
+  Alert,
+  } from 'reactstrap'
+  import {
+    Redirect
+  } from "react-router-dom";
+  
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 import {createProfessional} from '../actions/profActions'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {clearErrors} from '../actions/errorActions'
-import {isProf} from '../actions/profActions'
+import {isProf,getProfessions} from '../actions/profActions'
 
 class CreateProfessional extends Component{
   componentDidMount()
   {
     console.log('mounted');
     this.props.isProf()
+    this.props.getProfessions()
   }
   state={
-    profession:null,
+    profession:'CARPENTER',
     phonenumber:null,
-    msg:null
+    msg:null,
+    flag:null
   }
   static propTypes ={
     isAuthenticated:PropTypes.bool,
@@ -34,7 +42,9 @@ class CreateProfessional extends Component{
     isProf:PropTypes.func.isRequired,
     error:PropTypes.object.isRequired,
     createProfessional:PropTypes.func.isRequired,
-    clearErrors:PropTypes.func.isRequired
+    clearErrors:PropTypes.func.isRequired,
+    getProfessions:PropTypes.func.isRequired,
+    professions:PropTypes.array.isRequired
   }
 
   componentDidUpdate(prevProps){
@@ -66,16 +76,26 @@ class CreateProfessional extends Component{
     this.setState({[e.target.name]:e.target.value})
   }
 
-  onSubmit=(e)=>{
-      e.preventDefault()
+  handleChange = (value) => {
+    this.setState({
+        profession: value
+    });
+  }
+  onSubmit= async(e)=>{
+     // e.preventDefault()
 
       const{profession,phonenumber}=this.state
       const user=this.props.user
       const professional={user,profession,phonenumber}
 
-      this.props.createProfessional(professional)
+      const value = await this.props.createProfessional(professional)
+      
+      this.setState({flag:1})
   }
   render(){
+    if(this.state.flag){
+      return <Redirect to="/professional/location" />;
+    }
     return(
       <div>
       <NavLink onClick={this.toggle} href="#" >
@@ -90,14 +110,16 @@ class CreateProfessional extends Component{
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-            <Label for="profession">Profession</Label>
-            <Input
-              type="text"
-              name="profession"
-              id="profession"
-              placeholder ="profession"
-              onChange={this.onChange}
-            />
+          <DropdownButton id="dropdown-basic-button" title={this.state.profession}>
+           { 
+            this.props.professions?
+            this.props.professions.map((item) => (
+            <Dropdown.Item value={item} onSelect={()=>{this.handleChange(item)}} >{item}</Dropdown.Item>
+            )
+            )
+            : null
+          }
+          </DropdownButton>
             <Label for="phonenumber">phonenumber</Label>
             <Input
               type="string"
@@ -116,12 +138,13 @@ class CreateProfessional extends Component{
       </div>
     )
   }
-  }
+}
 
   const mapStateToProps = state =>({
     user:state.auth.user,
     error:state.error,
     isProfessional:state.prof.isProfessional,
+    professions:state.prof.professions
   })
 
-  export default connect(mapStateToProps,{ createProfessional, clearErrors,isProf})(CreateProfessional)
+  export default connect(mapStateToProps,{ createProfessional, clearErrors,isProf,getProfessions})(CreateProfessional)

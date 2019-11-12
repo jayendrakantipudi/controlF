@@ -3,15 +3,15 @@ const mongoose= require('mongoose');
 const orderItem = new mongoose.Schema({
 	service_type:{
 	  type:String,
-	  required:true,
+	  required:false,
 	},
 	cost:{
 		type:Number,
-		required:true,
+		required:false,
 	},
 	quantity:{
 		type:Number,
-		required:true,
+		required:false,
 	}
 });
 

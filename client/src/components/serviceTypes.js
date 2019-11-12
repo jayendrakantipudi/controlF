@@ -4,7 +4,7 @@ import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent
 import {Card, CardTitle, CardText} from 'reactstrap'
 import store from '../store'
 import {loadUser} from '../actions/authActions'
-import {get_services} from '../actions/serviceTypeactions'
+import {get_services, store_order} from '../actions/serviceTypeactions'
 import {FaRupeeSign} from 'react-icons/fa'
 import '../index.css'
 import {
@@ -20,6 +20,7 @@ class serviceTypes extends Component{
   state = {
     data_ser: null,
     count:0,
+    flag:null
   }
   componentDidMount(){
     this.props.loadUser();
@@ -57,17 +58,26 @@ class serviceTypes extends Component{
     return temp_total
   }
 
+  storeOrder = async(to_store_order) =>{
+     const flagger = await this.props.store_order(to_store_order);
+
+     this.setState({flag:1})
+    
+  }
+
 render(){
   const {name} = this.props.match.params;
+  const user_id1=this.props.user?this.props.user._id:null;
   var total = 0;
   var selected_services = null;
+  var to_store_order = {};
   if(this.state.count===0){
     const services=this.props.service;
     var data_services = [];
-    
+
     for (var i in services.ser){
       data_services.push(services.ser[i]);
-    }    
+    }
 
     for (var i = data_services.length - 1; i >= 0; i--) {
       data_services[i]['quantity'] = 0
@@ -75,6 +85,15 @@ render(){
   }
   if(this.state.data_ser){
     total = this.calculateTotal(this.state.data_ser);
+    to_store_order['user_id'] = user_id1;
+    for (var i = this.state.data_ser.length - 1; i >= 0; i--) {
+      const temp1 = this.state.data_ser[i]['service_type'];
+      const temp2 = this.state.data_ser[i]['quantity'];
+      if(temp2>0){
+        to_store_order[temp1] = temp2;
+      }
+    }
+    console.log(to_store_order)
   }
   if(total!=0){
     selected_services = []
@@ -97,6 +116,10 @@ render(){
     }
   }
 
+  if (this.state.flag) {
+    
+      return <Redirect to="/slots" />;
+    }
 
 
 if (!this.props.token) {
@@ -135,7 +158,7 @@ return(
             <button variant="light"
             onClick={() => { this.changeQuantityminus(this.state.data_ser, item.service_type); }}
             >-</button>
-            
+
                {' '}{item.quantity}{' '}
             <button variant="light"
               onClick={() => { this.changeQuantityplus(this.state.data_ser, item.service_type); }}
@@ -149,9 +172,9 @@ return(
         <td>{item.service_type}</td>
         <td><FaRupeeSign />{item.cost}</td>
         <td>
-            <button variant="light" 
+            <button variant="light"
             onClick={() => { this.changeQuantityminus(data_services, item.service_type); }}>-</button>
-            
+
                {' '}{item.quantity}{' '}
             <button variant="light"
               onClick={() => { this.changeQuantityplus(data_services, item.service_type); }}
@@ -189,25 +212,12 @@ return(
        :'No Service Selected'}
        <br/>
         <b>Total Cost : {total}</b><br/><br/>
-        {(total===0)?' ': <Button className='to_add_break'>Continue to Checkout</Button> }
+        {(total===0)?' ': <Button className='to_add_break' onClick={() => {this.storeOrder(to_store_order)}}>Continue to Checkout</Button> }
         <br/>
       </div>
       </Col>
     </Row>
-    </Container>
-
-
-
-
-
-      
-
-
-
-
-
-
-      
+    </Container>  
   </div>
 )
 }
@@ -218,12 +228,14 @@ serviceTypes.propTypes={
   token:PropTypes.string.isRequired,
   get_services:PropTypes.func.isRequired,
   service:PropTypes.object.isRequired,
+  store_order:PropTypes.func.isRequired
 }
 
 
 
 const mapStateToProps=state=>({
+user:state.auth.user,
 token:state.auth.token,
 service:state.service,
 })
-export default connect(mapStateToProps,{loadUser, get_services})(serviceTypes)
+export default connect(mapStateToProps,{loadUser, get_services, store_order})(serviceTypes)
