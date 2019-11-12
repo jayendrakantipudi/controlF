@@ -1,4 +1,4 @@
-import {GET_SERVICETYPES, GET_SERVICE} from './types';
+import {GET_SERVICETYPES, GET_SERVICE, STORE_ORDER} from './types';
 import axios from 'axios';
 
 
@@ -26,4 +26,23 @@ export const get_services=(service)=>dispatch=>{
 
     // console.log(res);
 
+}
+
+export const store_order = (selected_services) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  
+  const body=JSON.stringify(selected_services)
+  console.log(`qwerty store ${body}`)
+  axios
+    .post('/api/order/makeorder',body,config)
+    .then(res =>
+      dispatch({
+        type: STORE_ORDER,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
 }

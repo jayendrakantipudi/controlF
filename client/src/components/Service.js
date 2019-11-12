@@ -10,6 +10,7 @@ import {loadUser} from '../actions/authActions'
 import {get_service} from '../actions/serviceActions'
 import {Redirect} from "react-router-dom"
 import PropTypes from 'prop-types'
+import '../index.css'
 //import Example from '../components/minNav.js'
 
 
@@ -19,7 +20,8 @@ class Service extends React.Component{
 	state = {
 		service:[],
 		services: [],
-		activeTab: '1'
+		activeTab: '1',
+		serviceWorkers:[]	
 	}
 
 	componentDidMount(){
@@ -31,7 +33,19 @@ class Service extends React.Component{
 		this.props.get_service(name);
 		//this.getService(name);
 		this.getServices(name);
+		this.getServiceWorkers(name);
 	}
+	
+	getServiceWorkers = (temp) => {
+		var service_clicked = temp;
+		var url = 'http://localhost:3000/api/professional/';
+		const ser = url.concat(service_clicked)
+		fetch('http://localhost:3000/api/professional/Plumber')
+		 .then(response => response.json())
+		 .then(data => this.setState({ serviceWorkers: data }))
+	}
+
+
 
 	getService = (temp) => {
 		var service_clicked = temp;
@@ -71,8 +85,10 @@ class Service extends React.Component{
 		const {services} = this.state;
 		const br = '\n'
 
-		console.log(`checking the activeTab after dooing so much ${this.state.activeTab}`)
-
+		// console.log(`checking the serviceWorkers ${this.state.serviceWorkers}`)
+		for (var i = this.state.serviceWorkers.length - 1; i >= 0; i--) {
+			console.log(this.state.serviceWorkers[i])
+		}
 		if (!this.props.token) {
 			// Logout
 			return <Redirect to="/" />;
@@ -109,7 +125,7 @@ class Service extends React.Component{
             className={classnames({ active: this.state.activeTab === '2'})}
             onClick={() => { this.toggle('2') }}
           >
-          {service?service:null}
+          {service?service:null}s
           </NavLink>
 
 
@@ -157,20 +173,23 @@ class Service extends React.Component{
         <TabPane tabId="2">
 		<br />
           <Row>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
+            
+				{this.state.serviceWorkers.map((item, index) => (
+					<Col sm="6">
+	              <Card body className='card_service'>
+	                <CardTitle>
+	                	{item.user.name[0].toUpperCase() +  item.user.name.slice(1)}
+	                </CardTitle>
+	                <CardText>A hardworking and efficient {service?service:null}</CardText>
+	                <Button>View Profile</Button>
+	              </Card>
+	              <br/>
+	              </Col>
+	          	
+				))}
+
+            
+
           </Row>
         </TabPane>
         <TabPane tabId="4">
