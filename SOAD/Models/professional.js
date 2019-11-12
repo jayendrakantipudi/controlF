@@ -2,7 +2,6 @@ const config=require('config');
 const Joi= require('joi');
 const mongoose= require('mongoose');
 
-
 const professionalSchema=new mongoose.Schema({
 user:{
   _id:{
@@ -19,13 +18,20 @@ user:{
 },
 profession:{
   type:String,
+  enum:['CARPENTER','PLUMBER','ELECTRICIAN','HAIR STYLIST','PHYSICIAN'],
   required:true,
+  uppercase:true
 },
 phonenumber:{
   type:String,
   required:true,
 },
+locality:{
+  type:Array,
+  required:false
+},
 });
+
 const Professional= mongoose.model('Professional',professionalSchema)
 function validateProfessional(professional){
   const schema={
@@ -36,5 +42,6 @@ function validateProfessional(professional){
   return Joi.validate(professional,schema)
 }
 
+exports.enumValues = ['CARPENTER','PLUMBER','ELECTRICIAN','HAIR STYLIST','PHYSICIAN']
 exports.Professional = Professional;
 exports.validate =validateProfessional;

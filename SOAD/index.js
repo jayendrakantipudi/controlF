@@ -11,6 +11,10 @@ const order=require('./routes/order');
 const express = require('express');
 const app = express();
 var cors = require('cors');
+const slot = require('./routes/slot');
+const location = require('./routes/location');
+const booking = require('./routes/Booking');
+
 
 app.use(cors());
 
@@ -30,6 +34,9 @@ app.use('/api/professional',professional)
 app.use('/api/service', services);
 app.use('/api/serviceType', serviceTypes);
 app.use('/api/order', order);
+app.use('/api/slot',slot);
+app.use('/api/location',location);
+app.use('/api/booking',booking);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
