@@ -18,6 +18,7 @@ router.get('/:name',async(req, res) => {
 router.post('/addType',async(req, res) => {
 	let type =await Service.findOne({name:req.body.name});
 	console.log(req.body.name);
+	console.log(req.body);
 	if (!type) return res.status(400).send('Service Does Not Exist!')
 	const Type = new ServiceType({
 		service:type,

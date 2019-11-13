@@ -36,7 +36,8 @@ router.post('/saveAddress',async(req,res)=>{
   lat1 = req.body.lat;
   lng1 = req.body.lng;
   address1 = req.body.address;
-  type.locality=[lat1,lng1,address1]
+  city1 = req.body.city;
+  type.locality=[lat1,lng1,address1,city1]
   
   await type.save()
   console.log(`backend2 ${type}`)
@@ -50,15 +51,16 @@ router.get('/isProfessional',auth,async(req,res)=>{
 })
 
 
+router.get('/professions',async(req,res)=>{
+  res.send(enumValues)
+})
+
+
 router.get('/:serviceName',async(req,res)=>{
   const professionals = await Professional.find({profession:req.params.serviceName});
   res.send(professionals);
 })
 
-
-router.get('/professions',async(req,res)=>{
-  res.send(enumValues)
-})
 
 
 module.exports= router

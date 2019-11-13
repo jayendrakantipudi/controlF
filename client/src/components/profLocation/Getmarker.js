@@ -17,8 +17,9 @@ onChange=(e)=>{
   
 sendAddress(markers,address){
   var id = this.props.user._id;
+  var city = this.props.initial_center.city;
   console.log(markers)
-  this.props.sendLocation(id,markers[0].position.lat,markers[0].position.lng,address)
+  this.props.sendLocation(id,markers[0].position.lat,markers[0].position.lng,address,city)
   this.setState({
     flag:2
   })
@@ -66,8 +67,8 @@ sendAddress(markers,address){
             {
               name: "Current position",
               position: {
-                lat: this.props.initial_center.lat,
-                lng: this.props.initial_center.lng
+                lat: this.props.initial_center.initialCenter.lat,
+                lng: this.props.initial_center.initialCenter.lng
               }
             }
           ],
@@ -84,7 +85,7 @@ sendAddress(markers,address){
                 width: "70%",
                 height: "350px"
               }}
-              initialCenter={this.props.initial_center}
+              initialCenter={this.props.initial_center.initialCenter}
               zoom={14}
             >
               {this.state.markers.map((marker, index) => (

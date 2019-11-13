@@ -12,18 +12,23 @@ import PropTypes from 'prop-types'
 
 
 
-class Service extends Component{
+class ShowProfessional extends Component{
   componentDidMount(){
-    // console.log('mounted');
-
-     //this.props.loadUser()
-
+    console.log('mounted');
+     this.props.loadUser()
   }
 
 
 render(){
-const name=this.props.user?this.props.user.name:null;
-const email=this.props.user?this.props.user.email:null;
+const data=this.props.prof_details?this.props.prof_details:null;
+if(data){
+console.log(this.props.prof_details)
+var name=data[0];
+var email=data[1];
+var locality=data[2];
+var profession=data[3];
+var phonenumber=data[4];
+}
 
 if (!this.props.token) {
     // Logout
@@ -32,14 +37,14 @@ if (!this.props.token) {
 return(
 <div>
 <div style={{fontSize:'200%'}}>
-  YOUR PROFILE<br/><br/>
+  Professional Profile<br/><br/>
 </div>
 <ListGroup>
   <ListGroupItem>
-    NAME:{name?name:null}
+    NAME:{data?name:null}
   </ListGroupItem>
   <ListGroupItem>
-    EMAIL:{email?email:null}
+    EMAIL:{data?email:null}
   </ListGroupItem>
 </ListGroup>
 </div>
@@ -47,14 +52,16 @@ return(
 }
 }
 
-Service.propTypes={
+ShowProfessional.propTypes={
   user:PropTypes.object.isRequired,
   loadUser:PropTypes.func.isRequired,
-  token:PropTypes.string
+  token:PropTypes.string,
+  prof_details:PropTypes.object.isRequired
 }
 
 const mapStateToProps=state=>({
 user:state.auth.user,
-token:state.auth.token
+token:state.auth.token,
+prof_details:state.showProf.prof_details
 })
-export default connect(mapStateToProps,{loadUser})(Service)
+export default connect(mapStateToProps,{loadUser})(ShowProfessional)

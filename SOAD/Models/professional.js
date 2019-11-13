@@ -3,33 +3,33 @@ const Joi= require('joi');
 const mongoose= require('mongoose');
 
 const professionalSchema=new mongoose.Schema({
-user:{
-  _id:{
+  user:{
+    _id:{
+        type:String,
+        required:true},
+    name:{
       type:String,
-      required:true},
-  name:{
+      required:true,
+    },
+    email:{
+      type:String,
+      required:true
+    }
+  },
+  profession:{
+    type:String,
+    enum:['carpenter','plumber','electrician','hair stylist','physician'],
+    required:true,
+    lowercase:true
+  },
+  phonenumber:{
     type:String,
     required:true,
   },
-  email:{
-    type:String,
-    required:true
-  }
-},
-profession:{
-  type:String,
-  enum:['CARPENTER','PLUMBER','ELECTRICIAN','HAIR STYLIST','PHYSICIAN'],
-  required:true,
-  uppercase:true
-},
-phonenumber:{
-  type:String,
-  required:true,
-},
-locality:{
-  type:Array,
-  required:false
-},
+  locality:{
+    type:Array,
+    required:false
+  },
 });
 
 const Professional= mongoose.model('Professional',professionalSchema)
@@ -42,6 +42,6 @@ function validateProfessional(professional){
   return Joi.validate(professional,schema)
 }
 
-exports.enumValues = ['CARPENTER','PLUMBER','ELECTRICIAN','HAIR STYLIST','PHYSICIAN']
+exports.enumValues = ['carpenter','plumber','electrician','hair stylist','physician']
 exports.Professional = Professional;
 exports.validate =validateProfessional;
