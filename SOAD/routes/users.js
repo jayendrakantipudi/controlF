@@ -7,6 +7,8 @@ const {User,validate}=require('../Models/user')
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const {Professional} = require('../Models/professional');
+
 const multer = require("multer");
 const uuidv1=require('uuid/v1');
 const storage = multer.diskStorage({
@@ -47,6 +49,19 @@ router.get('/loggedin',auth,async(req,res)=>{
 router.get('/all',async(req,res)=>{
   const user= await User.find()
   res.send(user);
+})
+
+
+router.post('/showprofile',async(req, res)=>{
+  const user= await User.findById(req.body.id).select('-password')
+  const professional_details = await Professional.findOne({"user._id":user._id});
+  const arr = []
+  arr.push(user.name)
+  arr.push(user.email)
+  arr.push(professional_details.locality)
+  arr.push(professional_details.profession)
+  arr.push(professional_details.phonenumber)
+  res.send(arr);
 })
 
 router.post('/',upload,async(req, res)=>{

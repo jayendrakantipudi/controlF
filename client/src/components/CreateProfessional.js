@@ -25,7 +25,7 @@ import {isProf,getProfessions} from '../actions/profActions'
 
 class CreateProfessional extends Component{
   state={
-    profession:'CARPENTER',
+    profession:'carpenter',
     phonenumber:null,
     msg:null,
     flag:null

@@ -5,6 +5,10 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {bookSlot} from '../actions/locationAction'
  
+import {
+  Redirect
+} from "react-router-dom";
+
 
 class Getmarker extends React.Component {
   
@@ -17,6 +21,7 @@ sendAddress(markers,address){
   var city = this.props.initial_center.city;
   console.log(markers)
   this.props.bookSlot(id,markers[0].position.lat,markers[0].position.lng,address,city)
+  this.setState({flag:2})
 }
 
  
@@ -65,6 +70,12 @@ sendAddress(markers,address){
           ],
           flag:1
         })
+
+      }
+
+      if(this.state.flag==2)
+      {
+        return <Redirect to="/displaybooking" />;
       }
       return (
         <div>
