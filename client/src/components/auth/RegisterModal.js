@@ -23,6 +23,8 @@ state={
   name:'',
   email:'',
   password:'',
+  profilepic:'uploaded',
+  profilepicparse:"",
   msg:null
 }
 
@@ -62,14 +64,20 @@ onChange=(e)=>{
   this.setState({[e.target.name]:e.target.value})
 }
 
+fileSelectHandler = event => {
+  this.setState({profilepicparse: event.target.files[0]});
+};
+
 onSubmit=(e)=>{
     e.preventDefault()
-    const {name,email,password} =this.state
+    const {name,email,password,profilepic,profilepicparse} =this.state;
 
     const newUser={
       name,
       email,
-      password
+      password,
+      profilepic,
+      profilepicparse
     }
 
 this.props.register(newUser);
@@ -113,6 +121,8 @@ render(){
             placeholder ="password"
             onChange={this.onChange}
           />
+          <br/>
+          <input type="file" className="form__input" name="profilepicparse" onChange={this.fileSelectHandler} id="profilepic_parse" placeholder="Upload pic"/>
           <Button color="dark" block>
           Register
           </Button>

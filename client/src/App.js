@@ -12,13 +12,17 @@ import {loadUser} from './actions/authActions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer'
+import Dashboard from './Dashboard';
+import HomePage from  './components/HomePage'
+import ServicesDisplay from './components/ServicesDisplay'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect
 } from "react-router-dom";
-
+import Home from './components/Home';
 import Currentloco from './components/Currentloco'
 import Getmarker from './components/Getmarker'
 import Slot from './components/Slot'
@@ -29,6 +33,7 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
+
 class App extends Component{
 
   componentDidMount(){
@@ -42,6 +47,9 @@ class App extends Component{
         <div className="App">
           <AppNavbar/>
           <Switch>
+        <Route exact path='/' component={HomePage}/>
+        <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
+        <Route exact path='/chat' component={Dashboard}/>
           <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
@@ -58,6 +66,10 @@ class App extends Component{
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
           </Switch>
+          <br/><br/>
+          <Footer>
+          <Footer/>
+          </Footer>
         </div>
             </Router>
       </Provider>
