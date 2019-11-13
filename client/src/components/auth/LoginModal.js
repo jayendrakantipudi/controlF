@@ -101,6 +101,7 @@ render(){
             placeholder ="password"
             onChange={this.onChange}
           />
+          <br/>
           <Button color="dark" block>
           Login
           </Button>
@@ -115,7 +116,7 @@ render(){
 
 const mapStateToProps = state =>({
   isAuthenticated:state.auth.isAuthenticated,
-  error:state.error
+  error:state.error,
 })
 
 export default connect(mapStateToProps,{ login, clearErrors })(LoginModal)

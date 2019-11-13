@@ -8,11 +8,13 @@ LOGIN_SUCCESS,
 LOGIN_FAIL,
 LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
-REGISTER_FAIL
+REGISTER_FAIL,
+CLEAR_PROFESSIONAL
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
   // User Loading
+  console.log('running')
   dispatch({type:USER_LOADING})
   axios.get('/api/users/loggedin',tokenConfig(getState))
     .then(res => dispatch({
@@ -27,13 +29,19 @@ export const loadUser = () => (dispatch,getState) => {
     })
 }
 
-export const register=({name,email,password})=>dispatch=>{
+export const register=({name,email,password,profilepic,profilepicparse})=>dispatch=>{
   const config={
     headers:{
-      'Content-Type':'application/json'
+      'Content-Type':'multipart/form-data'
     }
   }
-  const body=JSON.stringify({name,email,password})
+  let body = new FormData();
+  body.append("profilepicparse",profilepicparse);
+  body.set("name",name);
+  body.set("email",email);
+  body.set("password",password);
+  body.set("profilepic",profilepic);
+//const body=JSON.stringify({name,email,password})
   axios.post('/api/users',body,config)
   .then(res=>dispatch({
     type:REGISTER_SUCCESS,
@@ -70,10 +78,13 @@ export const login=({email,password})=>dispatch=>{
 
 }
 
-export const logout =()=> {
-  return{
+export const logout =()=>dispatch=> {
+  dispatch({
+    type:CLEAR_PROFESSIONAL
+  })
+  dispatch({
     type:LOGOUT_SUCCESS
-  }
+  })
 }
 
 

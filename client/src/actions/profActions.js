@@ -4,7 +4,9 @@ import {
 CREATE_PROFESSIONAL_SUCCESS,
 CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
-IS_PROFESSIONAL_FALSE
+IS_PROFESSIONAL_FALSE,
+GET_PROFESSIONS,
+PROF_LOCATION
 } from './types'
 
 
@@ -57,3 +59,37 @@ export const isProf = () => (dispatch,getState) => {
   }
   return config
 }
+
+
+export const getProfessions = () => dispatch => {
+  
+  axios
+    .get('/api/professional/professions')
+    .then(res =>
+      dispatch({
+        type: GET_PROFESSIONS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+
+export const sendLocation = (user_id,lat,lng,address,city) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({user_id,lat,lng,address,city})
+  axios
+    .post('/api/professional/saveAddress',body,config)
+    .then(res =>
+      dispatch({
+        type: PROF_LOCATION,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+
+

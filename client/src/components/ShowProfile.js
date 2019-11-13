@@ -14,8 +14,7 @@ import PropTypes from 'prop-types'
 
 class ShowProfile extends Component{
   componentDidMount(){
-    // console.log('mounted');
-
+    console.log('mounted');
      this.props.loadUser()
   }
 

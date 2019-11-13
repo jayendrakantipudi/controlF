@@ -2,13 +2,17 @@ import {
 CREATE_PROFESSIONAL_SUCCESS,
 CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
-IS_PROFESSIONAL_FALSE
+IS_PROFESSIONAL_FALSE,
+CLEAR_PROFESSIONAL,
+GET_PROFESSIONS,
+PROF_LOCATION
 } from '../actions/types'
 
 const initialState={
   professionalData:null,
   isProfessional:null,
-  isLoading: false
+  isLoading: false,
+  professions:null
 }
 
 export default function(state=initialState,action){
@@ -31,6 +35,15 @@ export default function(state=initialState,action){
       ...state,
       isProfessional:action.payload
     }
+    case CLEAR_PROFESSIONAL:
+      return initialState
+    case GET_PROFESSIONS:
+    return {
+      ...state,
+      professions:action.payload
+    }
+    case PROF_LOCATION:
+      return state
     default:
       return state
   }
