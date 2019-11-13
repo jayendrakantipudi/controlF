@@ -19,8 +19,8 @@ class ProfStates extends Component{
      this.props.getCities()
   }
 
-  bookslot =  (lat,lng) => {
-    this.props.setLocation(lat,lng);
+  bookslot =  (city,lat,lng) => {
+    this.props.setLocation(city,lat,lng);
     this.setState({flag:true})
   }
 
@@ -44,7 +44,7 @@ return(
     cities_available.map((item) => (
       item?
   <tr>
-    <Button variant="light"  onClick={()=>{this.bookslot(item.lat,item.lng)}} >{item.city}
+    <Button variant="light"  onClick={()=>{this.bookslot(item.city,item.lat,item.lng)}} >{item.city}
         </Button>
      </tr>
      :

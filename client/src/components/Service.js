@@ -7,8 +7,9 @@ import { Table, TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
 import store from '../store'
 import {loadUser} from '../actions/authActions'
+import {loadProf} from '../actions/showprofActions'
 import {get_service} from '../actions/serviceActions'
-import {Redirect} from "react-router-dom"
+import {Redirect, Link} from "react-router-dom"
 import PropTypes from 'prop-types'
 import '../index.css'
 //import Example from '../components/minNav.js'
@@ -77,9 +78,14 @@ class Service extends React.Component{
 		const url2 = name;
 		const url3 = '/services';
 		const ser = url1.concat(url2).concat(url3)
-	    window.location.href=ser;
+			window.location.href=ser;
 	}
-			   		 	  	  	   	
+	
+	onClickProf = (id) => {
+		console.log(`wassup ${id}`)
+		this.props.loadProf(id);
+	}
+
 	render(){
 		const service=this.props.service.ser?this.props.service.ser.name:null;
 		const use_service=this.props.service.ser;
@@ -182,7 +188,7 @@ class Service extends React.Component{
 	                	{item.user.name[0].toUpperCase() +  item.user.name.slice(1)}
 	                </CardTitle>
 	                <CardText>A hardworking and efficient {service?service:null}</CardText>
-	                <Button>View Profile</Button>
+	                <Link to='/showprofessional'><Button onClick={()=>this.onClickProf(item.user._id)}>View Profile</Button></Link>
 	              </Card>
 	              <br/>
 	              </Col>
@@ -232,7 +238,7 @@ class Service extends React.Component{
 						<Card body>
 							<CardTitle>Need {service?service:null} for	</CardTitle>
 							
-								<Button onClick={this.onClickbutton}>Choose Services</Button>
+								<Button onClick={() => {this.onClickbutton()}}>Choose Services</Button>
 						</Card>
 					</Col>
 				</Row>
@@ -249,6 +255,7 @@ Service.propTypes={
 	token:PropTypes.string.isRequired,
 	get_service:PropTypes.func.isRequired,
 	service:PropTypes.object.isRequired,
+	loadProf:PropTypes.func.isRequired
 }
 
 
@@ -257,4 +264,4 @@ const mapStateToProps=state=>({
 token:state.auth.token,
 service:state.service,
 })
-export default connect(mapStateToProps,{loadUser, get_service})(Service)
+export default connect(mapStateToProps,{loadUser, loadProf, get_service})(Service)

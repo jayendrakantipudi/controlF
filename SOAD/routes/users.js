@@ -7,6 +7,7 @@ const {User,validate}=require('../Models/user')
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const {Professional} = require('../Models/professional');
 
 router.get('/loggedin',auth,async(req,res)=>{
   const user= await User.findById(req.user._id).select('-password')
@@ -16,6 +17,18 @@ router.get('/loggedin',auth,async(req,res)=>{
 router.get('/all',async(req,res)=>{
   const user= await User.find()
   res.send(user);
+})
+
+router.post('/showprofile',async(req, res)=>{
+  const user= await User.findById(req.body.id).select('-password')
+  const professional_details = await Professional.findOne({"user._id":user._id});
+  const arr = []
+  arr.push(user.name)
+  arr.push(user.email)
+  arr.push(professional_details.locality)
+  arr.push(professional_details.profession)
+  arr.push(professional_details.phonenumber)
+  res.send(arr);
 })
 
 router.post('/',async(req, res)=>{

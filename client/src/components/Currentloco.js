@@ -19,6 +19,11 @@ class Currentloco extends React.Component {
   }
 
 
+  componentDidMount(){
+    this.props.getCities()
+ }
+
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
@@ -49,7 +54,7 @@ class Currentloco extends React.Component {
   render() {
     if(!this.props.isGeolocationAvailable)
       return(<div>Your browser does not support Geolocation</div>)
-      if(this.props.coords && !this.state.flag) 
+      if(this.props.coords && this.state.flag===null) 
       { 
         this.setLocation(this.props.coords.latitude,this.props.coords.longitude)
       }

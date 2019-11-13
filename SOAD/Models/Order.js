@@ -7,10 +7,10 @@ const order = new mongoose.Schema({
 	},
 
 	professional:{
-		_id:{
+		
 			type:String,
-			required:false,
-		}
+			required:false
+	
 	},
 
 	slot:{
@@ -36,8 +36,15 @@ const order = new mongoose.Schema({
 		required:false
 	},
 	order_date:{
-		type:Date,
-		default:Date.now()
+		year:{
+			type:Number
+		},
+		month:{
+			type:Number
+		},
+		date:{
+			type:Number
+		}
 	}
 
 });

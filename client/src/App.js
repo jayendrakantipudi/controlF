@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import AppNavbar from'./components/AppNavbar';
 import ShowProfile from './components/ShowProfile';
+import ShowProfessional from './components/ShowProfessional';
 import Service from './components/Service';
 import ServiceTypes from './components/serviceTypes';
 import admin from './components/admin';
@@ -27,6 +28,7 @@ import ProfLocation from './components/profLocation/Location'
 import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
+import DisplayBooking from './components/Displaybooking'
 class App extends Component{
 
   componentDidMount(){
@@ -44,6 +46,7 @@ class App extends Component{
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
 				<Route exact path='/profile' component={ShowProfile}/>
+        <Route exact path='/showprofessional' component={ShowProfessional}/>
         <Route exact path='/currentloco' component={Currentloco}/>
         <Route exact path='/marker' component={Getmarker}/>
         <Route exact path='/slots' component={Slot}/>
@@ -53,6 +56,7 @@ class App extends Component{
         <Route exact path='/professional/states' component={ProfStates}/>
         <Route exact path='/professional/currentloco' component={ProfCurrentloco}/>
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
+        <Route exact path='/displaybooking' component={DisplayBooking}/>
           </Switch>
         </div>
             </Router>

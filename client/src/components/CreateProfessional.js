@@ -31,7 +31,7 @@ class CreateProfessional extends Component{
     this.props.getProfessions()
   }
   state={
-    profession:'CARPENTER',
+    profession:'carpenter',
     phonenumber:null,
     msg:null,
     flag:null

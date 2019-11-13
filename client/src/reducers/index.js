@@ -7,6 +7,7 @@ import serviceReducer from './serviceReducer'
 import slotReducer from './slotReducer'
 import serviceTypeReducer from './serviceTypesreducer'
 import locationReducer from './locationReducer'
+import showProfReducer from './showProfReducer'
 
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
   service:serviceReducer,
   slots:slotReducer,
   order:serviceTypeReducer,
-  booking:locationReducer
+  booking:locationReducer,
+  showProf:showProfReducer
 })
