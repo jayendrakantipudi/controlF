@@ -15,6 +15,7 @@ import './App.css';
 import Footer from './components/Footer'
 import Dashboard from './Dashboard';
 import HomePage from  './components/HomePage'
+import HomePageContent from './components/HomePageContent'
 import ServicesDisplay from './components/ServicesDisplay'
 import {
   BrowserRouter as Router,
@@ -46,8 +47,9 @@ class App extends Component{
           <Router>
         <div className="App">
           <AppNavbar/>
+		  
           <Switch>
-        <Route exact path='/' component={HomePage}/>
+        <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
         <Route exact path='/chat' component={Dashboard}/>
           <Route exact path='/admin' component={admin}/>
@@ -67,6 +69,8 @@ class App extends Component{
         <Route exact path='/displaybooking' component={DisplayBooking}/>
           </Switch>
           <br/><br/>
+
+		  <br/><br/>
           <Footer>
           <Footer/>
           </Footer>

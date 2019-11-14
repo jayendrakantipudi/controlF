@@ -53,7 +53,7 @@ toggle=()=>{
 }
   render(){
     const{isAuthenticated,user}= this.props.auth
-    const extraNavbarstyles={color:'black',fontFamily: 'Acme, sans-serif'}
+    const extraNavbarstyles={color:'black'}
     const authLinks =(
       <Fragment >
         <NavItem>

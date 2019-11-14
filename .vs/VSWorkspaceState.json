@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\SOAD",
     "\\SOAD\\middleware",
     "\\SOAD\\Models",
     "\\SOAD\\routes"
   ],
-  "SelectedNode": "\\SOAD\\routes\\professional.js",
   "PreviewInSolutionExplorer": false
 }
