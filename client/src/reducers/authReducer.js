@@ -6,14 +6,16 @@ LOGIN_SUCCESS,
 LOGIN_FAIL,
 LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
-REGISTER_FAIL
+REGISTER_FAIL,
+MY_BOOKINGS
 } from '../actions/types'
 
 const initialState={
   token:localStorage.getItem('token'),
   isAuthenticated:null,
   isLoading: false,
-  user:null
+  user:null,
+  mybookings:null
 }
 
 export default function(state=initialState,action){
@@ -51,6 +53,11 @@ export default function(state=initialState,action){
         isAuthenticated: false,
         isLoading:false
       }
+    case MY_BOOKINGS:
+    return {
+      ...state,
+      mybookings:action.payload,
+    }
     default:
     return state
   }

@@ -22,7 +22,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import Home from './components/Home';
+
 import Currentloco from './components/Currentloco'
 import Getmarker from './components/Getmarker'
 import Slot from './components/Slot'
@@ -33,6 +33,7 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
+import Mybookings from './components/Mybookings'
 
 class App extends Component{
 
@@ -50,7 +51,7 @@ class App extends Component{
         <Route exact path='/' component={HomePage}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
         <Route exact path='/chat' component={Dashboard}/>
-          <Route exact path='/admin' component={admin}/>
+        <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
 				<Route exact path='/profile' component={ShowProfile}/>
@@ -65,6 +66,7 @@ class App extends Component{
         <Route exact path='/professional/currentloco' component={ProfCurrentloco}/>
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
+        <Route exact path='/mybookings' component={Mybookings}/>
           </Switch>
           <br/><br/>
           <Footer>
