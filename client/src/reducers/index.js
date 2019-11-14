@@ -9,6 +9,8 @@ import slotReducer from './slotReducer'
 import serviceTypeReducer from './serviceTypesreducer'
 import locationReducer from './locationReducer'
 import showProfReducer from './showProfReducer'
+import notificationReducer from './notificationReducer'
+import mainchatReducer from './mainchatReducer'
 
 export default combineReducers({
   item: itemReducer,
@@ -20,5 +22,7 @@ export default combineReducers({
   slots:slotReducer,
   order:serviceTypeReducer,
   booking:locationReducer,
-  showProf:showProfReducer
+  showProf:showProfReducer,
+  notification:notificationReducer,
+  message:mainchatReducer
 })

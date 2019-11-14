@@ -9,6 +9,7 @@ import {
 import '../index.css';
  import image from '../img.JPG'
  import { Row, Col } from 'reactstrap';
+ import { Table } from 'reactstrap';
 
 
 
@@ -23,13 +24,18 @@ class ShowProfile extends Component{
   }
 
 
+
+
+
   constructor(props){
       super(props);
-      this.state={content1:''}
-      this.state={content2:''}
-      this.state={content3:''}
-      this.state={content4:''}
-      this.state={con:1}
+
+      this.state={
+        content1: true,
+        content2 : false,
+        content3 : false,
+        content4 : false
+      }
 
 
       this.myfun1=this.myfun1.bind(this);
@@ -40,18 +46,10 @@ class ShowProfile extends Component{
 
   myfun1(){
      this.setState(
-       {content1:
-         <div >
-
-          <h1 className='head1'>About:</h1>
-
-
-      <p className='head2'>Indian Institutes of Information Technology (IIITs) are a group of institutes of higher education in India, focused on information technology. Five of them are established, funded and managed by the Ministry of Human Resource Development. The rest are set up on the public-private partnership (PPP) model.
-      </p></div>
-       ,content2:'',
-       content3:'',
-       content4:'',
-       con:1}
+       {content1: true,
+       content2:false,
+       content3:false,
+       content4:false}
 
      );
 
@@ -61,13 +59,10 @@ class ShowProfile extends Component{
     myfun2(){
         this.setState(
           {
-            content1:'',
-          content3:'',
-          content4:'',
-          content2:<div class="head">
-          <h1 className="head1">Reviews:</h1>
-          </div>,
-          con:2
+          content1:false,
+          content2:true,
+          content3:false,
+          content4:false,
         });
 
     }
@@ -75,13 +70,10 @@ class ShowProfile extends Component{
 
       myfun3(){
           this.setState({
-            content1:'',
-            content2:'',
-            content3:<div class="head">
-            <h1 className="head1">My Bookings:</h1>
-            </div>,
-            content4:'',
-            con:3
+            content1:false,
+            content2:false,
+            content3: true,
+            content4:false
           });
 
       }
@@ -89,15 +81,10 @@ class ShowProfile extends Component{
 
       myfun4(){
             this.setState({
-              content1:'',
-              content2:'',
-              content3:'',
-              content4:<div class="head">
-              <h2 className="head1">Contact:</h2>
-              <h2 className="head1">E-mail:</h2>
-              <h2 className="head1">Address:</h2>
-              </div>,
-              con:4
+              content1:false,
+              content2:false,
+              content3:false,
+              content4: true
             });
 
         }
@@ -117,45 +104,152 @@ if (!this.props.token) {
 return(
 <div className="row_class">
 <br/>
-<div className="hello">
-  YOUR PROFILE<br/>
-</div>
 
-
-<div>
-  <Row >
-      <Col sm={{ size: 6, offset: 0 }}>< img src={image} className="imag"/></Col>
-      <Col sm={{ size: 0, offset: 0 }}><h1 className="name">{name?name:null}</h1><br/><h1 className="email">{email?email:null}</h1> </Col>
+<Container>
+  <Row>
+    <Col md="12">
+      <h1>Your Profile</h1>
+    </Col>
   </Row>
-   </div>
+  <Row>
+    <Col md="3" className="imag">
+      <img src={image} className="imag"/>
+    </Col>
+    <Col md="6" className="name">
+    <h1>
+      {name?name:null}
+    </h1>
+      {email?email:null}
+    </Col>
+  </Row>
+  <br/><br/>
+  <Row>
+    <Col md="3">
+    <div className="prof_btn">
+ <Button  className="button_prof" onClick= {this.myfun1}>About</Button><br/><br/>
+ <Button  className="button_prof" onClick={this.myfun2}>My Reviews</Button><br/><br/>
+ <Button  className="button_prof" onClick={this.myfun3}>Bookings</Button><br/><br/>
+ <Button  className="button_prof" onClick={this.myfun4}>Personal Information</Button>
+ </div>
+    </Col>
+    <Col md="8" className="prof_data">
+
+        <span>
+          {this.state.content1 ? <div>
+
+            <h3>About</h3>
 
 
-   <div>
-   <Row >
-       <Col sm={{ size: 5, offset: 0 }}>
-<Button  className="button_prof" onClick= {this.myfun1}>About</Button><br/><br/>
-<Button  className="button_prof" onClick={this.myfun2}>Reviews</Button><br/><br/>
-<Button  className="button_prof" onClick={this.myfun3}>Bookings</Button><br/><br/>
-<Button  className="button_prof" onClick={this.myfun4}>Personal Information</Button></Col>
+          <p>I have began an illustrious career in hair styling more than a decade ago and today I'm one of the most sought-after stylists in Hyderabad. Get a trendy, chic hairstyle at B Blunt, Dev’s hangout! A warm personality, reassuring manner and skillful hands will take you from Plain Jane to Hot Diva in a few minutes. Ask any well-groomed lady in the city where she gets her hair and nails done, and you can bet your locks it’s at Dev More’s salon! Dev believes that women should experiment more with their face and hair for a modern, chic, smart look suited to any occasion.
 
-<Col sm={{ size: 0, offset: 0 }}  style={{marginLeft:'50%',width:'50%',position:'absolute'}} className="show">
+</p>
 
-{(this.state.con===1) ?
+         </div> : null}
+       </span>
 
-  <span>{this.state.content1}</span>
 
-  :''}
-{(this.state.con===2) ?<span>{this.state.content2}</span>:''}
-{(this.state.con===3) ?<span>{this.state.content3}</span>:''}
-{(this.state.con===4) ?<span>{this.state.content4}</span>:''}
-  </Col>
-</Row>
+        <span>
+          {this.state.content2 ? <div>
+            <h3>My Reviews:</h3>
+            <div className='rev1'>
+              <h6>Jayendra Kantipudi</h6>
+              <p>I'm very much satisfied with your work.</p>
+            </div>
+              <br/>
+            <div className='rev1'>
+              <h6>Yashwanth Bhogadi</h6>
+              <p>Oh My God! You are absolutely fabulous</p>
+            </div>
+          </div> : null}
+        </span>
+
+
+        <span>
+          {this.state.content3 ? <div>
+            <h3>My Bookings:</h3>
+
+            <Table>
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Customer Name</th>
+                  <th>Order-Id</th>
+                  <th>Total Cost(INR)</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Jayendra</td>
+                  <td>CF14564</td>
+                  <td>170</td>
+                  <td style={{color:'green'}}>Done</td>
+                  <td>13 Oct 2019</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Madhukar</td>
+                  <td>CF67804</td>
+                  <td>567</td>
+                  <td style={{color:'orange'}}>Not Done</td>
+                  <td>20 Nov 2019</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Srinivasa</td>
+                  <td>CF89456</td>
+                  <td>400</td>
+                  <td style={{color:'green'}}>Done</td>
+                  <td>13 Nov 2019</td>
+                </tr>
+              </tbody>
+            </Table>
+
+          </div> : null}
+        </span>
+
+
+        <span>
+        {this.state.content4 ? <div>
+            <Table borderless>
+
+              <tbody>
+                <tr>
+
+                  <td><b>Contact</b></td>
+                  <td>+91 7731066610</td>
+
+                </tr>
+                <tr>
+
+                  <td><b>Email</b></td>
+                  <td>madhukar.vangala12@gmail.com</td>
+
+                </tr>
+                <tr>
+
+                  <td><b>Address</b></td>
+                  <td>Room no.310,Bh1,IIIT Sricity</td>
+
+                </tr>
+              </tbody>
+            </Table>
+              </div> : null}
+        </span>
+
+
+
+
+    </Col>
+  </Row>
+</Container>
+
 
 
 </div>
 
-
-</div>
 )
 }
 }
