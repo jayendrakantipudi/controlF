@@ -29,14 +29,32 @@ class Location extends Component{
             return <Redirect to="/states" />;
         }
         return(
-            <Card style={{width:"30%",size:"70px",alignItems:"center",justifyContent:"center"}}>
-            <Button onClick = {()=>{this.getCurrentloco()}}>
-            <FaCrosshairs/>Current Location
-            </Button>
-            <Button onClick = {()=>{this.getOtherloco()}}>
-            Other Location
-            </Button>
-            </Card>
+          <div>
+          <br/><br/>
+          <Container style={{border:'1px solid gray'}}>
+          <br/><br/>
+            <Row>
+              <Col md="12">
+                <h1>Select Your City</h1>
+              </Col>
+            </Row>
+            <br/>
+            <Row>
+              <Col>
+                <Button className="add_btn" onClick = {()=>{this.getCurrentloco()}}>
+                <FaCrosshairs/> Current Location
+                </Button>
+                <br/><br/>
+                <Button  className="add_btn" onClick = {()=>{this.getOtherloco()}}>
+                Pin Location on Map
+                </Button>
+
+              </Col>
+            </Row>
+<br/><br/>
+          </Container>
+
+          </div>
         )
     }
 
