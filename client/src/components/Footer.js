@@ -15,11 +15,6 @@ export default class Footer extends Component{
   render(){
     return(
       <div style={{backgroundColor:"black",color:'white'}}><br/><br/>
-
-
-
-	 
-
 	  <Container>
 		  <Row className="test" style={{textAlign:"left"}}>
 			  <Col md="6">
