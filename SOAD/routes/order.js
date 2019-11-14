@@ -50,7 +50,11 @@ router.post('/makeorder',async(req, res) => {
 	let serOne = await Service.findOne({name:sermodel})	
 	order.service_name = serOne.name
 	order.user_id = temp.user_id
-	
+
+	var d = new Date();
+	order.order_date.date = d.getDate();
+	order.order_date.month = d.getMonth()+1;
+	order.order_date.year = d.getFullYear();
 	
 	await order.save()
 	console.log(`order: ${order}`)

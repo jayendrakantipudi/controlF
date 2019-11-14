@@ -1,15 +1,19 @@
 import React from "react";
 import { Form, FormGroup, Label, Input, Button, Row, Col, Table, TabContent, TabPane } from 'reactstrap'
 import { sendLocation } from '../../actions/profActions'
+import {getCities} from '../../actions/locationAction'
 import PropTypes from 'prop-types'
 import { geolocated } from "react-geolocated";
 import { connect } from 'react-redux'
 import {
   Redirect
 } from "react-router-dom";
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 class ProfCurrentloco extends React.Component {
   state = {
+    city:'Chennai',
     address: null,
     position: {
       lat: null,
@@ -19,14 +23,25 @@ class ProfCurrentloco extends React.Component {
   }
 
 
+  componentDidMount(){
+    this.props.getCities()
+ }
+
+ handleChange = (value) => {
+  this.setState({
+      city: value
+  });
+}
+
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  sendAddress(position, address) {
+  sendAddress(position, address,city) {
     var id = this.props.user._id
     console.log(id)
-    this.props.sendLocation(id, position.lat, position.lng, address)
+    this.props.sendLocation(id, position.lat, position.lng, address,city)
     this.setState({
       flag:2
     })
@@ -69,7 +84,17 @@ class ProfCurrentloco extends React.Component {
             />
           </FormGroup>
         </Form>
-        <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address) }}>Continue to Book</Button>
+        <DropdownButton id="dropdown-basic-button" title={this.state.city}>
+           { 
+            this.props.all_cities?
+            this.props.all_cities.map((item) => (
+            <Dropdown.Item value={item.city} onSelect={()=>{this.handleChange(item.city)}} >{item.city}</Dropdown.Item>
+            )
+            )
+            : null
+          }
+          </DropdownButton>
+        <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Continue to Book</Button>
       </div>
     )
   }
@@ -78,15 +103,17 @@ class ProfCurrentloco extends React.Component {
 
 ProfCurrentloco.propTypes = {
   user: PropTypes.object.isRequired,
-  sendLocation: PropTypes.func.isRequired
-
+  sendLocation: PropTypes.func.isRequired,
+  getCities: PropTypes.func.isRequired,
+  all_cities: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  all_cities: state.booking.all_cities
 })
 
-export default connect(mapStateToProps, { sendLocation })( geolocated({
+export default connect(mapStateToProps, { sendLocation,getCities })( geolocated({
   positionOptions: {
       enableHighAccuracy: false,
   },

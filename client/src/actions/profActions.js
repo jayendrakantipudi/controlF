@@ -74,13 +74,13 @@ export const getProfessions = () => dispatch => {
 }
 
 
-export const sendLocation = (user_id,lat,lng,address) => dispatch => {
+export const sendLocation = (user_id,lat,lng,address,city) => dispatch => {
   const config={
     headers:{
       'Content-Type':'application/json'
     }
   }
-  const body=JSON.stringify({user_id,lat,lng,address})
+  const body=JSON.stringify({user_id,lat,lng,address,city})
   axios
     .post('/api/professional/saveAddress',body,config)
     .then(res =>
