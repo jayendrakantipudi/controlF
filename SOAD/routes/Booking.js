@@ -27,14 +27,14 @@ router.post('/booking',async(req,res)=>{
     city1 = req.body.city;
     service_name = type.service_name;
     let serviceOne = await Service.findOne({name:service_name})
-   
+
     const value = serviceOne.service_worker;
-   
+
     const proffs = await Professional.findOne({profession:value})
-    
+
     type.professional=proffs,
     type.address=[lat1,lng1,address1,city1]
-    
+
     await type.save()
     res.send(type)
 })
