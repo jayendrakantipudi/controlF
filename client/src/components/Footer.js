@@ -6,7 +6,7 @@ export default class Footer extends Component{
     return(
       <div style={{backgroundColor:"black",color:'white'}}><br/><br/>
       <table>
-      <tr style={{fontSize:'28px',fontFamily: 'Acme, sans-serif' }}>
+      <tr style={{fontSize:'28px'}}>
         <td>
           ControlF
         </td>

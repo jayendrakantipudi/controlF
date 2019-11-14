@@ -53,7 +53,7 @@ toggle=()=>{
 }
   render(){
     const{isAuthenticated,user}= this.props.auth
-    const extraNavbarstyles={color:'black',fontFamily: 'Acme, sans-serif'}
+    const extraNavbarstyles={color:'black'}
     const authLinks =(
       <Fragment >
         <NavItem>
@@ -105,7 +105,7 @@ toggle=()=>{
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">CtrlF </NavbarBrand>
+            <Link to="/"><NavbarBrand>CtrlF </NavbarBrand></Link>
             <NavbarToggler onClick={this.toggle}/>
             {this.state.isOpen}
             <Collapse isOpen={this.state.isOpen} navbar>
