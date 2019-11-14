@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -53,7 +55,7 @@ code {
 }
 
 .to_check1{
-    
+
     text-align:left
 }
 
@@ -69,19 +71,42 @@ code {
 }
 
     .img2:hover {
-        transform: scale(1.2);
+        transform: scale(1.3);
     }
 
-
+.hpc_img_name{
+  text-decoration:none;
+  color: black;
+}
 
 .hpc_row2 {
     display: inline-block;
     overflow: hidden;
+    text-decoration:none;
 }
 
     .hpc_row2:hover {
         cursor: pointer;
+        text-decoration:none;
     }
+
+    .hpc_row2:hover .hpc_img_name{
+        text-decoration:none;
+        color: blue;
+    }
+.hpc_row2_link{
+  text-decoration: none;
+}
+
+.hpc_img_name{
+  font-family: 'Abel', sans-serif;
+  font-size: 24px;
+}
+
+.link_sd{
+  text-decoration: none;
+}
+
 
 .row2 {
     text-align: center;
@@ -109,4 +134,55 @@ code {
 .foot_icon{
     font-size:30px;
     cursor:pointer
+}
+
+.foot_hpc{
+  font-size: 25px;
+}
+
+.mainSlide{
+  background-image: url("./assets/back.jpg");
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.8);
+}
+.display-31{
+  color: white;
+  font-family: "Righteous"
+}
+.display-32{
+  color: white;
+  font-family: "Righteous";
+}
+.jumb2{
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3);
+}
+.lead1{
+  color: white;
+}
+
+
+.search{
+  width: 35%;
+  padding: 10px 15px;
+  /* border: 1px solid #00a0fc; */
+  background-color: #f1f1f1;
+  border: 1px solid transparent;
+}
+
+.search_btn{
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 11px 30px;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 0.8%;
+  font-size: 16px;
+  opacity: 1;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.search_btn:hover{
+  opacity: 0.8;
 }
