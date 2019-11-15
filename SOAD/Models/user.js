@@ -16,7 +16,12 @@ password:{
   type:String,
   required:true,
 },
-isAdmin:Boolean
+isAdmin:Boolean,
+profilepic: {
+    type: String,
+    required: true,
+    default: "no picture"
+  }
 });
 userSchema.methods.generateAuthToken=function(){
   const token=jwt.sign({_id:this._id,isAdmin:this.isAdmin},config.get('jwtPrivateKey'));
@@ -27,7 +32,9 @@ function validateUser(user){
   const schema={
     name:Joi.string().required(),
     email:Joi.string().required().email(),
-    password:Joi.string().required()
+    password:Joi.string().required(),
+    profilepic: Joi.string().required(),
+    profilepicparse: Joi.any()
   };
   return Joi.validate(user,schema)
 }

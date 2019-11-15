@@ -19,17 +19,28 @@ code {
     border: 0;
     text-align: center;
     border-top: 1px solid #ccc;
-    padding: 0;
+}
+
+.summary_stype_underline1 {
+    display: block;
+    height: 1px;
+    width: 10%;
+    border: 0;
+    text-align: center;
+    border-top: 1px solid #ccc;
 }
 
 .block-example {
     border: 1px solid #eee;
 }
+.check_stype{
+  border-left: 1px solid #eee;
+}
 .summary_stype{
-	width: 20%;
-	height: 30%;
-	border: 1px solid #eee;
-	position: fixed;
+	width:100%;
+}
+.to_add_break{
+  margin-bottom: 3%;
 }
 .summary_stype:hover{
 	box-shadow: 5px 5px 15px #888888;
@@ -94,4 +105,67 @@ margin-right: auto;*/
 }
 .hidden{
    margin-left: 5%;
+}
+}
+.card_service:hover{
+  box-shadow: 5px 5px 15px #888888;
+}
+
+.to_check1{
+    
+    text-align:left
+}
+
+.img1{
+    margin-top:1.5%;
+    width:100%;
+    height:80%
+}
+.img2 {
+    width: 100%;
+    height: 150px;
+    transition: transform .3s ease;
+}
+
+    .img2:hover {
+        transform: scale(1.2);
+    }
+
+
+
+.hpc_row2 {
+    display: inline-block;
+    overflow: hidden;
+}
+
+    .hpc_row2:hover {
+        cursor: pointer;
+    }
+
+.row2 {
+    text-align: center;
+}
+
+.row2_col:hover {
+    box-shadow: 5px 5px 15px #888888;
+}
+.icons{
+    font-size:50px;
+}
+
+.td_tab:hover{
+    color:blue;
+    cursor:pointer
+}
+.tab {
+    /*border-top: 1px solid white;*/
+    text-align:left
+}
+
+.foot_con {
+    border-left: 1px solid white;
+}
+.foot_icon{
+    font-size:30px;
+    cursor:pointer
 }
