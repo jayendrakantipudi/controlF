@@ -47,6 +47,65 @@ code {
 }
 .temp{
 	margin-top: 10%;
+
+}
+
+.hello{
+   font-size: 200%;
+   text-align: center;
+}
+.imag{
+  padding: 50px;
+  width: 50%;
+  /* display: block; */
+/* margin-left: auto;
+margin-right: auto;*/
+}
+
+.name{
+   font-size: 300%;
+   padding-top: 0px;
+   justify-content: center;
+   align-items: center;
+   margin-top: 50%;
+ }
+
+.email{
+    font-size: 75%;
+    padding-top: 0px;
+    justify-content: center;
+    align-items: center;
+}
+ .row_class{
+   justify-content: center;
+   align-items: center;
+ }
+
+ .button_prof{
+   width: 30%;
+   margin-left: 25%;
+ }
+.show{
+
+  border-left: 30px solid black;
+  border-width: thin;
+}
+
+
+
+.head1{
+  text-align: left;
+  margin-left: 2%;
+  font-size: 150%;
+}
+
+.head2{
+  text-align: left;
+  margin-left: 2%;
+}
+.hidden{
+   margin-left: 5%;
+}
 }
 .card_service:hover{
   box-shadow: 5px 5px 15px #888888;
