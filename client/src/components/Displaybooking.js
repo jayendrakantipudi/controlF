@@ -6,8 +6,6 @@ import {Container, ListGroup, ListGroupItem, Button, Modal,
 import {
   Redirect
 } from "react-router-dom";
-import Popup from "reactjs-popup";
-
 import PropTypes from 'prop-types'
 
 
