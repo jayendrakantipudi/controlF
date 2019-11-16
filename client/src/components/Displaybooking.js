@@ -1,13 +1,16 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+
 import {Container, ListGroup, ListGroupItem, Button, Modal,
   ModalHeader,
   ModalBody} from 'reactstrap'
-import {
-  Redirect
-} from "react-router-dom";
-import Popup from "reactjs-popup";
+import {sendMessage} from '../actions/mainchatActions'
+import {messageNotification} from '../actions/notificationActions'
 
+import {
+  Redirect,
+  Link
+} from "react-router-dom";
 import PropTypes from 'prop-types'
 
 
@@ -31,6 +34,16 @@ class DisplayBooking extends Component{
   setflag(){
     this.setState({flag:2})
   }
+  closebutton=()=>{
+    this.setState({flag:1})
+  }
+
+  sendhello=(user_id,professional_id)=>{
+    const message="hello"
+    this.props.sendMessage(user_id,professional_id,message)
+    this.props.messageNotification(user_id,professional_id,"/chatpage")
+  }
+
 render(){
 
 const name=this.props.order?this.props.order.name:null;
@@ -42,6 +55,8 @@ const professional_number = this.props.order?this.props.order.prof_phone:null;
 const slot = this.props.order?this.props.order.slot:null;
 const address = this.props.order?this.props.order.address:null;
 const city = this.props.order?this.props.order.city:null;
+const user_id = this.props.order?this.props.order.user_id:null;
+const professional_id = this.props.order?this.props.order.professional_id:null;
 
 if (!this.props.token) {
     // Logout
@@ -107,6 +122,8 @@ return(
   </ListGroupItem>
 </ListGroup>
 <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
+<Link to="/chatpage"><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
+
 </div>
 )
 }
@@ -114,11 +131,13 @@ return(
 
 DisplayBooking.propTypes={
   order:PropTypes.object.isRequired,
-  token:PropTypes.string
+  token:PropTypes.string,
+  sendMessage:PropTypes.func.isRequired,
+  messageNotification:PropTypes.func.isRequired
 }
 
 const mapStateToProps=state=>({
 order:state.booking.order,
 token:state.auth.token
 })
-export default connect(mapStateToProps,{})(DisplayBooking)
+export default connect(mapStateToProps,{sendMessage,messageNotification})(DisplayBooking)

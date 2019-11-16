@@ -6,7 +6,8 @@ CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
 IS_PROFESSIONAL_FALSE,
 GET_PROFESSIONS,
-PROF_LOCATION
+PROF_LOCATION,
+MY_ORDERS
 } from './types'
 
 
@@ -92,4 +93,20 @@ export const sendLocation = (user_id,lat,lng,address,city) => dispatch => {
 }
 
 
+export const myorders = (id) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id})
+  axios
+    .post('/api/professional/myorders',body,config)
+    .then(res =>
+      dispatch({
+        type: MY_ORDERS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
 

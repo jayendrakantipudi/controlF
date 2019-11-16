@@ -1,2 +1,4 @@
 node_modules/
 config/
+SOAD/package-lock.json
+client/package-lock.json

@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import {getCities,setLocation} from '../actions/locationAction'
+import '../index.css'
 
 import {
   Redirect
@@ -37,27 +38,43 @@ if (this.state.flag){
 return(
 
 <div >
-<Table>
-  <tbody>
-{
 
-    cities_available?
-    cities_available.map((item) => (
-      item?
-  <tr>
-    <Button variant="light"  onClick={()=>{this.bookslot(item.city,item.lat,item.lng)}} >{item.city}
-        </Button>
-     </tr>
-     :
-     null
-          
-    ))
-  :
-  null
+<br/><br/><br/>
 
-}
-</tbody>
-</Table>
+<Container>
+<Row>
+  <Col md="12">
+    <h3  style={{marginRight:'10%'}}>Select City</h3>
+  </Col>
+</Row>
+<Row>
+<Col md="6" style={{marginLeft:'20%'}}>
+  <Container>
+    <Row>
+
+    {
+
+        cities_available?
+        cities_available.map((item) => (
+          item?
+          <Col md="3" style={{marginTop:'5%'}}>
+        <Button variant="light" className="sc_btn"  onClick={()=>{this.bookslot(item.city,item.lat,item.lng)}} >{item.city}
+            </Button>
+            </Col>
+
+         :
+         null
+
+        ))
+      :
+      null
+
+    }
+    </Row>
+  </Container>
+</Col>
+</Row>
+</Container>
 </div>
 )
 }

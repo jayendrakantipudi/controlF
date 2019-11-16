@@ -1,19 +1,26 @@
 import React,{Component} from 'react';
+import { Jumbotron } from 'reactstrap';
+import '../index.css';
+import img from '../assets/Carpentry.jpg'
+const imgUrl = '../assets/Carpentry.jpg'
+
+const jumbStyle = {
+	backgroundImage: 'url(' + imgUrl + ')',
+}
 
 class HomePage extends Component{
   render(){
     return(
       <div>
-      <div style={{background:'linear-gradient(to right, #f09819, #edde5d)',height:'400px'}}>
-          <div style={{fontSize:'200px',color:'white',fontFamily: 'Acme, sans-serif'}}>
-            ControlF
-          </div>
-          <div style={{fontFamily: 'Acme, sans-serif',marginTop:'-3%',color:'white',fontSize:'37px'}}>
-          Find Your Service
-          </div>
-        </div>
 
-      </div>
+
+	  <Jumbotron className="mainSlide">
+        <h1 className="display-3">CtrlF</h1>
+        <p className="lead">Find Your Service</p>
+      </Jumbotron>
+
+
+</div>
 
 
     )

@@ -53,7 +53,7 @@ router.get('/all',async(req,res)=>{
 })
 
 router.post('/mybookings',async(req, res)=>{
-  const order = await Order.find({user_id:req.body.id,is_confirmed:true});
+  const order = await Order.find({user_id:req.body.id,is_confirmed:true})
   var item = null;
   orders = [];
   console.log(order)
@@ -79,7 +79,7 @@ router.post('/mybookings',async(req, res)=>{
   }
   orders.push(Orderdetails)
   }
-  res.send(orders);
+  res.send(orders.reverse());
 })
 
 router.post('/showprofile',async(req, res)=>{

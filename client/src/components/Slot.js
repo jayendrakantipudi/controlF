@@ -39,36 +39,47 @@ if (this.state.flag){
 return(
 
 <div >
-<Table>
-  <tr>
-    <td>Start Time</td>
-    <td>To</td>
-    <td>End Time</td>
-    <td>Select</td>
-    </tr>
-<tbody>
-{
 
-    slots_available?
-    slots_available.map((item) => (
-      item?
-  <tr>
-    <td>{item.start_time}</td>
-    <td>to</td>
-    <td>{item.end_time}</td>
-    <Button variant="light" value={item._id} onClick={this.bookslot} >
-        </Button>
-     </tr>
-     :
-     null
-          
-    ))
-  :
-  null
+<Container>
+<br/><br/>
+  <Row>
+    <Col md="12">
+      <h1>Choose a Slot</h1>
+    </Col>
+  </Row>
+  <br/>
+  <Row>
+  <Col md="12">
+    <Col md="8" style={{marginLeft:'20%'}}>
 
-}
-</tbody>
-</Table>
+        <Container>
+          <Row>
+
+          {
+              slots_available?
+
+              slots_available.map((item) => (
+
+            <Col md="3" className="slot_select"  value={item._id} onClick={this.bookslot}>
+
+                <span>{item.start_time}:00 - </span>
+                <span>{item.end_time}:00</span>
+
+            </Col>
+
+          ))
+
+        :null
+      }
+
+          </Row>
+        </Container>
+
+    </Col>
+    </Col>
+  </Row>
+</Container>
+
 </div>
 )
 }
