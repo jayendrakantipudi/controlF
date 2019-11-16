@@ -112,9 +112,11 @@ getNoti=(id)=>{
     <table style={{marginLeft:'30%'}}>
     <tr style={{cellspacing:'30%'}}>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Home </NavbarBrand></Link></td>
-      <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Services </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Areas </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
+
+      <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
+      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
+      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
+
       <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
     </tr>
     </table>
@@ -128,7 +130,7 @@ getNoti=(id)=>{
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <Link to="/"><NavbarBrand>CtrlF </NavbarBrand></Link>
+            <Link to="/"><NavbarBrand><span className="head_nav_name">CtrlF</span> </NavbarBrand></Link>
             <NavbarToggler onClick={this.toggle}/>
             {this.state.isOpen}
             <Collapse isOpen={this.state.isOpen} navbar>

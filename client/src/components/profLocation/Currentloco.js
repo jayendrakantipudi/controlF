@@ -94,7 +94,7 @@ class ProfCurrentloco extends React.Component {
             : null
           }
           </DropdownButton>
-        <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Continue to Book</Button>
+        <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Become Professional</Button>
       </div>
     )
   }
