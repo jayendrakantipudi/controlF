@@ -22,26 +22,24 @@ class Service extends React.Component{
 		service:[],
 		services: [],
 		activeTab: '1',
-		serviceWorkers:[]	
+		serviceWorkers:[]
 	}
 
 	componentDidMount(){
 		this.props.loadUser();
 		const {name} = this.props.match.params;
-		// this.setState({get_ser: name});
 		console.log(this.props)
 		console.log(name)
 		this.props.get_service(name);
-		//this.getService(name);
 		this.getServices(name);
 		this.getServiceWorkers(name);
 	}
-	
+
 	getServiceWorkers = (temp) => {
 		var service_clicked = temp;
 		var url = 'http://localhost:3000/api/professional/';
 		const ser = url.concat(service_clicked)
-		fetch('http://localhost:3000/api/professional/Plumber')
+		fetch(ser)
 		 .then(response => response.json())
 		 .then(data => this.setState({ serviceWorkers: data }))
 	}
@@ -79,7 +77,7 @@ class Service extends React.Component{
 		const ser = url1.concat(url2).concat(url3)
 			window.location.href=ser;
 	}
-	
+
 	onClickProf = (id) => {
 		console.log(`wassup ${id}`)
 		this.props.loadProf(id);
@@ -90,7 +88,7 @@ class Service extends React.Component{
 		const use_service=this.props.service.ser;
 		const {services} = this.state;
 		const br = '\n'
-
+		const worker=this.props.service.ser?this.props.service.ser.service_worker:null;
 		// console.log(`checking the serviceWorkers ${this.state.serviceWorkers}`)
 		for (var i = this.state.serviceWorkers.length - 1; i >= 0; i--) {
 			console.log(this.state.serviceWorkers[i])
@@ -107,9 +105,9 @@ class Service extends React.Component{
 		return(
 			<div>
 			<div className='jumb'>
-				<Jumbotron fluid>
+				<Jumbotron fluid className="jumb2">
 					<Container fluid>
-						<h1 className="display-3">{service?service:null}</h1>
+						<h1 className="display-3 display-32">{service?service:null}</h1>
 					</Container>
 				</Jumbotron>
 
@@ -131,7 +129,7 @@ class Service extends React.Component{
             className={classnames({ active: this.state.activeTab === '2'})}
             onClick={() => { this.toggle('2') }}
           >
-          {service?service:null}s
+          {worker?worker:null}s
           </NavLink>
 
 
@@ -167,7 +165,7 @@ class Service extends React.Component{
 
 		<br/>
           <Row>
-            <Col sm="4" style={Style}>
+            <Col sm="6" style={Style}>
               <h2>About {use_service?use_service.service_worker:null}</h2>
             </Col>
 
@@ -179,7 +177,7 @@ class Service extends React.Component{
         <TabPane tabId="2">
 		<br />
           <Row>
-            
+
 				{this.state.serviceWorkers.map((item, index) => (
 					<Col sm="6">
 	              <Card body className='card_service'>
@@ -191,10 +189,10 @@ class Service extends React.Component{
 	              </Card>
 	              <br/>
 	              </Col>
-	          	
+
 				))}
 
-            
+
 
           </Row>
         </TabPane>

@@ -13,6 +13,7 @@ import carpenter from '../assets/carpenter.jpg';
 import plumber from '../assets/plumber.jpg';
 import electrician from '../assets/electrician.jpg';
 import hair_stylist from '../assets/hair_stylist.jpg';
+import {Redirect, Link} from "react-router-dom"
 
 import { FaTools, FaWallet, FaClock, FaMapMarkedAlt } from 'react-icons/fa';
 
@@ -20,10 +21,12 @@ import { FaTools, FaWallet, FaClock, FaMapMarkedAlt } from 'react-icons/fa';
 class HomePageContent extends Component{
   render(){
     return(
-    <div>
+    <div className="hpc">
 	  <Jumbotron className="mainSlide">
-        <h1 className="display-3">CtrlF</h1>
-        <p className="lead">Find Your Service</p>
+        <h1 className="display-3 display-31">CtrlF</h1>
+        <p className="lead lead1">Find Your Service</p>
+        <br/>
+        <br/>
       </Jumbotron>
 	  <br/><br/>
 		<Container>
@@ -36,10 +39,10 @@ class HomePageContent extends Component{
 			<br/><br/>
 			<Row className="to_check1">
 				<Col md="4">
-					<img src={img1} className="img1"/>					
+					<img src={img1} className="img1"/>
 				</Col>
 				<Col md="8">
-								
+
 					<b>CtrlF</b> is recognized as the fastest-growing startup in India. We are a mobile marketplace for local services. We help customers hire trusted professionals for all their service needs. We are staffed with young, passionate people working tirelessly to make a difference in the lives of people by catering to their service needs at their doorsteps. We provide housekeeping services which consist of Plumbers, Electricians, Carpenters, Cleaning and Pest Control. We also provide personal services like beauty, spa, mobile and other appliance repairs etc. Be it getting a plumbing job done, improving your fitness through yoga, learning to play the guitar, decorating your home or getting candid photos of your wedding clicked, we are a sure shot destination for your service needs.
 				</Col>
 			</Row>
@@ -48,30 +51,50 @@ class HomePageContent extends Component{
 				<Col md="12">
 					<h4>Our Services</h4>
 					<hr className="summary_stype_underline1" />
-				</Col>			
+				</Col>
 			</Row>
 			<br/><br/>
 			<Row>
+
 				<Col md="3" className="hpc_row2">
+        <Link className="hpc_row2_link" to="/service/Carpenter">
 					<br/>
 					<img src={carpenter} className="img2"/>	<br/><br/>
-					<span>Carpenter</span>
-				</Col>
-				<Col md="3" className="hpc_row2">
+          </Link>
+          <span className="hpc_img_name">Carpenter</span>
+
+        </Col>
+
+
+        <Col md="3" className="hpc_row2">
+        <Link className="hpc_row2_link" to="/service/Plumber">
 					<br/>
 					<img src={plumber} className="img2"/>	<br/><br/>
-					<span>Plumber</span>
-				</Col>
-				<Col md="3" className="hpc_row2">
+          </Link>
+					<span className="hpc_img_name">Plumber</span>
+
+        </Col>
+
+
+        <Col md="3" className="hpc_row2">
+        <Link className="hpc_row2_link" to="/service/Electrician">
 					<br/>
 					<img src={electrician} className="img2"/>	<br/><br/>
-					<span>Electrician</span>
-				</Col>
-				<Col md="3" className="hpc_row2">
+          </Link>
+					<span className="hpc_img_name">Electrician</span>
+
+        </Col>
+
+
+        <Col md="3" className="hpc_row2">
+        <Link className="hpc_row2_link" to="/service/Hair Saloon and Spa">
 					<br/>
 					<img src={hair_stylist} className="img2"/>	<br/><br/>
-					<span>Hair Stylist</span>
-				</Col>
+          </Link>
+					<span className="hpc_img_name">Hair Stylist</span>
+
+        </Col>
+
 			</Row>
 			<br/><br/><br/><br/><br/><br/><br/><br/>
 			<Row>
@@ -83,7 +106,7 @@ class HomePageContent extends Component{
 			<br/><br/>
 			<Row className="row2">
 				<Col md="3">
-				
+
 				<Card className="row2_col h-100">
 				<br/><br/>
 				<span><FaTools className="icons" /></span>
@@ -133,7 +156,7 @@ class HomePageContent extends Component{
 				<Col md="12">
 					<h4>Our Customer Reviews</h4>
 					<hr className="summary_stype_underline1" />
-				</Col>			
+				</Col>
 			</Row>
 			<br/>
 			<Row>
@@ -143,7 +166,7 @@ class HomePageContent extends Component{
 						<ListGroupItemText>
 						<i>" Great service by plumber Lokesh Reddy. Fixed the problems with ease."</i>
 						</ListGroupItemText>
-						- <b>Anand Chopra</b>
+						- <b>Mahesh Babu</b>
 					  </ListGroupItem>
 					  <ListGroupItem>
 						<ListGroupItemText>

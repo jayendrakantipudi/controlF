@@ -3,7 +3,9 @@ import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } fro
 import { Table, UncontrolledTooltip } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import '../index.css';
-import { FaCopyright, FaFacebookSquare, FaTwitterSquare, FaInstagram, FaYoutube, FaLinkedin, FaPinterest, FaEnvelope } from 'react-icons/fa';
+import { FaRegCopyright, FaFacebookSquare, FaTwitterSquare, FaInstagram, FaYoutube, FaLinkedin, FaPinterest, FaEnvelope	 } from 'react-icons/fa';
+import { MdPhone } from "react-icons/md";
+import {Redirect, Link} from "react-router-dom";
 
 const tooltipStyle = {
 	color: "blue",
@@ -14,6 +16,7 @@ export default class Footer extends Component{
 
   render(){
     return(
+			<div>	
       <div style={{backgroundColor:"black",color:'white'}}><br/><br/>
 	  <Container>
 		  <Row className="test" style={{textAlign:"left"}}>
@@ -41,7 +44,7 @@ export default class Footer extends Component{
 					<Col md="2"><span className="td_tab">Bangalore</span></Col>
 					<Col md="2"><span className="td_tab">Kolkata</span></Col>
 				</Row><br/><br/>
-		  
+
 			  </Col>
 			  <Col md="6"  className="foot_con">
 				<Row>
@@ -73,6 +76,12 @@ export default class Footer extends Component{
 						<UncontrolledTooltip placement="bottom" target="envelope" style={tooltipStyle}>
 							customer.care@ctrlf.in
 						</UncontrolledTooltip>
+						<br/>
+						<br/><br/><br/>
+						customer.care@ctrlf.com
+						<br/>
+					<MdPhone/> 040 - 6666 8888
+
 					</Col>
 				</Row>
 			  </Col>
@@ -80,11 +89,12 @@ export default class Footer extends Component{
 	  </Container>
 	  <br/><br/>
 
-	
+
       <div width="100%" style={{backgroundColor:'#262626'}}>
-	  CtrlF <FaCopyright style={{marginLeft:"3%"}}/> 2018-2019 CtrlF Technologies India Pvt. Ltd.
+	  <span className="foot_hpc">CtrlF</span> <FaRegCopyright style={{marginLeft:"3%"}}/> 2018-2019 CtrlF Technologies India Pvt. Ltd.
 	  <br/><br/></div>
       </div>
+			</div>
     )
   }
 
