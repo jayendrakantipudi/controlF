@@ -34,9 +34,26 @@ import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
 import Mybookings from './components/Mybookings'
+import Myorders from './components/Myorders'
+import {connect} from 'react-redux'
+
+import PropTypes from 'prop-types'
 
 class App extends Component{
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: null,
+    };
+
+    store.subscribe(() => {
+      this.setState({
+        user: store.getState().auth.user
+      });
+    });  
+  }
   componentDidMount(){
     store.dispatch(loadUser())
   }
@@ -46,6 +63,8 @@ class App extends Component{
       <Provider store={store}>
           <Router>
         <div className="App">
+            
+            
           <AppNavbar/>
           <Switch>
         <Route exact path='/' component={HomePage}/>
@@ -66,9 +85,12 @@ class App extends Component{
         <Route exact path='/professional/currentloco' component={ProfCurrentloco}/>
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
-        <Route exact path='/mybookings' component={Mybookings}/>
+        <Route exact path='/mybookings'  component={Mybookings}/>
+        <Route exact path='/myorders'  component={Myorders}/>
           </Switch>
           <br/><br/>
+          <div style={{backgroundColor:'pink',height:'200px',color:'black'}}></div>
+      
           <Footer>
           <Footer/>
           </Footer>

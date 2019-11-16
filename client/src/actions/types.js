@@ -30,4 +30,4 @@ export const SELECT_CITY = 'SELECT_CITY'
 export const PROF_LOCATION='PROF_LOCATION'
 export const PROF_DISPLAY='PROF_DISPLAY'
 export const MY_BOOKINGS='MY_BOOKINGS'
-
+export const MY_ORDERS='MY_ORDERS'

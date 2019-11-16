@@ -146,10 +146,10 @@ router.get('/service/orderbooking',async(req,res)=>{
         console.log(service_bookings)
         if(prof_bookings.length===0 && service_bookings.length===0)
         {
-            order.profession = proffs[k]._id,
+            order.professional = proffs[k]._id,
             order.slot = all_slots[s]
             order.save();
-            res.send(order)
+            res.send(proffs[k])
             return;
         }
     }

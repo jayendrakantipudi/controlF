@@ -1,19 +1,18 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent, TabPane} from 'reactstrap'
-import {loadUser,mybookings} from '../actions/authActions'
+import {loadUser} from '../actions/authActions'
+import {myorders} from '../actions/profActions'
 import ReactTimeout from "react-timeout";
 import Card from 'react-bootstrap/Card'
 import {
   Redirect
 } from "react-router-dom";
 
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types'
 
 
-class Mybookings extends Component{
+class Myorders extends Component{
  
   constructor(props)
   {
@@ -25,18 +24,16 @@ class Mybookings extends Component{
   }
   
   myBookings = () =>{
-     this.props.mybookings(this.props.user._id)
+     this.props.myorders(this.props.user._id)
   }
 
   
   async componentDidMount(){
     await this.props.loadUser()
-    
     this.props.setTimeout(this.myBookings, 100);
   }
  
 render(){
-  
  const user_orders = this.props.orderList?this.props.orderList:null;
 if (!this.props.token) {
       return <Redirect to="/" />;
@@ -50,15 +47,14 @@ return(
 
 <div style={{alignContent:'center',marginTop:'20px'}}>
 <center>
-  <h1>My Bookings</h1>
+  <h1>My Orders</h1>
 {
     user_orders?
-    user_orders.map((item) => (
-      item?
+    user_orders.map((item) => 
+    item?  
 <div>
 <Card style={{ width: '60%' ,alignItems: "center",height:'70%',color:'#800080',backgroundColor:'#d8bfd8'}}>
   <Card.Body>
-    
     <Card.Text>
      <label style={{float:'left'}}>Services Chosen : </label> {item.services_chosen.map((ser) =>(
       <p style={{float:'left'}}> {ser} ,</p> 
@@ -68,9 +64,10 @@ return(
      <br/>
      Date : {item.date}
      <br/>
-     Professioanl Name : {item.prof_name}
+     Customer Name : {item.user_name}
      <br/>
-     Professional Phone Number : {item.prof_phone}
+     {/* <p>Customer Phone Number : {item.prof_phone}</p>:<p>Customer Email : {item.user_email}</p>}  */}
+     Customer Email : {item.user_email}
      <br/>
      Slot Booked : {item.slot}
      <br/>
@@ -84,9 +81,7 @@ return(
 </Card>
 <br/>
 </div>
-  :
-    null      
-    )) 
+    ) 
     :
   null
 
@@ -98,9 +93,9 @@ return(
 }
 }
 
-Mybookings.propTypes={
+Myorders.propTypes={
   token:PropTypes.string,
-  mybookings:PropTypes.func.isRequired,
+  myorders:PropTypes.func.isRequired,
   orderList:PropTypes.object.isRequired,
   loadUser:PropTypes.func.isRequired,
   user:PropTypes.object.isRequired
@@ -108,8 +103,8 @@ Mybookings.propTypes={
 
 const mapStateToProps=state=>({
 token:state.auth.token,
-orderList:state.auth.mybookings,
+orderList:state.prof.my_orders,
 user:state.auth.user
 })
 
-export default ReactTimeout(connect(mapStateToProps,{loadUser,mybookings})(Mybookings));
+export default ReactTimeout(connect(mapStateToProps,{loadUser,myorders})(Myorders));

@@ -5,14 +5,16 @@ IS_PROFESSIONAL_TRUE,
 IS_PROFESSIONAL_FALSE,
 CLEAR_PROFESSIONAL,
 GET_PROFESSIONS,
-PROF_LOCATION
+PROF_LOCATION,
+MY_ORDERS
 } from '../actions/types'
 
 const initialState={
   professionalData:null,
   isProfessional:null,
   isLoading: false,
-  professions:null
+  professions:null,
+  my_orders:null
 }
 
 export default function(state=initialState,action){
@@ -44,7 +46,12 @@ export default function(state=initialState,action){
     }
     case PROF_LOCATION:
       return state
-    default:
+    case MY_ORDERS:
+      return {
+        ...state,
+        my_orders:action.payload,
+      }
+      default:
       return state
   }
 }
