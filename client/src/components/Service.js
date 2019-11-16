@@ -22,26 +22,24 @@ class Service extends React.Component{
 		service:[],
 		services: [],
 		activeTab: '1',
-		serviceWorkers:[]	
+		serviceWorkers:[]
 	}
 
 	componentDidMount(){
 		this.props.loadUser();
 		const {name} = this.props.match.params;
-		// this.setState({get_ser: name});
 		console.log(this.props)
 		console.log(name)
 		this.props.get_service(name);
-		//this.getService(name);
 		this.getServices(name);
 		this.getServiceWorkers(name);
 	}
-	
+
 	getServiceWorkers = (temp) => {
 		var service_clicked = temp;
 		var url = 'http://localhost:3000/api/professional/';
 		const ser = url.concat(service_clicked)
-		fetch('http://localhost:3000/api/professional/Plumber')
+		fetch(ser)
 		 .then(response => response.json())
 		 .then(data => this.setState({ serviceWorkers: data }))
 	}
@@ -79,7 +77,7 @@ class Service extends React.Component{
 		const ser = url1.concat(url2).concat(url3)
 			window.location.href=ser;
 	}
-	
+
 	onClickProf = (id) => {
 		console.log(`wassup ${id}`)
 		this.props.loadProf(id);
@@ -179,7 +177,7 @@ class Service extends React.Component{
         <TabPane tabId="2">
 		<br />
           <Row>
-            
+
 				{this.state.serviceWorkers.map((item, index) => (
 					<Col sm="6">
 	              <Card body className='card_service'>
@@ -191,10 +189,10 @@ class Service extends React.Component{
 	              </Card>
 	              <br/>
 	              </Col>
-	          	
+
 				))}
 
-            
+
 
           </Row>
         </TabPane>

@@ -4,17 +4,17 @@ const mongoose= require('mongoose');
 
 const notificationSchema = new mongoose.Schema({
 	from : {
-    type:Object,
+    type:String,
     required:true
   },
 	notification: String,
-	url:String,
+  order_id:String,
 	to:{
-    type:Object,
+    type:String,
     required:true
   }
 });
 
-const Notifications = mongoose.model('Notificaations', notificationSchema)
+const Notifications = mongoose.model('Notifications', notificationSchema)
 
 exports.Notifications = Notifications;
