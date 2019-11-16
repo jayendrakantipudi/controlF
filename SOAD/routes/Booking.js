@@ -94,6 +94,12 @@ router.post('/booking',async(req,res)=>{
 })
 
 
+router.post('/messagenotification',async(req,res)=>{
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",to:req.body.professional_id,url:req.body.url})
+	await notification.save()
+	res.send(notification.id)
+})
+
 router.post('/addorganisation',async(req,res)=>{
     console.log(req.body)
     org_name = req.body.org_name;
@@ -167,8 +173,8 @@ router.get('/service/orderbooking',async(req,res)=>{
 
 router.post('/notification',async(req,res)=>{
 	console.log(req.body)
-	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id');
-	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id; return temp})
+	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
+	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
 	res.send(a);
 })
 

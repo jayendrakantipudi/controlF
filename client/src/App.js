@@ -43,6 +43,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import ChatPage from './components/ChatPage'
+import Notifications from './components/Notifications'
 
 class App extends Component{
 
@@ -95,6 +96,7 @@ class App extends Component{
         <Route exact path='/mybookings'  component={Mybookings}/>
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
+        <Route exact path='/notifications' component={Notifications}/>
           </Switch>
           <br/><br/>
           <br/><br/>
