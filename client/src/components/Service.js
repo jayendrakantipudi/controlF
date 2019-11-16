@@ -88,7 +88,7 @@ class Service extends React.Component{
 		const use_service=this.props.service.ser;
 		const {services} = this.state;
 		const br = '\n'
-
+		const worker=this.props.service.ser?this.props.service.ser.service_worker:null;
 		// console.log(`checking the serviceWorkers ${this.state.serviceWorkers}`)
 		for (var i = this.state.serviceWorkers.length - 1; i >= 0; i--) {
 			console.log(this.state.serviceWorkers[i])
@@ -105,9 +105,9 @@ class Service extends React.Component{
 		return(
 			<div>
 			<div className='jumb'>
-				<Jumbotron fluid>
+				<Jumbotron fluid className="jumb2">
 					<Container fluid>
-						<h1 className="display-3">{service?service:null}</h1>
+						<h1 className="display-3 display-32">{service?service:null}</h1>
 					</Container>
 				</Jumbotron>
 
@@ -129,7 +129,7 @@ class Service extends React.Component{
             className={classnames({ active: this.state.activeTab === '2'})}
             onClick={() => { this.toggle('2') }}
           >
-          {service?service:null}s
+          {worker?worker:null}s
           </NavLink>
 
 
@@ -165,7 +165,7 @@ class Service extends React.Component{
 
 		<br/>
           <Row>
-            <Col sm="4" style={Style}>
+            <Col sm="6" style={Style}>
               <h2>About {use_service?use_service.service_worker:null}</h2>
             </Col>
 

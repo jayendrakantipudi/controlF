@@ -1,44 +1,55 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom'
-import {Button} from 'reactstrap'
+import {Button, Container, Row, Col} from 'reactstrap'
 import '../styles/serviceDisplay.css'
 import ScrollUpButton from "react-scroll-up-button";
 
 class ServicesDisplay extends Component{
+  state = {
+		all_services:[]
+	}
+  componentDidMount(){
+    this.getAllServices();
+  }
+
+  getAllServices = () => {
+		fetch('http://localhost:3000/api/service/all')
+		 .then(response => response.json())
+		 .then(data => this.setState({ all_services: data }))
+  }
+
   render(){
-var mybutton = document.getElementById("myBtn");
+    var mybutton = document.getElementById("myBtn");
+    console.log('services display this is')
+    console.log(this.state.all_services);
     return(
       <div>
-      <table style={{marginLeft:'10%'}}>
-      <tr style={{height:'20%'}}>
-        <td>
-            <Link to='/service/carpenter' style={{fontSize:'35px',float:'left',color:'rgb(255, 151, 0)'}}><td>Carpentry -</td></Link>
-          <td style={{fontSize:'25px',paddingTop:'2%'}}> Deck building, fencing, pergola, custom cabinetry, railings</td>
-        </td>
-      </tr>
       <br/>
-      <tr style={{height:'20%'}}>
-        <td>
-          <Link to='/service/plumber' style={{fontSize:'35px',float:'left',color:'rgb(255, 151, 0)'}}><td >Plumbing -</td></Link>
-          <td style={{fontSize:'25px',paddingTop:'2%'}}>Hot water tank replacement, garbage disposals, leaky faucets</td>
-        </td>
-      </tr>
       <br/>
-      <tr style={{height:'20%'}}>
-        <td>
-          <Link to='/service/electrician' style={{fontSize:'35px',float:'left',color:'rgb(255, 151, 0)'}}><td >Electrical -</td></Link>
-          <td style={{fontSize:'25px',paddingTop:'2%'}}>Replacing/adding electrical outlets, light fixture installation, installing ceiling fans</td>
-        </td>
-      </tr>
-      <br/>
-      <tr style={{height:'20%'}}>
-        <td>
-          <Link to='/service/cleaning' style={{fontSize:'35px',float:'left',color:'rgb(255, 151, 0)'}}><td >Cleaning -</td></Link>
-          <td style={{fontSize:'25px',paddingTop:'2%'}}>Keeping your home, office, or rental in tip-top shape with preventive maintenance</td>
-        </td>
-      </tr>
-      </table>
+      <input placeholder="Search for a service..." className="search"></input>
+      <button className="search_btn">Search</button>
+      <Container>
+        <br/><br/><br/><br/>
+        <Row style={{textAlign:'center'}}>
+          <Col md="12">
+          <h3>Related Services</h3>
+          </Col>
+        </Row>
+        <Row style={{textAlign:'center'}}>
+          <Col md="12">
+            {this.state.all_services.map((item, index) => (
+              <Row  style={{textAlign:'center'}}>
+              <Col md="12">
+                    <Link className="link_sd" to={'/service/'+item.name} style={{textDecoration: 'none',}}>
+                      {item.name}
+                    </Link>
+              </Col>
+              </Row>
 
+            ))}
+          </Col>
+        </Row>
+      </Container>
       </div>
 
 
