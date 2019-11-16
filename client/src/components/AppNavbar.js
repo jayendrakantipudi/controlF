@@ -19,6 +19,7 @@ import {Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
+import {getNotification} from '../actions/notificationActions'
 class AppNavbar extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -42,7 +43,8 @@ static propTypes ={
   auth: PropTypes.object.isRequired,
   isProfessional:PropTypes.bool,
   isProf:PropTypes.func.isRequired,
-  loadUser:PropTypes.func.isRequired
+  loadUser:PropTypes.func.isRequired,
+  getNotification:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -50,6 +52,10 @@ toggle=()=>{
   this.setState({
     isOpen: !this.state.isOpen
   });
+}
+
+getNoti=(id)=>{
+  this.props.getNotification(id)
 }
   render(){
     const{isAuthenticated,user}= this.props.auth
@@ -72,6 +78,11 @@ toggle=()=>{
           <Link to="/profile" style={{color:'rgba(255,255,255,.5)'}}>Profile</Link>
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink  >
+          <Link to="/" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications</Link>
+          </NavLink>
+        </NavItem>
       </Fragment>
     )
 
@@ -92,9 +103,11 @@ toggle=()=>{
     <table style={{marginLeft:'30%'}}>
     <tr style={{cellspacing:'30%'}}>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Home </NavbarBrand></Link></td>
-      <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Services </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Areas </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
+
+      <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
+      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
+      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
+
       <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
     </tr>
     </table>
@@ -128,4 +141,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps,{loadUser})(AppNavbar)
+export default connect(mapStateToProps,{loadUser,getNotification})(AppNavbar)
