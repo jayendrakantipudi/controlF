@@ -94,7 +94,7 @@ toggle=()=>{
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Home </NavbarBrand></Link></td>
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
+      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
       <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
     </tr>
     </table>
