@@ -17,6 +17,7 @@ import Dashboard from './Dashboard';
 import HomePage from  './components/HomePage'
 import HomePageContent from './components/HomePageContent'
 import ServicesDisplay from './components/ServicesDisplay'
+import ContactUS from './components/ContactUS'
 import {
   BrowserRouter as Router,
   Route,
@@ -47,10 +48,11 @@ class App extends Component{
           <Router>
         <div className="App">
           <AppNavbar/>
-		  
+
           <Switch>
         <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
+        <Route exact path='/contact' component={ContactUS}/>
         <Route exact path='/chat' component={Dashboard}/>
         <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
