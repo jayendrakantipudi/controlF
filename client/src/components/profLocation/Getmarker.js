@@ -114,7 +114,7 @@ sendAddress(markers,address){
           </FormGroup>
           </Form>
           
-        <Button style={{marginTop:'550px',height:'50px'}} onClick={()=>{this.sendAddress(this.state.markers,this.state.address)}}>Continue to Book</Button>
+        <Button style={{marginTop:'550px',height:'50px'}} onClick={()=>{this.sendAddress(this.state.markers,this.state.address)}}>Become Professional</Button>
         </div>
       );
     }

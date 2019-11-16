@@ -1,16 +1,14 @@
 const mongoose= require('mongoose');
 
-const order = new mongoose.Schema({
-	user_id:{
+const Serviceorderschema = new mongoose.Schema({
+	token:{
 		type:String,
 		required:true
 	},
 
 	professional:{
-		
 			type:String,
-			required:false
-	
+			required:false	
 	},
 
 	slot:{
@@ -18,8 +16,12 @@ const order = new mongoose.Schema({
 			type:String,
 			required:false,
 		}
+    },
+    
+	service_type:{
+		type:String,
+		required:true
 	},
-	services_chosen:mongoose.Schema.Types.Mixed,
 	
 	service_name:{
 			type:String,
@@ -35,6 +37,7 @@ const order = new mongoose.Schema({
 		type:Array,
 		required:false
 	},
+
 	order_date:{
 		year:{
 			type:Number
@@ -46,13 +49,15 @@ const order = new mongoose.Schema({
 			type:Number
 		}
 	},
-	is_confirmed:{
-		type:Boolean,
-		default:false
+	phone_number:{
+		type:Number,
+	},
+	user_name:{
+		type:String,
 	}
 
 });
 
-const Order = mongoose.model('Order', order)
+const Serviceorder = mongoose.model('Serviceorder', Serviceorderschema)
 
-exports.Order = Order
+exports.Serviceorder = Serviceorder

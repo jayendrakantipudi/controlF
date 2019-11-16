@@ -7,6 +7,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import PropTypes from 'prop-types'
 import { geolocated } from "react-geolocated";
 import { connect } from 'react-redux'
+ 
+import {
+  Redirect
+} from "react-router-dom";
+
 class Currentloco extends React.Component {
   state = {
     city:'Select City',
@@ -32,6 +37,7 @@ class Currentloco extends React.Component {
     var id = this.props.order.order_id
     console.log(id)
     this.props.bookSlot(id, position.lat, position.lng, address,city)
+    this.setState({flag:2})
   }
 
   handleChange = (value) => {
@@ -57,6 +63,10 @@ class Currentloco extends React.Component {
       if(this.props.coords && this.state.flag===null)
       {
         this.setLocation(this.props.coords.latitude,this.props.coords.longitude)
+      }
+      if(this.state.flag==2)
+      {
+        return <Redirect to="/displaybooking" />;
       }
     return (
       <div>

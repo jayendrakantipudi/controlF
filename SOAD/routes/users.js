@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const {Professional} = require('../Models/professional');
-
+const {Order} =  require('../Models/Order')
+const {Slot} = require('../Models/Slot')
 const multer = require("multer");
 const uuidv1=require('uuid/v1');
 const storage = multer.diskStorage({
@@ -51,6 +52,35 @@ router.get('/all',async(req,res)=>{
   res.send(user);
 })
 
+router.post('/mybookings',async(req, res)=>{
+  const order = await Order.find({user_id:req.body.id,is_confirmed:true})
+  var item = null;
+  orders = [];
+  console.log(order)
+  for(item in order){
+    temp =   order[item]; 
+    var professional = await Professional.findById(temp.professional)
+    var slot = await Slot.findById(temp.slot._id)  
+    var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
+    var ser_chosen= [];var item2=null;
+    for(item2 in temp.services_chosen)
+    {
+      ser_chosen.push(item2)
+    }
+    var Orderdetails= {
+      services_chosen:ser_chosen,
+      total_cost:temp.total_cost,
+      date:ordered_date,
+      prof_name:professional.user.name,
+      prof_phone:professional.phonenumber,
+      slot:slot.start_time,
+      address:temp.address[2],
+      city:temp.address[3],
+  }
+  orders.push(Orderdetails)
+  }
+  res.send(orders.reverse());
+})
 
 router.post('/showprofile',async(req, res)=>{
   const user= await User.findById(req.body.id).select('-password')
