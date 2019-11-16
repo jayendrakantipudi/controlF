@@ -13,26 +13,26 @@ import PropTypes from 'prop-types'
 
 
 class Myorders extends Component{
- 
+
   constructor(props)
   {
     super(props)
     this.state={
       flag:null,
       }
-      
+
   }
-  
+
   myBookings = () =>{
      this.props.myorders(this.props.user._id)
   }
 
-  
+
   async componentDidMount(){
     await this.props.loadUser()
     this.props.setTimeout(this.myBookings, 100);
   }
- 
+
 render(){
  const user_orders = this.props.orderList?this.props.orderList:null;
 if (!this.props.token) {
@@ -50,40 +50,40 @@ return(
   <h1>My Orders</h1>
 {
     user_orders?
-    user_orders.map((item) => 
-    item?  
-<div>
-<Card style={{ width: '60%' ,alignItems: "center",height:'70%',color:'#800080',backgroundColor:'#d8bfd8'}}>
-  <Card.Body>
-    <Card.Text>
-     <label style={{float:'left'}}>Services Chosen : </label> {item.services_chosen.map((ser) =>(
-      <p style={{float:'left'}}> {ser} ,</p> 
-     ))}
-     <br/><br/>
-     Total cost : {item.total_cost}
-     <br/>
-     Date : {item.date}
-     <br/>
-     Customer Name : {item.user_name}
-     <br/>
-     {/* <p>Customer Phone Number : {item.prof_phone}</p>:<p>Customer Email : {item.user_email}</p>}  */}
-     Customer Email : {item.user_email}
-     <br/>
-     Slot Booked : {item.slot}
-     <br/>
-     Address : {item.address}
-     City : {item.city}
-    </Card.Text>
-    {/* <Fab aria-label="like" >
-        <FavoriteIcon />
-      </Fab> */}
-  </Card.Body>
-</Card>
-<br/>
-</div>
-    :null) 
-    :
-  null
+    user_orders.map( (item) =>
+    item?
+      <div>
+      <Card style={{ width: '60%' ,alignItems: "center",height:'70%',color:'#800080',backgroundColor:'#d8bfd8'}}>
+        <Card.Body>
+          <Card.Text>
+           <label style={{float:'left'}}>Services Chosen : </label> {item.services_chosen.map((ser) =>(
+            <p style={{float:'left'}}> {ser} ,</p>
+           ))}
+           <br/><br/>
+           Total cost : {item.total_cost}
+           <br/>
+           Date : {item.date}
+           <br/>
+           Customer Name : {item.user_name}
+           <br/>
+           {/* <p>Customer Phone Number : {item.prof_phone}</p>:<p>Customer Email : {item.user_email}</p>}  */}
+           Customer Email : {item.user_email}
+           <br/>
+           Slot Booked : {item.slot}
+           <br/>
+           Address : {item.address}
+           City : {item.city}
+          </Card.Text>
+          {/* <Fab aria-label="like" >
+              <FavoriteIcon />
+            </Fab> */}
+        </Card.Body>
+      </Card>
+      <br/>
+      </div>
+      :null
+    )
+    :null
 
 }
 </center>
