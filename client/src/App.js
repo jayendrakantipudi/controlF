@@ -35,6 +35,7 @@ import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
 import ChatPage from './components/ChatPage'
+import Notifications from './components/Notifications'
 class App extends Component{
 
   componentDidMount(){
@@ -47,7 +48,7 @@ class App extends Component{
           <Router>
         <div className="App">
           <AppNavbar/>
-		  
+
           <Switch>
         <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
@@ -68,6 +69,7 @@ class App extends Component{
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
         <Route exact path='/chatpage' component={ChatPage}/>
+        <Route exact path='/notifications' component={Notifications}/>
           </Switch>
           <br/><br/>
 

@@ -15,11 +15,12 @@ import PropTypes from 'prop-types'
 import RegisterModal from './auth/RegisterModal'
 import Logout from './auth/Logout'
 import LoginModal from './auth/LoginModal'
-import {Link} from 'react-router-dom'
+import {Redirect,Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
 import {getNotification} from '../actions/notificationActions'
+import ReactTimeout from 'react-timeout'
 class AppNavbar extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -34,10 +35,18 @@ constructor(props){
 
 
 
-componentDidMount()
+async componentDidMount()
 {
-  this.props.loadUser();
+  await this.props.loadUser();
+  if(this.props.auth.token)
+  this.props.setTimeout(this.getNotifi,100)
+
 }
+
+getNotifi=()=>{
+  this.props.getNotification(this.props.auth.user._id)
+}
+
 
 static propTypes ={
   auth: PropTypes.object.isRequired,
@@ -80,7 +89,7 @@ getNoti=(id)=>{
         </NavItem>
         <NavItem>
           <NavLink  >
-          <Link to="/" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications</Link>
+          <Link to="/notifications" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications</Link>
           </NavLink>
         </NavItem>
       </Fragment>
@@ -112,6 +121,9 @@ getNoti=(id)=>{
     </Container>
     </Navbar>
   )
+  // if(!this.props.auth.token){
+  //   return <Redirect to="/"/>
+  // }
     return(
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
         <Navbar color="dark" dark expand="sm" className="mb-5">
@@ -139,4 +151,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps,{loadUser,getNotification})(AppNavbar)
+export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification})(AppNavbar))

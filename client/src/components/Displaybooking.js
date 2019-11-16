@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
+import {messageNotification} from '../actions/notificationActions'
 import {
   Redirect,
   Link
@@ -24,6 +25,7 @@ class DisplayBooking extends Component{
   sendhello=(user_id,professional_id)=>{
     const message="hello"
     this.props.sendMessage(user_id,professional_id,message)
+    this.props.messageNotification(user_id,professional_id,"/chatpage")
   }
 
 render(){
@@ -88,11 +90,12 @@ return(
 DisplayBooking.propTypes={
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
-  sendMessage:PropTypes.func.isRequired
+  sendMessage:PropTypes.func.isRequired,
+  messageNotification:PropTypes.func.isRequired
 }
 
 const mapStateToProps=state=>({
 order:state.booking.order,
 token:state.auth.token
 })
-export default connect(mapStateToProps,{sendMessage})(DisplayBooking)
+export default connect(mapStateToProps,{sendMessage,messageNotification})(DisplayBooking)
