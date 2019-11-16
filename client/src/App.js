@@ -34,7 +34,7 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
-
+import ChatPage from './components/ChatPage'
 class App extends Component{
 
   componentDidMount(){
@@ -52,7 +52,7 @@ class App extends Component{
         <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
         <Route exact path='/chat' component={Dashboard}/>
-          <Route exact path='/admin' component={admin}/>
+        <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
 				<Route exact path='/profile' component={ShowProfile}/>
@@ -67,6 +67,7 @@ class App extends Component{
         <Route exact path='/professional/currentloco' component={ProfCurrentloco}/>
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
+        <Route exact path='/chatpage' component={ChatPage}/>
           </Switch>
           <br/><br/>
 

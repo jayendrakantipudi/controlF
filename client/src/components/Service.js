@@ -28,11 +28,9 @@ class Service extends React.Component{
 	componentDidMount(){
 		this.props.loadUser();
 		const {name} = this.props.match.params;
-		// this.setState({get_ser: name});
 		console.log(this.props)
 		console.log(name)
 		this.props.get_service(name);
-		//this.getService(name);
 		this.getServices(name);
 		this.getServiceWorkers(name);
 	}
@@ -41,7 +39,7 @@ class Service extends React.Component{
 		var service_clicked = temp;
 		var url = 'http://localhost:3000/api/professional/';
 		const ser = url.concat(service_clicked)
-		fetch('http://localhost:3000/api/professional/Plumber')
+		fetch(ser)
 		 .then(response => response.json())
 		 .then(data => this.setState({ serviceWorkers: data }))
 	}
