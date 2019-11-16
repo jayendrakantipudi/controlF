@@ -31,7 +31,7 @@ mongoose.connect('mongodb://localhost:27017/User')
   .catch(err => console.error('Could not connect to MongoDB...'));
 
 app.use(express.json());
-app.use(express.static("uploads"));
+app.use('/uploads',express.static(__dirname+"/uploads"));
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/professional',professional)

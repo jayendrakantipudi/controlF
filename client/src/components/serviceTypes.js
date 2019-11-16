@@ -62,7 +62,7 @@ class serviceTypes extends Component{
      const flagger = await this.props.store_order(to_store_order);
 
      this.setState({flag:1})
-    
+
   }
 
 render(){
@@ -117,7 +117,7 @@ render(){
   }
 
   if (this.state.flag) {
-    
+
       return <Redirect to="/slots" />;
     }
 
@@ -136,7 +136,7 @@ return(
     </Row>
   <Row>
   <Col sm="8">
-    
+
     <Table borderless hover style={{textAlign:'center'}}>
         <thead className="block-example">
           <tr>
@@ -187,8 +187,8 @@ return(
       </tbody>
     </Table>
     </Col>
-    
-    
+
+
       <Col sm="4" className="check_stype">
       <div className="summary_stype">
       <br/>
@@ -204,7 +204,7 @@ return(
             <tr>
               <td>{item.service_type}</td>
               <td>{item.quantity}</td>
-              <td>{item.cost}</td>
+              <td>{item.cost * item.quantity}</td>
             </tr>
           ))}
         </tbody>
@@ -217,7 +217,7 @@ return(
       </div>
       </Col>
     </Row>
-    </Container>  
+    </Container>
   </div>
 )
 }

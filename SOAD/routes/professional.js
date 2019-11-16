@@ -3,7 +3,7 @@ const config=require('config');
 const jwt= require('jsonwebtoken');
 const bcrypt=require('bcryptjs')
 const _ = require('lodash')
-const {Professional,validate,enumValues}=require('../Models/professional')
+const {Professional,validate}=require('../Models/professional')
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -11,6 +11,8 @@ const {Order} = require('../Models/Order')
 const {Serviceorder} = require('../Models/Serviceorder')
 const {User} = require('../Models/user')
 const {Slot} = require('../Models/Slot')
+const {Service}= require('../Models/service')
+
 router.post('/',auth,async(req, res)=>{
   const {error} = validate(req.body);
   if(error) return res.status (400).send(error.details[0].message);
@@ -41,7 +43,7 @@ router.post('/saveAddress',async(req,res)=>{
   address1 = req.body.address;
   city1 = req.body.city;
   type.locality=[lat1,lng1,address1,city1]
-  
+
   await type.save()
   console.log(`backend2 ${type}`)
   res.send(type)
@@ -55,7 +57,9 @@ router.get('/isProfessional',auth,async(req,res)=>{
 
 
 router.get('/professions',async(req,res)=>{
-  res.send(enumValues)
+  const professions=await Service.find().select('service_worker')
+  const a = professions.map(profession=>{var temp;temp=profession.service_worker;return temp})
+  res.send(a)
 })
 
 

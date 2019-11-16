@@ -11,6 +11,9 @@ const {Serviceuser} = require('../Models/Serviceuser')
 const OrderItem=require('../Models/OrderItem').OrderItem;
 const ServiceType=require('../Models/serviceType').ServiceType;
 const {Serviceorder} = require('../Models/Serviceorder')
+const {Notifications}= require ('../Models/notifications')
+const {Chat} = require('../Models/chat')
+
 
 router.post('/slotbooking',async(req, res) => {
 	let type =await Order.findById(req.body.orderid);
@@ -34,7 +37,7 @@ router.post('/booking',async(req,res)=>{
     service_name = type.service_name;
     let serviceOne = await Service.findOne({name:service_name})
     const value = serviceOne.service_worker;
-   
+
     const proffs = await Professional.find({profession:value,'locality.3':city1})
     var k = null;
     var flag=0;
@@ -46,10 +49,12 @@ router.post('/booking',async(req,res)=>{
          
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0)
         {
-
             type.professional=proffs[k]._id        
             type.is_confirmed = true
             await type.save()
+						let professional = await Professional.findById(type.professional)
+						var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
+						await notification.save()
             flag=1;
             break;
         }
@@ -72,6 +77,8 @@ router.post('/booking',async(req,res)=>{
     
 
     Orderdetails= {
+				user_id:user._id,
+				professional_id:professional.user._id,
         name:user.name,
         services_chosen:chosen,
         total_cost:type.total_cost,
@@ -85,6 +92,7 @@ router.post('/booking',async(req,res)=>{
 
     res.send(Orderdetails)
 })
+
 
 router.post('/addorganisation',async(req,res)=>{
     console.log(req.body)
@@ -154,6 +162,30 @@ router.get('/service/orderbooking',async(req,res)=>{
         }
     }
     }
+})
+
+
+router.post('/notification',async(req,res)=>{
+	console.log(req.body)
+	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id');
+	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id; return temp})
+	res.send(a);
+})
+
+
+router.post('/chat',async(req,res)=>{
+	chat= new Chat({
+		from: req.body.from,
+		to: req.body.to,
+		message: req.body.message
+	});
+	await chat.save()
+	res.send(chat);
+})
+
+router.post('/getmessages',async(req,res)=>{
+	const prof_to_user=await Chat.find({$or:[{to:req.body.user_id,from:req.body.professional_id},{to:req.body.professional_id,from:req.body.user_id}]})
+	res.send(prof_to_user)
 })
 
 module.exports = router;

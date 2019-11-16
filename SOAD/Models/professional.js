@@ -18,9 +18,7 @@ const professionalSchema=new mongoose.Schema({
   },
   profession:{
     type:String,
-    enum:['carpenter','plumber','electrician','hair stylist','physician'],
     required:true,
-    lowercase:true
   },
   phonenumber:{
     type:String,
@@ -42,6 +40,5 @@ function validateProfessional(professional){
   return Joi.validate(professional,schema)
 }
 
-exports.enumValues = ['carpenter','plumber','electrician','hair stylist','physician']
 exports.Professional = Professional;
 exports.validate =validateProfessional;
