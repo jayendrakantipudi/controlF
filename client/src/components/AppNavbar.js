@@ -38,7 +38,6 @@ constructor(props){
 async componentDidMount()
 {
   await this.props.loadUser();
-  if(this.props.auth.token)
   this.props.setTimeout(this.getNotifi,100)
 
 }
