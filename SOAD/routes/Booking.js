@@ -149,11 +149,12 @@ router.get('/service/orderbooking',async(req,res)=>{
             order.profession = proffs[k]._id,
             order.slot = all_slots[s]
             order.save();
-            res.send(order)
+            res.send(proffs[k])
             return;
         }
     }
-    }
+}
+    res.send({})
 })
 
 module.exports = router;

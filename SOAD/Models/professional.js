@@ -18,7 +18,7 @@ const professionalSchema=new mongoose.Schema({
   },
   profession:{
     type:String,
-    enum:['carpenter','Plumber','electrician','hair stylist','physician'],
+    enum:['carpenter','plumber','electrician','hair stylist','physician'],
     required:true,
     lowercase:true
   },
