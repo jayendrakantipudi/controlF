@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Form, FormGroup, Label, Input, Button, Row, Col, Table, TabContent, TabPane } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button, Container, Row, Col, Table, TabContent, TabPane } from 'reactstrap'
 import { bookSlot,getCities } from '../actions/locationAction'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -9,7 +9,7 @@ import { geolocated } from "react-geolocated";
 import { connect } from 'react-redux'
 class Currentloco extends React.Component {
   state = {
-    city:null,
+    city:'Select City',
     address: null,
     position: {
       lat: null,
@@ -33,7 +33,7 @@ class Currentloco extends React.Component {
     console.log(id)
     this.props.bookSlot(id, position.lat, position.lng, address,city)
   }
-  
+
   handleChange = (value) => {
     this.setState({
         city: value
@@ -48,42 +48,64 @@ class Currentloco extends React.Component {
       },
       flag:1
     })
-    
+
   }
 
   render() {
     if(!this.props.isGeolocationAvailable)
       return(<div>Your browser does not support Geolocation</div>)
-      if(this.props.coords && this.state.flag===null) 
-      { 
+      if(this.props.coords && this.state.flag===null)
+      {
         this.setLocation(this.props.coords.latitude,this.props.coords.longitude)
       }
     return (
       <div>
-        <Form style={{ height: '100px', position: 'fixed' }}>
-          <FormGroup>
-            <Label for="address">Address</Label>
-            <Input
-              type="text"
-              name="address"
-              id="address"
-              placeholder="address"
-              onChange={this.onChange}
-            />
-          </FormGroup>
-        </Form>
-        <DropdownButton id="dropdown-basic-button" title={this.state.city}>
-           { 
-            this.props.all_cities?
-            this.props.all_cities.map((item) => (
-            <Dropdown.Item value={item.city} onSelect={()=>{this.handleChange(item.city)}} >{item.city}</Dropdown.Item>
-            )
-            )
-            : null
-          }
-          </DropdownButton>
-          
-        <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Continue to Book</Button>
+        <br/><br/>
+
+        <Container>
+          <Row  style={{marginRight:'4%'}}>
+            <Col md="12">
+              <h1>Address</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col md="5">
+            <Table borderless style={{textAlign:'left',marginLeft:'70%'}}>
+              <tr>
+                <td colspan="2">
+                  <Form>
+                  <FormGroup>
+                    <Input type="textarea" name="address" id="address" placeholder="Enter your address here..." onChange={this.onChange} cols="10" rows="5" className="input_add" />
+                  </FormGroup>
+                  </Form>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                <DropdownButton id="dropdown-basic-button" className="dd_btn"  title={this.state.city}>
+
+                   {
+                    this.props.all_cities?
+                    this.props.all_cities.map((item) => (
+                    <Dropdown.Item value={item.city} onSelect={()=>{this.handleChange(item.city)}} >{item.city}</Dropdown.Item>
+                    )
+                    )
+                    : null
+                  }
+                  </DropdownButton>
+                </td>
+                <td><Button onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Continue to Checkout</Button></td>
+              </tr>
+            </Table>
+
+
+            </Col>
+          </Row>
+        </Container>
+
+
+
+
       </div>
     )
   }
@@ -108,5 +130,3 @@ export default connect(mapStateToProps, { bookSlot,getCities })( geolocated({
   },
   userDecisionTimeout: 5000,
 })(Currentloco))
-
-

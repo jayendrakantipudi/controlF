@@ -118,7 +118,7 @@ getNoti=(id)=>{
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <Link to="/"><NavbarBrand>CtrlF </NavbarBrand></Link>
+            <Link to="/"><NavbarBrand><span className="head_nav_name">CtrlF</span> </NavbarBrand></Link>
             <NavbarToggler onClick={this.toggle}/>
             {this.state.isOpen}
             <Collapse isOpen={this.state.isOpen} navbar>
