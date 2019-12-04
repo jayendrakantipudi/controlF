@@ -46,6 +46,10 @@ const order = new mongoose.Schema({
 			type:Number
 		}
 	},
+	is_paid:{
+		type:Boolean,
+		default:false
+	},
 	is_confirmed:{
 		type:Boolean,
 		default:false

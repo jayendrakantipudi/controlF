@@ -118,13 +118,13 @@ getNoti=(id)=>{
     const extraNavbar=(
     <Navbar style={{marginTop:'-2%'}}>
     <Container>
-    <table style={{marginLeft:'30%'}}>
+    <table style={{marginLeft:'29%'}}>
     <tr style={{cellspacing:'30%'}}>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Home </NavbarBrand></Link></td>
 
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
       <td><Link to="/mybookings"><NavbarBrand className="cool-link" style={extraNavbarstyles}>My Bookings </NavbarBrand></Link></td>
+      <td><Link to="/mypendingorders"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Pending Payments </NavbarBrand></Link></td>
     </tr>
     </table>
     </Container>

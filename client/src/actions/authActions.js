@@ -10,7 +10,8 @@ LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
 CLEAR_PROFESSIONAL,
-MY_BOOKINGS
+MY_BOOKINGS,
+ORDER_PAYMENT
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
@@ -116,6 +117,23 @@ export const mybookings = (id) => dispatch => {
     .then(res =>
       dispatch({
         type: MY_BOOKINGS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+export const payment = (order_id, user_id, total_cost) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({order_id, user_id, total_cost})
+  axios
+    .post('/api/payments/',body,config)
+    .then(res =>
+      dispatch({
+        type: ORDER_PAYMENT,
         payload:res.data
       }))
       .catch(err =>console.log(err.response))

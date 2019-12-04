@@ -49,6 +49,7 @@ import Services from './components/admin/Services'
 import AdminSlots from './components/admin/AdminSlots'
 import Admincity from './components/admin/Admincity'
 import Adminservicetype from './components/admin/Adminservicetype'
+import pendingOrders from './components/pendingOrders'
 
 class App extends Component{
 
@@ -99,6 +100,7 @@ class App extends Component{
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
         <Route exact path='/mybookings'  component={Mybookings}/>
+        <Route exact path='/mypendingorders'  component={pendingOrders}/>
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
