@@ -136,9 +136,25 @@ class Service extends React.Component{
 		return(
 			<div>
 			<div className='jumb'>
-				<Jumbotron fluid className="jumb2">
+				<Jumbotron fluid className="jumb2 serviceMainSlide">
 					<Container fluid>
-						<h1 className="display-3 display-32">{service?service:null}</h1>
+						<Row>
+							<Col md="7">
+								<span className="serviceJumb1">
+									<h1 className="display-3 display-32">{service?service:null}</h1>
+									<span style={{color:'white',fontSize:'20px'}}>At Your Doorstep</span>
+								</span>
+							</Col>
+							<Col md="5" style={{textAlign:'left',color:'white'}}>
+								<span>
+									<ul style={{lineHeight:'300%'}}>
+										<li><b>Doorstep repair within 90 mins</b></li>
+										<li><b>Protection Against Damage Upto INR 10,000</b></li>
+										<li><b>30 day post-service guarantee</b></li>
+									</ul>  
+								</span>
+							</Col>
+						</Row>
 					</Container>
 				</Jumbotron>
 
@@ -146,7 +162,7 @@ class Service extends React.Component{
 					<Col sm="1"></Col>
 					<Col sm="6">
       <Nav tabs>
-        <NavItem>
+        <NavItem className="forPointer">
           <NavLink
             className={classnames({ active: this.state.activeTab === '1' })}
             onClick={() => { this.toggle('1'); }}
@@ -155,7 +171,7 @@ class Service extends React.Component{
           </NavLink>
         </NavItem>
 
-        <NavItem>
+        <NavItem className="forPointer">
           <NavLink
             className={classnames({ active: this.state.activeTab === '2'})}
             onClick={() => { this.toggle('2') }}
@@ -166,7 +182,7 @@ class Service extends React.Component{
 
         </NavItem>
 
-        <NavItem>
+        <NavItem className="forPointer">
           <NavLink
             className={classnames({ active: this.state.activeTab === '3' })}
             onClick={() => { this.toggle('3'); }}
@@ -177,7 +193,7 @@ class Service extends React.Component{
 
         </NavItem>
 
-        <NavItem>
+        <NavItem className="forPointer">
           <NavLink
             className={classnames({ active: this.state.activeTab === '4'})}
             onClick={() => { this.toggle('4') }}
@@ -348,7 +364,7 @@ class Service extends React.Component{
 					</Col>
 					<Col sm="3">
 						<Card body>
-							<CardTitle>Need {service?service:null} for	</CardTitle>
+							<CardTitle>Need {worker?worker:null} for	</CardTitle>
 								<Button onClick={() => {this.onClickbutton()}}>Choose Services</Button>
 						</Card>
 					</Col>

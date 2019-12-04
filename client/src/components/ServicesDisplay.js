@@ -6,16 +6,40 @@ import ScrollUpButton from "react-scroll-up-button";
 
 class ServicesDisplay extends Component{
   state = {
-		all_services:[]
+    all_services:[],
+    disp_services:[]
 	}
   componentDidMount(){
     this.getAllServices();
+    this.getAllServices1();
   }
 
   getAllServices = () => {
 		fetch('http://localhost:3000/api/service/all')
 		 .then(response => response.json())
-		 .then(data => this.setState({ all_services: data }))
+     .then(data => this.setState({ all_services: data }))
+  }
+
+  getAllServices1 = () => {
+		fetch('http://localhost:3000/api/service/all')
+		 .then(response => response.json())
+     .then(data => this.setState({ disp_services: data }))
+  }
+
+  suggestion = ({ target }) => {
+    console.log(target.value)
+    console.log(this.state.disp_services)
+    var disp = []
+    for (var i in this.state.all_services) {
+      var temp = this.state.all_services[i].name    
+      var tempSmall = temp.toLowerCase()  
+      var bol = tempSmall.includes(target.value.toLowerCase())
+      if(bol){
+        console.log(this.state.all_services[i].name )
+        disp.push(this.state.all_services[i])
+      }      
+    }
+    this.setState({ disp_services: disp })
   }
 
   render(){
@@ -24,10 +48,10 @@ class ServicesDisplay extends Component{
       <div>
       <br/>
       <br/>
-      <input placeholder="Search for a service..." className="search"></input>
-      <button className="search_btn">Search</button>
+      <input placeholder="Search for a service..." className="search" onChange={this.suggestion}></input>
+      <button className="search_btn">Go</button>
       <Container >
-        <br/><br/><br/><br/>
+        <br/>
         <Row style={{textAlign:'center'}}>
           <Col md="12">
           <h3>Our Services</h3>
@@ -36,7 +60,7 @@ class ServicesDisplay extends Component{
         <Row>
           <Col md={{ size: 8, offset: 2 }}>
             <ListGroup style={{textAlign:"left"}}>
-            {this.state.all_services.map((item, index) => (
+            {this.state.disp_services.map((item, index) => (
               <ListGroupItem className="listgrp_serdisp">
                 <Link className="link_sd" to={'/service/'+item.name} style={{textDecoration:'none'}}>
                   <ListGroupItemHeading>
@@ -50,6 +74,7 @@ class ServicesDisplay extends Component{
                 </Link>
               </ListGroupItem>
             ))}
+            {(this.state.disp_services.length === 0)?<span style={{marginLeft:'30%',fontSize:'20px'}}>No Results for given query</span>:''}
             </ListGroup>
           </Col>
         </Row>
