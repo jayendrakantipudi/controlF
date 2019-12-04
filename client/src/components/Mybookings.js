@@ -14,7 +14,8 @@ import {
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Fab from '@material-ui/core/Fab';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { FaUserAlt } from "react-icons/fa";
 
 
 class Mybookings extends Component{
@@ -144,6 +145,11 @@ return(
 </Container>
 
 </center>
+<br/><br/><br/><br/>
+<center>
+
+</center>
+
 </div>
 
 
