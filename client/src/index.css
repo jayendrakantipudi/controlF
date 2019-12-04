@@ -366,3 +366,7 @@ code {
 .mybooks_row:hover{
   background-color: #EDE8FF;
 }
+
+.but_disp:hover{
+  box-shadow: 5px 5px 15px #888888;
+}

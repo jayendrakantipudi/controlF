@@ -2,6 +2,7 @@ const paytm = require('paytm-nodejs')
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const Order = require('../Models/Order').Order;
 const config = {
     MID : 'bPdqef86135815495874', // Get this from Paytm console
     KEY : 'P4h0OGPNnNit1E4C', // Get this from Paytm console
@@ -14,12 +15,18 @@ const config = {
 
 
 router.get('/:order_id/:user_id/:total_cost', async(req, res) => {
-  console.log('in payment routeeeeeeeeeeee')
      let data = {
          TXN_AMOUNT : req.params.total_cost, // request amount
          ORDER_ID : req.params.order_id, // any unique order id
          CUST_ID : req.params.user_id // any unique customer id
      }
+     
+     Order.findOne({_id: req.params.order_id}, function(err, doc){
+        doc.is_paid = true
+        doc.save()
+     })
+
+
      console.log(data);
      // let data = {
      //     TXN_AMOUNT : 1200,
