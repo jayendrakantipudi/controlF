@@ -64,6 +64,11 @@ router.get('/:serviceName',async(req,res)=>{
   res.send(professionals);
 })
 
+router.get('/all',async(req,res)=>{
+  const professionals = await Professional.find();
+  res.send(professionals);
+})
+
 
 
 module.exports= router

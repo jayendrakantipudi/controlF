@@ -168,8 +168,16 @@ code {
 
 .link_sd{
   text-decoration: none;
+  color: black;
 }
 
+.link_sd:hover{
+  color: black;
+}
+
+.listgrp_serdisp:hover{
+  background-color:#dbd4ce;
+}
 
 .row2 {
     text-align: center;
@@ -221,7 +229,7 @@ code {
   border: 1px solid gray;
   padding-left: 2%;
   padding-top: 1%;
-
+}
   
 .foot_hpc{
   font-size: 25px;
@@ -311,4 +319,22 @@ code {
 
 .head_nav_name1{
   color: white;
+}
+
+.head_ser_rev{
+  margin-bottom: 2%;
+}
+
+.colgrp_reviews{
+  margin-left: 1% !important;
+  background-color: white;
+  padding: 7px;
+}
+
+.colgrp_reviews:hover{
+  background-color: #e3dddc;
+}
+
+.forstyle_username{
+  margin-right: 10% !important;
 }

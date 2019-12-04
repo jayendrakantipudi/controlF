@@ -51,6 +51,10 @@ router.get('/all',async(req,res)=>{
   res.send(user);
 })
 
+router.get('/:id',async(req,res)=>{
+  const user = await User.findById(req.params.id)
+  res.send(user);
+})
 
 router.post('/showprofile',async(req, res)=>{
   const user= await User.findById(req.body.id).select('-password')

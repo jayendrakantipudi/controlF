@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Container, ListGroup, ListGroupItem, Button, Jumbotron} from 'reactstrap';
+import {Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button, Jumbotron} from 'reactstrap';
 import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 import { Card, CardTitle, CardText, Row, Col } from 'reactstrap';
 import { Table, TabContent, TabPane} from 'reactstrap';
@@ -12,6 +12,7 @@ import {get_service} from '../actions/serviceActions'
 import {Redirect, Link} from "react-router-dom"
 import PropTypes from 'prop-types'
 import '../index.css'
+import {FaUserAlt, FaStar, FaRegStar} from "react-icons/fa";
 //import Example from '../components/minNav.js'
 
 
@@ -22,7 +23,10 @@ class Service extends React.Component{
 		service:[],
 		services: [],
 		activeTab: '1',
-		serviceWorkers:[]
+		serviceWorkers:[],
+		reviews:[],
+		prof_names:{},
+		user_names:{}
 	}
 
 	componentDidMount(){
@@ -33,6 +37,8 @@ class Service extends React.Component{
 		this.props.get_service(name);
 		this.getServices(name);
 		this.getServiceWorkers(name);
+		this.getReviews(name);
+		this.getNames(name)
 	}
 
 	getServiceWorkers = (temp) => {
@@ -64,8 +70,36 @@ class Service extends React.Component{
 		 .then(data => this.setState({ services: data }))
 	}
 
+	getReviews = (temp) => {
+		var service_clicked = temp;
+		var url = 'http://localhost:3000/api/reviews/';
+		const ser = url.concat(service_clicked)
+		fetch(ser)
+		 .then(response => response.json())
+		 .then(data => this.setState({ reviews: data }))
+	}
+
+	getNames = (temp) => {
+
+		var service_clicked = temp;
+		var url = 'http://localhost:3000/api/reviews/user_names/';
+		const ser = url.concat(service_clicked)
+		fetch(ser)
+		 .then(response => response.json())
+		 .then(data => this.setState({ user_names: data }))
+
+		var url1 = 'http://localhost:3000/api/reviews/prof_names/';
+		const ser1 = url1.concat(service_clicked)
+		fetch(ser1)
+		.then(response => response.json())
+		.then(data => this.setState({ prof_names: data }))
+
+	}
+
 	 toggle = tab => {
 		if(this.state.activeTab !== tab) this.setState({activeTab:tab});
+		console.log(this.state.prof_names)
+		console.log(this.state.reviews)
 		}
 
 
@@ -79,7 +113,7 @@ class Service extends React.Component{
 	}
 
 	onClickProf = (id) => {
-		console.log(`wassup ${id}`)
+		// console.log(`wassup ${id}`)
 		this.props.loadProf(id);
 	}
 
@@ -89,18 +123,15 @@ class Service extends React.Component{
 		const {services} = this.state;
 		const br = '\n'
 		const worker=this.props.service.ser?this.props.service.ser.service_worker:null;
-		// console.log(`checking the serviceWorkers ${this.state.serviceWorkers}`)
-		for (var i = this.state.serviceWorkers.length - 1; i >= 0; i--) {
-			console.log(this.state.serviceWorkers[i])
-		}
 		if (!this.props.token) {
 			// Logout
 			return <Redirect to="/" />;
 		}
 		const Style = {
-			textAlign:'left'
+			textAlign:'left',
 		};
-
+		console.log(`CHECKING STATE VALUESSSSSSS ${this.state}`)
+		console.log(this.state)
 
 		return(
 			<div>
@@ -196,6 +227,90 @@ class Service extends React.Component{
 
           </Row>
         </TabPane>
+        <TabPane tabId="3">
+		<br/>
+		<Row>
+			
+            <Col sm="6" style={Style} className="head_ser_rev">
+              <h2>Customer Reviews</h2>
+            </Col>
+					
+             
+			<br/>
+
+
+			</Row>
+
+            
+            {this.state.reviews.map((item, index) => (
+				<div>
+              <Row className="colgrp_reviews" style={{marginRight:'5%', border:'1px solid #e0d8d7'}}>
+				  <Col md="2" style={{textAlign:'center',marginTop:'1%'}}>
+						<FaUserAlt style={{fontSize:'30px'}}/>						
+					<br/>
+					<div className='forstyle_username'>
+						{this.state.user_names[item.user_id]}
+					</div>
+				  </Col>
+				  <Col md="7" style={{textAlign:'left'}}>
+				  <h3>
+				  {this.state.prof_names[item.professional_id]}
+				  </h3>
+						
+						{item.review}
+				  </Col>
+				  <Col md="3">
+					<span style={{fontSize:'25px'}}>{item.rating}</span>
+					<span style={{fontSize:'15px'}}>/5</span><br/>
+												
+					{(item.rating===1)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===2)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===3)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===4)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===5)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></span>
+						</span>
+					:''}
+
+					
+				  </Col>
+
+			  </Row>
+			  <br/>
+			  </div>
+            ))}
+            
+
+
+
+		  
+        </TabPane>
+
         <TabPane tabId="4">
 
           <Row>
