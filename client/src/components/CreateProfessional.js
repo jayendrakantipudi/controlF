@@ -22,13 +22,16 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {clearErrors} from '../actions/errorActions'
 import {isProf,getProfessions} from '../actions/profActions'
+import {getCities} from '../actions/locationAction'
+
 
 class CreateProfessional extends Component{
   state={
-    profession:null,
+    profession:"Select Profession",
     phonenumber:null,
     msg:null,
-    flag:null
+    flag:null,
+    city:"Select City"
   }
   static propTypes ={
     isAuthenticated:PropTypes.bool,
@@ -38,12 +41,15 @@ class CreateProfessional extends Component{
     createProfessional:PropTypes.func.isRequired,
     clearErrors:PropTypes.func.isRequired,
     getProfessions:PropTypes.func.isRequired,
-    professions:PropTypes.array.isRequired
+    professions:PropTypes.array.isRequired,
+    all_cities:PropTypes.object.isRequired,
+    getCities:PropTypes.func.isRequired
   }
 
   componentDidMount(){
     this.props.isProf();
     this.props.getProfessions()
+    this.props.getCities()
   }
 
   componentDidUpdate(prevProps){
@@ -80,12 +86,19 @@ class CreateProfessional extends Component{
         profession: value
     });
   }
+  handleChange2 = (value) => {
+    this.setState({
+        city: value
+    });
+  }
+  
+  
   onSubmit= async(e)=>{
      // e.preventDefault()
 
-      const{profession,phonenumber}=this.state
+      const{profession,phonenumber,city}=this.state
       const user=this.props.user
-      const professional={user,profession,phonenumber}
+      const professional={user,profession,phonenumber,city}
       if (profession!=null){
         const value = await this.props.createProfessional(professional)
         this.setState({flag:1})
@@ -93,7 +106,7 @@ class CreateProfessional extends Component{
   }
   render(){
     if(this.state.flag){
-      return <Redirect to="/professional/location" />;
+      return <Redirect to="/" />;
     }
     return(
       <div>
@@ -109,7 +122,7 @@ class CreateProfessional extends Component{
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-          <DropdownButton id="dropdown-basic-button" title="Select Profession">
+          <DropdownButton id="dropdown-basic-button" title={this.state.profession}>
            {
             this.props.professions?
             this.props.professions.map((item) => (
@@ -128,6 +141,17 @@ class CreateProfessional extends Component{
               onChange={this.onChange}
             />
             <br/>
+            <DropdownButton id="dropdown-basic-button" title={this.state.city}>
+           {
+            this.props.all_cities?
+            this.props.all_cities.map((item) => (
+            <Dropdown.Item value={item.city} onSelect={()=>{this.handleChange2(item.city)}} >{item.city}</Dropdown.Item>
+            )
+            )
+            : null
+          }
+          </DropdownButton>
+          
             <Button color="dark" block>
             Become professional
             </Button>
@@ -144,7 +168,8 @@ class CreateProfessional extends Component{
     user:state.auth.user,
     error:state.error,
     isProfessional:state.prof.isProfessional,
-    professions:state.prof.professions
+    professions:state.prof.professions,
+    all_cities:state.booking.all_cities
   })
 
-  export default connect(mapStateToProps,{ createProfessional, clearErrors,isProf,getProfessions})(CreateProfessional)
+  export default connect(mapStateToProps,{ createProfessional, clearErrors,isProf,getProfessions,getCities})(CreateProfessional)
