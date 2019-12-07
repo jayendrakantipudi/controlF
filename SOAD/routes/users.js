@@ -52,6 +52,12 @@ router.get('/all',async(req,res)=>{
   res.send(user);
 })
 
+
+router.get('/:id',async(req,res)=>{
+  const user = await User.findById(req.params.id)
+  res.send(user);
+})
+
 router.post('/mybookings',async(req, res)=>{
   const order = await Order.find({user_id:req.body.id,is_confirmed:true})
   var item = null;
