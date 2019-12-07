@@ -1,63 +1,78 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import {Container, ListGroup, ListGroupItem, Button} from 'reactstrap'
-import store from '../store'
-import {loadUser, allServices} from '../actions/adminActions'
+import { Container, Button, Row, Col,} from 'reactstrap'
 import {
   Redirect
 } from "react-router-dom";
 
 
-import PropTypes from 'prop-types'
 
+class Admin extends Component{
+  state = {
+    flag:null
+  }
+  
 
-
-class admin extends Component{
-  componentDidMount(){
-    console.log('mounted');
-     this.props.loadUser();
-     this.props.allServices()
+  goto(value){
+    this.setState({flag:value})
   }
 
-
 render(){
-const name=this.props.user?this.props.user.name:null;
-const email=this.props.user?this.props.user.email:null;
-console.log(`checking props ${this.props.services}`)
-
-if (!this.props.token) {
-    // Logout
-      return <Redirect to="/" />;
-    }
+  if (this.state.flag===1){
+    return <Redirect to="/adminservices" />
+  }
+  if (this.state.flag===2){
+    return <Redirect to="/adminslots" />
+  }
+  if (this.state.flag===3){
+    return <Redirect to="/admincities" />
+  }
 return(
 <div>
-<div style={{fontSize:'200%'}}>
-  YOUR PROFILE<br/><br/>
-</div>
-<ListGroup>
-  <ListGroupItem>
-    NAME:{name?name:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    EMAIL:{email?email:null}
-  </ListGroupItem>
-</ListGroup>
+<Container>
+<br/><br/>
+  <Row>
+    <Col md="12">
+      <h1>Admin Page</h1>
+    </Col>
+  </Row>
+  <br/>
+  <Row>
+  <Col md="12">
+    <Col md="8" style={{marginLeft:'20%'}}>
+
+        <Container>
+          <Row>
+
+            <Col md="3" className="slot_select"  onClick={()=>{this.goto(1)}}>
+
+                <span>Services</span>
+                
+            </Col>
+
+            <Col md="3" className="slot_select"  onClick={()=>{this.goto(2)}}>
+
+                <span>Slots</span>
+                
+            </Col>
+
+            <Col md="3" className="slot_select"  onClick={()=>{this.goto(3)}}>
+
+                <span>Cities</span>
+                
+            </Col>
+      
+
+          </Row>
+        </Container>
+
+    </Col>
+    </Col>
+  </Row>
+</Container>
 </div>
 )
 }
 }
 
-admin.propTypes={
-  user:PropTypes.object.isRequired,
-  loadUser:PropTypes.func.isRequired,
-  token:PropTypes.string,
-  allServices:PropTypes.func.isRequired,
-  services:PropTypes.object.isRequired,
-}
-
-const mapStateToProps=state=>({
-  user:state.auth.user,
-  token:state.auth.token,
-  services:state.services
-})
-export default connect(mapStateToProps,{loadUser, allServices})(admin)
+export default Admin
