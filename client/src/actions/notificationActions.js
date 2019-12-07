@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
-GET_NOTIFICATION
+GET_NOTIFICATION,
+MESSAGE_NOTIFICATION
 } from './types'
 
 export const getNotification = (id) => dispatch => {
@@ -18,4 +19,21 @@ axios.post('api/booking/notification',body,config)
 })
 console.log(res.data)
 })
+}
+
+export const messageNotification = (user_id,professional_id,url) => dispatch =>{
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({user_id,professional_id,url})
+  axios.post('api/booking/messagenotification',body,config)
+  .then(res=>{dispatch({
+    type:MESSAGE_NOTIFICATION,
+    payload:res.data
+  })
+  console.log(res.data)
+  })
+
 }

@@ -101,6 +101,7 @@ code {
    margin-left: 5%;
 }
 
+
 .r1{
     border:5px solid grey;
     border-width:thin;
@@ -221,8 +222,8 @@ code {
   border: 1px solid gray;
   padding-left: 2%;
   padding-top: 1%;
+}
 
-  
 .foot_hpc{
   font-size: 25px;
   font-family: "Righteous";
@@ -307,4 +308,8 @@ code {
 .head_nav_name{
   font-family: "Righteous";
   color:white
+}
+
+.head_nav_name1{
+  color: white;
 }

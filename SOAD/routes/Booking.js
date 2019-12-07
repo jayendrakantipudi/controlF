@@ -46,10 +46,10 @@ router.post('/booking',async(req,res)=>{
        const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
        console.log(prof_bookings)
        const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
-         
+
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0)
         {
-            type.professional=proffs[k]._id        
+            type.professional=proffs[k]._id
             type.is_confirmed = true
             await type.save()
 						let professional = await Professional.findById(type.professional)
@@ -74,7 +74,7 @@ router.post('/booking',async(req,res)=>{
     }
 
     var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
-    
+
 
     Orderdetails= {
 				user_id:user._id,
@@ -93,6 +93,12 @@ router.post('/booking',async(req,res)=>{
     res.send(Orderdetails)
 })
 
+
+router.post('/messagenotification',async(req,res)=>{
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",to:req.body.professional_id,url:req.body.url})
+	await notification.save()
+	res.send(notification.id)
+})
 
 router.post('/addorganisation',async(req,res)=>{
     console.log(req.body)
@@ -147,28 +153,29 @@ router.get('/service/orderbooking',async(req,res)=>{
     {
 
         for(s in all_slots)
-        {      
+        {
         const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
         const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
         console.log(prof_bookings)
         console.log(service_bookings)
         if(prof_bookings.length===0 && service_bookings.length===0)
-        {
-            order.professional = proffs[k]._id,
-            order.slot = all_slots[s]
-            order.save();
-            res.send(proffs[k])
-            return;
-        }
+	        {
+	            order.professional = proffs[k]._id,
+	            order.slot = all_slots[s]
+	            order.save();
+	            res.send(proffs[k])
+	            return;
+	        }
+    		}
     }
-    }
+		res.send({})
 })
 
 
 router.post('/notification',async(req,res)=>{
 	console.log(req.body)
-	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id');
-	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id; return temp})
+	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
+	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
 	res.send(a);
 })
 

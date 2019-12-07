@@ -1,5 +1,6 @@
 import {
-GET_NOTIFICATION
+GET_NOTIFICATION,
+MESSAGE_NOTIFICATION
 } from '../actions/types'
 
 const initialState={
@@ -13,6 +14,8 @@ export default function(state=initialState,action){
         ...state,
         notifications:action.payload
       }
+      case MESSAGE_NOTIFICATION:
+      return state
     default:
     return state
   }
