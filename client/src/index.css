@@ -169,8 +169,16 @@ code {
 
 .link_sd{
   text-decoration: none;
+  color: black;
 }
 
+.link_sd:hover{
+  color: black;
+}
+
+.listgrp_serdisp:hover{
+  background-color:#dbd4ce;
+}
 
 .row2 {
     text-align: center;
@@ -229,9 +237,21 @@ code {
   font-family: "Righteous";
 }
 
+.serviceMainSlide{
+  background-image: url("./assets/backForService.jpg");
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.8);
+  background-repeat: no-repeat;
+  background-size: 1500px 300px;
+}
+
+.forPointer{
+  cursor: pointer;
+}
+
 .mainSlide{
   background-image: url("./assets/back.jpg");
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.8);
+  background-size: auto;
 }
 .display-31{
   color: white;
@@ -312,4 +332,22 @@ code {
 
 .head_nav_name1{
   color: white;
+}
+
+.head_ser_rev{
+  margin-bottom: 2%;
+}
+
+.colgrp_reviews{
+  margin-left: 1% !important;
+  background-color: white;
+  padding: 7px;
+}
+
+.colgrp_reviews:hover{
+  background-color: #e3dddc;
+}
+
+.forstyle_username{
+  margin-right: 10% !important;
 }
