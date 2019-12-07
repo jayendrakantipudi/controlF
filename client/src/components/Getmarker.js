@@ -1,21 +1,21 @@
-import React,{Component} from 'react'; 
+import React,{Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import { Container,Button,Form,FormGroup,Label,Input } from 'reactstrap';
+import { Container,Button,Form,FormGroup,Label,Input, Row, Col } from 'reactstrap';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {bookSlot} from '../actions/locationAction'
- 
+
 import {
   Redirect
 } from "react-router-dom";
 
 
 class Getmarker extends React.Component {
-  
+
 onChange=(e)=>{
   this.setState({[e.target.name]:e.target.value})
 }
-  
+
 sendAddress(markers,address){
   var id = this.props.order.order_id
   var city = this.props.initial_center.city;
@@ -24,14 +24,14 @@ sendAddress(markers,address){
   this.setState({flag:2})
 }
 
- 
+
   state = {
     address:null,
     flag:null,
     initial_center:{
       lat:13.09,
       lng:77.89
-    },    
+    },
       markers: [
         {
           name: "Current position",
@@ -42,19 +42,19 @@ sendAddress(markers,address){
         }
       ]
     };
-  
+
     onMarkerDragEnd = (coord, index) => {
       const { latLng } = coord;
       const lat = latLng.lat();
       const lng = latLng.lng();
-  
+
       this.setState(prevState => {
         const markers = [...this.state.markers];
         markers[index] = { ...markers[index], position: { lat, lng } };
         return { markers };
       });
     };
-  
+
     render() {
 
       if(!this.state.flag){
@@ -79,8 +79,12 @@ sendAddress(markers,address){
       }
       return (
         <div>
-        <div className="maps" style={{position:"relative"}}>
+        <br/><br/><br/>
         <Container>
+        <Row>
+        <Col md="12">
+        <div className="maps">
+
         <Map
               google={this.props.google}
               style={{
@@ -89,7 +93,7 @@ sendAddress(markers,address){
               }}
               initialCenter={this.props.initial_center.initialCenter}
               zoom={14}
-              
+
             >
               {this.state.markers.map((marker, index) => (
                 <Marker
@@ -97,28 +101,42 @@ sendAddress(markers,address){
                   draggable={true}
                   onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
                   name={marker.name}
-                  
+
                 />
               ))}
             </Map>
-            
-        </Container>
-        </div>
 
-        <Form style={{marginTop:'400px',height:'100px',position:'fixed'}}>
+        </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="6">
+
+        <Form style={{marginTop:'65%'}}>
         <FormGroup>
           <Label for="address">Address</Label>
           <Input
-            type="text"
+            type="textarea"
             name="address"
             id="address"
-            placeholder ="address"
+            placeholder ="Enter your address here...."
+            cols="10"
+            rows="5"
             onChange={this.onChange}
           />
           </FormGroup>
           </Form>
-          
-        <Button style={{marginTop:'550px',height:'50px'}} onClick={()=>{this.sendAddress(this.state.markers,this.state.address)}}>Continue to Book</Button>
+          <br/>
+        <Button onClick={()=>{this.sendAddress(this.state.markers,this.state.address)}}>
+          Continue to Checkout
+        </Button>
+
+
+        </Col>
+      </Row>
+      </Container>
+
+
         </div>
       );
     }
@@ -138,5 +156,3 @@ initial_center:state.booking.initial_center
 export default connect(mapStateToProps,{bookSlot})( GoogleApiWrapper({
   apiKey: ('AIzaSyBM9hBBwzMOrDHqOB9harB9AqXS6HZdiX8'),
 })(Getmarker))
-
-

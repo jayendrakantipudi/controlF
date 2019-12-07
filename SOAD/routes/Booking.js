@@ -11,6 +11,9 @@ const {Serviceuser} = require('../Models/Serviceuser')
 const OrderItem=require('../Models/OrderItem').OrderItem;
 const ServiceType=require('../Models/serviceType').ServiceType;
 const {Serviceorder} = require('../Models/Serviceorder')
+const {Notifications}= require ('../Models/notifications')
+const {Chat} = require('../Models/chat')
+
 
 router.post('/slotbooking',async(req, res) => {
 	let type =await Order.findById(req.body.orderid);
@@ -34,7 +37,7 @@ router.post('/booking',async(req,res)=>{
     service_name = type.service_name;
     let serviceOne = await Service.findOne({name:service_name})
     const value = serviceOne.service_worker;
-   
+
     const proffs = await Professional.find({profession:value,'locality.3':city1})
     var k = null;
     var flag=0;
@@ -43,13 +46,15 @@ router.post('/booking',async(req,res)=>{
        const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
        console.log(prof_bookings)
        const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
-         
+
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0)
         {
-
-            type.professional=proffs[k]._id        
+            type.professional=proffs[k]._id
             type.is_confirmed = true
             await type.save()
+						let professional = await Professional.findById(type.professional)
+						var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
+						await notification.save()
             flag=1;
             break;
         }
@@ -69,9 +74,11 @@ router.post('/booking',async(req,res)=>{
     }
 
     var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
-    
+
 
     Orderdetails= {
+				user_id:user._id,
+				professional_id:professional.user._id,
         name:user.name,
         services_chosen:chosen,
         total_cost:type.total_cost,
@@ -84,6 +91,13 @@ router.post('/booking',async(req,res)=>{
     }
 
     res.send(Orderdetails)
+})
+
+
+router.post('/messagenotification',async(req,res)=>{
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",to:req.body.professional_id,url:req.body.url})
+	await notification.save()
+	res.send(notification.id)
 })
 
 router.post('/addorganisation',async(req,res)=>{
@@ -139,21 +153,46 @@ router.get('/service/orderbooking',async(req,res)=>{
     {
 
         for(s in all_slots)
-        {      
+        {
         const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
         const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
         console.log(prof_bookings)
         console.log(service_bookings)
         if(prof_bookings.length===0 && service_bookings.length===0)
-        {
-            order.professional = proffs[k]._id,
-            order.slot = all_slots[s]
-            order.save();
-            res.send(proffs[k])
-            return;
-        }
+	        {
+	            order.professional = proffs[k]._id,
+	            order.slot = all_slots[s]
+	            order.save();
+	            res.send(proffs[k])
+	            return;
+	        }
+    		}
     }
-    }
+		res.send({})
+})
+
+
+router.post('/notification',async(req,res)=>{
+	console.log(req.body)
+	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
+	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
+	res.send(a);
+})
+
+
+router.post('/chat',async(req,res)=>{
+	chat= new Chat({
+		from: req.body.from,
+		to: req.body.to,
+		message: req.body.message
+	});
+	await chat.save()
+	res.send(chat);
+})
+
+router.post('/getmessages',async(req,res)=>{
+	const prof_to_user=await Chat.find({$or:[{to:req.body.user_id,from:req.body.professional_id},{to:req.body.professional_id,from:req.body.user_id}]})
+	res.send(prof_to_user)
 })
 
 module.exports = router;

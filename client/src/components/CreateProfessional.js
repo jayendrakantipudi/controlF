@@ -14,7 +14,7 @@ import {
   import {
     Redirect
   } from "react-router-dom";
-  
+
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import {createProfessional} from '../actions/profActions'
@@ -25,7 +25,7 @@ import {isProf,getProfessions} from '../actions/profActions'
 
 class CreateProfessional extends Component{
   state={
-    profession:'carpenter',
+    profession:null,
     phonenumber:null,
     msg:null,
     flag:null
@@ -86,10 +86,10 @@ class CreateProfessional extends Component{
       const{profession,phonenumber}=this.state
       const user=this.props.user
       const professional={user,profession,phonenumber}
-
-      const value = await this.props.createProfessional(professional)
-      
-      this.setState({flag:1})
+      if (profession!=null){
+        const value = await this.props.createProfessional(professional)
+        this.setState({flag:1})
+      }
   }
   render(){
     if(this.state.flag){
@@ -109,8 +109,8 @@ class CreateProfessional extends Component{
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-          <DropdownButton id="dropdown-basic-button" title={this.state.profession}>
-           { 
+          <DropdownButton id="dropdown-basic-button" title="Select Profession">
+           {
             this.props.professions?
             this.props.professions.map((item) => (
             <Dropdown.Item value={item} onSelect={()=>{this.handleChange(item)}} >{item}</Dropdown.Item>

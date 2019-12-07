@@ -15,7 +15,9 @@ import './App.css';
 import Footer from './components/Footer'
 import Dashboard from './Dashboard';
 import HomePage from  './components/HomePage'
+import HomePageContent from './components/HomePageContent'
 import ServicesDisplay from './components/ServicesDisplay'
+import ContactUS from './components/ContactUS'
 import {
   BrowserRouter as Router,
   Route,
@@ -33,11 +35,15 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
+
 import Mybookings from './components/Mybookings'
 import Myorders from './components/Myorders'
 import {connect} from 'react-redux'
 
 import PropTypes from 'prop-types'
+
+import ChatPage from './components/ChatPage'
+import Notifications from './components/Notifications'
 
 class App extends Component{
 
@@ -66,9 +72,11 @@ class App extends Component{
             
             
           <AppNavbar/>
+
           <Switch>
-        <Route exact path='/' component={HomePage}/>
+        <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
+        <Route exact path='/contact' component={ContactUS}/>
         <Route exact path='/chat' component={Dashboard}/>
         <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
@@ -87,9 +95,11 @@ class App extends Component{
         <Route exact path='/displaybooking' component={DisplayBooking}/>
         <Route exact path='/mybookings'  component={Mybookings}/>
         <Route exact path='/myorders'  component={Myorders}/>
+        <Route exact path='/chatpage' component={ChatPage}/>
+        <Route exact path='/notifications' component={Notifications}/>
           </Switch>
           <br/><br/>
-          <div style={{backgroundColor:'pink',height:'200px',color:'black'}}></div>
+          <br/><br/>
       
           <Footer>
           <Footer/>
