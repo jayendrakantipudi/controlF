@@ -66,7 +66,8 @@ router.get('/professions',async(req,res)=>{
 
 
 router.get('/:serviceName',async(req,res)=>{
-  const professionals = await Professional.find({profession:req.params.serviceName});
+  const serv = await Service.findOne({name:req.params.serviceName})
+  const professionals = await Professional.find({profession:serv.service_worker});
   res.send(professionals);
 })
 
@@ -74,6 +75,7 @@ router.get('/:serviceName',async(req,res)=>{
 router.get('/all',async(req,res)=>{
   const professionals = await Professional.find();
   res.send(professionals);
+})
 
 router.post('/myorders',async(req, res)=>{
   const thisprofessional = await Professional.findOne({'user._id':req.body.id})
