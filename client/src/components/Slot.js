@@ -23,7 +23,9 @@ class Slot extends Component{
   }
 
   bookslot = async(e) =>{
-    const slottter = await this.props.bookSlot(e.target.value,this.props.order);
+    console.log('in booking slot...........')
+    console.log(e, this.props.order)
+    const slottter = await this.props.bookSlot(e,this.props.order);
     this.setState({flag:true})
   }
 
@@ -59,8 +61,7 @@ return(
               slots_available?
 
               slots_available.map((item) => (
-
-            <Col md="3" className="slot_select"  value={item._id} onClick={this.bookslot}>
+            <Col md="3" className="slot_select"  onClick={()=>{this.bookslot(item._id)}}>
 
                 <span>{item.start_time}:00 - </span>
                 <span>{item.end_time}:00</span>
@@ -79,7 +80,6 @@ return(
     </Col>
   </Row>
 </Container>
-
 </div>
 )
 }

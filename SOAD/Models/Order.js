@@ -45,6 +45,10 @@ const order = new mongoose.Schema({
 		date:{
 			type:Number
 		}
+	},
+	is_confirmed:{
+		type:Boolean,
+		default:false
 	}
 
 });

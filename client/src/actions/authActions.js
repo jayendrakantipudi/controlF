@@ -9,7 +9,8 @@ LOGIN_FAIL,
 LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
-CLEAR_PROFESSIONAL
+CLEAR_PROFESSIONAL,
+MY_BOOKINGS
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
@@ -100,4 +101,22 @@ if(token){
   config.headers['x-auth-token']=token
 }
 return config
+}
+
+
+export const mybookings = (id) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id})
+  axios
+    .post('/api/users/mybookings',body,config)
+    .then(res =>
+      dispatch({
+        type: MY_BOOKINGS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
 }
