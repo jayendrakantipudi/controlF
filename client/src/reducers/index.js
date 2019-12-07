@@ -11,6 +11,8 @@ import locationReducer from './locationReducer'
 import showProfReducer from './showProfReducer'
 import notificationReducer from './notificationReducer'
 import mainchatReducer from './mainchatReducer'
+import adminReducer from './adminReducer'
+
 
 export default combineReducers({
   item: itemReducer,
@@ -24,5 +26,6 @@ export default combineReducers({
   booking:locationReducer,
   showProf:showProfReducer,
   notification:notificationReducer,
-  message:mainchatReducer
+  message:mainchatReducer,
+  admin:adminReducer
 })
