@@ -1,5 +1,7 @@
 import {
-GET_SERVICES
+GET_SERVICES,
+ADD_SERVICE,
+ADD_SLOT
 } from '../actions/types'
 
 const initialState={
@@ -13,6 +15,10 @@ export default function(state=initialState,action){
         ...state,
         services:action.payload
       }
+    case ADD_SERVICE:
+      return state
+    case ADD_SLOT:
+      return state
     default:
       return state
   }

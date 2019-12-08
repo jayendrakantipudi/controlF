@@ -45,6 +45,9 @@ import PropTypes from 'prop-types'
 import ChatPage from './components/ChatPage'
 import Notifications from './components/Notifications'
 
+import Services from './components/admin/Services'
+import AdminSlots from './components/admin/AdminSlots'
+
 class App extends Component{
 
   constructor(props) {
@@ -97,6 +100,8 @@ class App extends Component{
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
+        <Route exact path='/admin/services' component={Services} />
+        <Route exact path='/admin/slots' component={AdminSlots} />
           </Switch>
           <br/><br/>
           <br/><br/>
