@@ -66,7 +66,8 @@ router.get('/professions',async(req,res)=>{
 
 
 router.get('/:serviceName',async(req,res)=>{
-  const professionals = await Professional.find({profession:req.params.serviceName});
+  const serv = await Service.findOne({name:req.params.serviceName})
+  const professionals = await Professional.find({profession:serv.service_worker});
   res.send(professionals);
 })
 
