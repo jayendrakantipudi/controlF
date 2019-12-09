@@ -74,6 +74,9 @@ router.post('/mybookings',async(req, res)=>{
       ser_chosen.push(item2)
     }
     var Orderdetails= {
+      order_id:temp._id,
+      professional_id: professional._id,
+      user_id: req.body.id,
       services_chosen:ser_chosen,
       total_cost:temp.total_cost,
       date:ordered_date,

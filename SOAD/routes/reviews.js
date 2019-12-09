@@ -54,14 +54,15 @@ router.get('/prof_names/:serviceName', async(req, res) => {
 
 router.post('/', async(req, res) => {
     const prof_id = req.body.professional_id
-    const profService = await Professional.find({"user._id":prof_id})
+    const profService = await Professional.find({"_id":prof_id})
     console.log(profService[0].profession)
     Review = new review({
         user_id: req.body.user_id,
         professional_id: req.body.professional_id,
         review: req.body.review,
         service_name:profService[0].profession,
-        rating: req.body.rating
+        rating: req.body.rating,
+        order_id: req.body.order_id
     })
 
     await Review.save()
