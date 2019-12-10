@@ -59,7 +59,8 @@ static propTypes ={
   isProf:PropTypes.func.isRequired,
   loadUser:PropTypes.func.isRequired,
   getNotification:PropTypes.func.isRequired,
-  notifications:PropTypes.array.isRequired
+  notifications:PropTypes.array.isRequired,
+  sendMessage:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -80,7 +81,10 @@ getNoti=(id)=>{
     return(
       <div>
       {
-        this.props.notifications?this.props.notifications.map(notification=><Link to={notification.url?notification.url:"/"} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>):null
+        this.props.notifications?this.props.notifications.map(notification=><Link to={{
+          pathname: notification.url?notification.url:"/",
+          state: { order_id: notification.order_id?notification.order_id:null }
+      }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>):null
       }
       </div>
     )

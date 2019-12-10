@@ -6,7 +6,7 @@ import {Container, ListGroup, ListGroupItem, Button, Table, Modal,
   ModalBody} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
 import {messageNotification} from '../actions/notificationActions'
-
+import { getOrder } from '../actions/locationAction'
 import {
   Redirect,
   Link
@@ -14,6 +14,7 @@ import {
 import PropTypes from 'prop-types';
 import { FaUserAlt } from "react-icons/fa";
 
+import ReactTimeout from "react-timeout";
 
 
 class DisplayBooking extends Component{
@@ -21,6 +22,17 @@ class DisplayBooking extends Component{
     flag:null,
     modal:true
   }
+
+
+  myBookings = () =>{
+    console.log('in my bookings')
+    this.props.getOrder(this.props.location.state.order_id)
+ }
+
+ async componentDidMount(){
+  this.props.setTimeout(this.myBookings, 100);
+}
+
 
   toggle=()=>{
     this.setState({
@@ -42,10 +54,11 @@ class DisplayBooking extends Component{
   sendhello=(user_id,professional_id)=>{
     const message="hello"
     this.props.sendMessage(user_id,professional_id,message)
-    this.props.messageNotification(user_id,professional_id,"/chatpage")
+    this.props.messageNotification(user_id,professional_id,"/chatpage",this.props.location.state.order_id)
   }
 
 render(){
+
 
 const name=this.props.order?this.props.order.name:null;
 const services_chosen = this.props.order?this.props.order.services_chosen:null;
@@ -72,6 +85,8 @@ if(this.state.flag===1){
     return <Redirect to="/slots" />;
   }
 
+
+  
 if(professional===null)
 {
   return (
@@ -89,6 +104,7 @@ if(professional===null)
       </Modal>
   );
 }
+
 return(
 <div>
 <div style={{fontSize:'200%'}}>
@@ -201,12 +217,14 @@ return(
   </ListGroupItem>
 </ListGroup>
 
+
 </div>
 )
 }
 }
 
 DisplayBooking.propTypes={
+  getOrder:PropTypes.func.isRequired,
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
   sendMessage:PropTypes.func.isRequired,
@@ -214,7 +232,7 @@ DisplayBooking.propTypes={
 }
 
 const mapStateToProps=state=>({
-order:state.booking.order,
-token:state.auth.token
+order:state.booking.order_details,
+token:state.auth.token,
 })
-export default connect(mapStateToProps,{sendMessage,messageNotification})(DisplayBooking)
+export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(DisplayBooking))

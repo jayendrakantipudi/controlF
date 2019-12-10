@@ -38,7 +38,7 @@ constructor(props){
 async componentDidMount()
 {
   await this.props.loadUser();
-  this.props.setTimeout(this.getNotifi,100)
+  // this.props.setTimeout(this.getNotifi,100)
 
 }
 
@@ -114,9 +114,7 @@ getNoti=(id)=>{
 
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
-      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
-
-      <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
+      <td><Link to="/mybookings"><NavbarBrand className="cool-link" style={extraNavbarstyles}>My Bookings </NavbarBrand></Link></td>
     </tr>
     </table>
     </Container>
