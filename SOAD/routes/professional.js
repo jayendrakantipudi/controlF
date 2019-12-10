@@ -15,12 +15,14 @@ const {Service}= require('../Models/service')
 
 router.post('/',auth,async(req, res)=>{
   const {error} = validate(req.body);
+  console.log(req.body)
   if(error) return res.status (400).send(error.details[0].message);
 
   let professional =await Professional.findOne( {"user.email":req.body.user.email});
   if (professional) return res.status(400).send('You\'ve already registered as a Professional')
 
   professional= new Professional(_.pick(req.body,['user','profession','phonenumber']));
+  professional.locality = [0,0,'None',req.body.city]
   /* can also be written as
   user= new User({
     name: req.body.name,
@@ -64,7 +66,14 @@ router.get('/professions',async(req,res)=>{
 
 
 router.get('/:serviceName',async(req,res)=>{
-  const professionals = await Professional.find({profession:req.params.serviceName});
+  const serv = await Service.findOne({name:req.params.serviceName})
+  const professionals = await Professional.find({profession:serv.service_worker});
+  res.send(professionals);
+})
+
+
+router.get('/all',async(req,res)=>{
+  const professionals = await Professional.find();
   res.send(professionals);
 })
 

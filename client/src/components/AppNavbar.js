@@ -43,7 +43,7 @@ async componentDidMount()
 }
 
 getNotifi=()=>{
-  this.props.getNotification(this.props.auth.user._id)
+  //this.props.getNotification(this.props.auth.user._id)
 }
 
 

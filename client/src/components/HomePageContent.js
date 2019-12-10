@@ -57,7 +57,7 @@ class HomePageContent extends Component{
 			<Row>
 
 				<Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Carpenter">
+        <Link className="hpc_row2_link" to="/service/Carpentry">
 					<br/>
 					<img src={carpenter} className="img2"/>	<br/><br/>
           </Link>
@@ -87,7 +87,7 @@ class HomePageContent extends Component{
 
 
         <Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Hair Saloon and Spa">
+        <Link className="hpc_row2_link" to="/service/Saloon and Spa">
 					<br/>
 					<img src={hair_stylist} className="img2"/>	<br/><br/>
           </Link>

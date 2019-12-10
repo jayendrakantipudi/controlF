@@ -81,6 +81,8 @@ export default class Footer extends Component{
 						customer.care@ctrlf.com
 						<br/>
 					<MdPhone/> 040 - 6666 8888
+					<br/>
+					<MdPhone/> 040 - 6868 4000
 
 					</Col>
 				</Row>

@@ -35,7 +35,8 @@ function validateProfessional(professional){
   const schema={
     user:Joi.object().required(),
     profession:Joi.string().required(),
-    phonenumber:Joi.string().trim().regex(/^[0-9]{7,10}$/).required()
+    phonenumber:Joi.string().trim().regex(/^[0-9]{7,10}$/).required(),
+    city:Joi.string()
   };
   return Joi.validate(professional,schema)
 }
