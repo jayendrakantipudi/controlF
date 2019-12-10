@@ -2,11 +2,14 @@ import {
 GET_SERVICES,
 ADD_SERVICE,
 ADD_SLOT,
-ADD_CITY
+ADD_CITY,
+ADD_SERVICETYPE,
+SHOW_SERVICETYPE
 } from '../actions/types'
 
 const initialState={
-  services:null
+  services:null,
+  service_types:null
 }
 
 export default function(state=initialState,action){
@@ -22,6 +25,13 @@ export default function(state=initialState,action){
       return state
     case ADD_CITY:
       return state
+    case ADD_SERVICETYPE:
+      return state
+    case SHOW_SERVICETYPE:
+    return{
+      ...state,
+      service_types:action.payload
+    }
     default:
       return state
   }

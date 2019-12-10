@@ -42,6 +42,21 @@ const upload = multer({
 }).single("profilepicparse");
 
 
+router.get('/adetails',async(req,res)=>{
+  console.log('inconsole')
+  const users= await User.find()
+  const professionals = await Professional.find()
+  const orders = await Order.find({is_confirmed:true})
+  var Admindetails = {
+    no_users : users.length,
+    no_professionals : professionals.length,
+    no_orders : orders.length
+  }
+ 
+  res.send(Admindetails);
+});
+
+
 router.get('/loggedin',auth,async(req,res)=>{
   const user= await User.findById(req.user._id).select('-password')
   res.send(user);
@@ -136,5 +151,7 @@ router.post('/',upload,async(req, res)=>{
   res.send(userDetails)
 
 });
+
+
 
 module.exports = router;

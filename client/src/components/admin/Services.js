@@ -45,6 +45,8 @@ class Services extends Component{
   toggle=()=>{
     
     this.setState({
+      flag:null,
+      flag2:null,
       modal: !this.state.modal,
       msg:null,
       msg2:null
@@ -90,23 +92,27 @@ class Services extends Component{
     }
   }
 
-  onSubmit= async(e)=>{
+  onSubmit= (e)=>{
     // e.preventDefault()
 
      const {name,about,service_worker}=this.state
      const service_added={name,about,service_worker}
      if (service_added!=null){
-       const value = await this.props.addService(service_added)
-       this.setState({flag:1})
+       
+       this.props.addService(service_added)
+       this.setState({flag2:true})
      }
  }
 
   selectService(service){
-    
+    this.setState({flag:service})
   }
   render(){
       const services = this.props.services?this.props.services:null;
-
+    if(this.state.flag){
+      const url = "/admin/servicetypes/".concat(this.state.flag)
+      return <Redirect  to={url} />
+    }
       return(
         <div>
           <br/>
