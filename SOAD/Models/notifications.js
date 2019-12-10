@@ -21,6 +21,11 @@ const notificationSchema = new mongoose.Schema({
 url:{
 	type:String,
 	required:false
+},
+new:{
+	type:Boolean,
+	required:true,
+	default:true
 }
 
 });

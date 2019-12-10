@@ -19,7 +19,7 @@ import {Redirect,Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
-import {getNotification} from '../actions/notificationActions'
+import {getNotification,newNotifications} from '../actions/notificationActions'
 import ReactTimeout from 'react-timeout'
 class AppNavbar extends Component{
 // componentDidUpdate(){
@@ -38,8 +38,20 @@ constructor(props){
 async componentDidMount()
 {
   await this.props.loadUser();
-  this.props.setTimeout(this.getNotifi,100)
+  if(this.props.auth.user)
+  this.props.newNotifications(this.props.auth.user._id)
+  this.timer = setInterval(() =>this.props.auth.user? this.props.newNotifications(this.props.auth.user._id):null, 1000);
 
+}
+
+componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
+componentDidUpdate(){
+  if(this.props.auth.user)
+  {this.props.newNotifications(this.props.auth.user._id)}
 }
 
 getNotifi=()=>{
@@ -52,7 +64,9 @@ static propTypes ={
   isProfessional:PropTypes.bool,
   isProf:PropTypes.func.isRequired,
   loadUser:PropTypes.func.isRequired,
-  getNotification:PropTypes.func.isRequired
+  getNotification:PropTypes.func.isRequired,
+  count:PropTypes.number.isRequired,
+  newNotifications:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -88,7 +102,7 @@ getNoti=(id)=>{
         </NavItem>
         <NavItem>
           <NavLink  >
-          <Link to="/notifications" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications</Link>
+          <Link to="/notifications" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications {this.props.count}</Link>
           </NavLink>
         </NavItem>
       </Fragment>
@@ -114,9 +128,7 @@ getNoti=(id)=>{
 
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
-      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
-
-      <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
+      <td><Link to="/mybookings"><NavbarBrand className="cool-link" style={extraNavbarstyles}>My Bookings </NavbarBrand></Link></td>
     </tr>
     </table>
     </Container>
@@ -148,8 +160,9 @@ getNoti=(id)=>{
 }
 const mapStateToProps = state => ({
   auth:state.auth,
-  isProfessional:state.prof.isProfessional
+  isProfessional:state.prof.isProfessional,
+  count:state.notification.count
 })
 
 
-export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification})(AppNavbar))
+export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,newNotifications})(AppNavbar))

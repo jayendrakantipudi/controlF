@@ -351,3 +351,7 @@ code {
 .forstyle_username{
   margin-right: 10% !important;
 }
+
+.mybooks_row:hover{
+  background-color: #EDE8FF;
+}

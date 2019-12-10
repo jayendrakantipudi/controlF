@@ -59,8 +59,14 @@ class ChatPage extends Component{
     this.props.loadUser();
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)
+    // this.timer = setInterval(() => this.props.getMessages(this.props.order.user_id,this.props.order.professional_id), 1000);
   }
-  }
+}
+
+// componentWillUnmount() {
+//         clearInterval(this.timer);
+//         this.timer = null;
+//     }
   componentDidUpdate(){
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)
@@ -77,7 +83,6 @@ class ChatPage extends Component{
   render(){
     const user_id = this.props.auth.user?this.props.auth.user._id:null;
     const professional_id = this.props.order?this.props.order.professional_id==user_id?this.props.order.user_id:this.props.order.professional_id:null;
-
 
   const stylesRight={textAlign:'right',marginRight:'10%',marginTop:'3px',marginBottom:'3px'}
   const stylesLeft={textAlign:'left',marginLeft:'10%',marginTop:'3px',marginBottom:'3px'}
