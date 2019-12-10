@@ -39,7 +39,7 @@ class DisplayBooking extends Component{
       modal: !this.state.modal
     })
   }
-  
+
   closebutton(){
     this.setState({flag:1})
   }
@@ -86,7 +86,7 @@ if(this.state.flag===1){
   }
 
 
-  
+
 if(professional===null)
 {
   return (
@@ -194,7 +194,11 @@ return(
   <Row style={{textAlign:'center'}}>
     <Col md="5">
     <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-<Link to="/chatpage"><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
+    <Link to={{
+              pathname: "/chatpage",
+              state: { order_id: this.props.location.state.order_id }
+          }}
+    ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
 
     </Col>
   </Row>

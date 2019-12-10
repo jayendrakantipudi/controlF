@@ -102,7 +102,7 @@ getNoti=(id)=>{
         </NavItem>
         <NavItem>
           <NavLink  >
-          <Link to="/notifications" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications {this.props.count}</Link>
+          <Link to="/notifications" className="notification" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}><i className="fas fa-bell"></i> <span className="badge" style={{display:this.props.count?'block':'none'}}>{this.props.count}</span></Link>
           </NavLink>
         </NavItem>
       </Fragment>
