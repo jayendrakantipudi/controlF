@@ -19,7 +19,7 @@ import {Redirect,Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
-import {getNotification} from '../actions/notificationActions'
+import {getNotification,clearnewNotifications} from '../actions/notificationActions'
 import ReactTimeout from 'react-timeout'
 import {sendMessage} from '../actions/mainchatActions'
 class Notifications extends Component{
@@ -39,14 +39,26 @@ constructor(props){
 async componentDidMount()
 {
   await this.props.loadUser();
-
+  this.props.setTimeout(this.clearNotifi,100)
   this.props.setTimeout(this.getNotifi,100)
 
+
+}
+
+componentDidUpdate(){
+  this.getNotifi()
 }
 
 getNotifi=()=>{
-  this.props.getNotification(this.props.auth.user._id)
+  if(this.props.auth.user)
+  {this.props.getNotification(this.props.auth.user._id)}
 }
+
+clearNotifi=()=>{
+  if(this.props.auth.user){
+  this.props.clearnewNotifications(this.props.auth.user._id)}
+}
+
 
 sendhello=(user_id,professional_id)=>{
   const message="hello"
@@ -60,7 +72,8 @@ static propTypes ={
   loadUser:PropTypes.func.isRequired,
   getNotification:PropTypes.func.isRequired,
   notifications:PropTypes.array.isRequired,
-  sendMessage:PropTypes.func.isRequired
+  sendMessage:PropTypes.func.isRequired,
+  clearnewNotifications:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -97,4 +110,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,sendMessage})(Notifications))
+export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,sendMessage,clearnewNotifications})(Notifications))
