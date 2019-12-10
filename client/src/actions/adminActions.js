@@ -4,7 +4,9 @@ import {
 GET_SERVICES,
 ADD_SERVICE,
 ADD_SLOT,
-ADD_CITY
+ADD_CITY,
+ADD_SERVICETYPE,
+SHOW_SERVICETYPE
 } from './types'
 
 export const allServices = () => (dispatch,getState) => {
@@ -27,6 +29,22 @@ export const addService=({name,about,service_worker})=>dispatch=>{
   axios.post('/api/service/',body,config)
   .then(res=>dispatch({
     type:ADD_SERVICE,
+    payload:res.data
+  }))
+  .catch(err=>console.log(err.response))
+
+}
+
+export const addServiceType=({name,service_type,cost})=>dispatch=>{
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({name,service_type,cost})
+  axios.post('/api/serviceType/addType',body,config)
+  .then(res=>dispatch({
+    type:ADD_SERVICETYPE,
     payload:res.data
   }))
   .catch(err=>console.log(err.response))
@@ -66,4 +84,28 @@ export const addCity=({city,lat,lng})=>dispatch=>{
   .catch(err=>console.log(err.response))
 
 }
+
+
+export const getserviceType=(service)=>dispatch=>{
+    const config={
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }
+    var url = '/api/serviceType/';
+    const ser = url.concat(service);
+    axios.get(ser,config)
+      .then(res => {
+         
+        dispatch({
+        type: SHOW_SERVICETYPE,
+        payload:res.data
+      }
+  
+      )}).catch(err => console.log(err));
+  
+      
+  
+  }
+  
 

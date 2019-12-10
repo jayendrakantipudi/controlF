@@ -9,7 +9,8 @@ import {
 
 class Admin extends Component{
   state = {
-    flag:null
+    flag:null,
+    details:[]
   }
   
 
@@ -17,15 +18,26 @@ class Admin extends Component{
     this.setState({flag:value})
   }
 
+  componentDidMount(){
+    this.getDetails();
+  }
+
+  getDetails = () => {
+		fetch('http://localhost:3000/api/users/adetails')
+		 .then(response => response.json())
+     .then(data => this.setState({ details: data }))
+  }
+
 render(){
+  console.log(this.state.details)
   if (this.state.flag===1){
-    return <Redirect to="/adminservices" />
+    return <Redirect to="/admin/services" />
   }
   if (this.state.flag===2){
-    return <Redirect to="/adminslots" />
+    return <Redirect to="/admin/slots" />
   }
   if (this.state.flag===3){
-    return <Redirect to="/admincities" />
+    return <Redirect to="/admin/cities" />
   }
 return(
 <div>
@@ -43,7 +55,21 @@ return(
 
         <Container>
           <Row>
+          <Col md="3" className="slot_select" >
 
+          <span>Total Users {this.state.details.no_users?this.state.details.no_users:null}</span>
+
+          </Col>
+          <Col md="3" className="slot_select" >
+
+          <span>Total Professionals {this.state.details.no_professionals?this.state.details.no_professionals:null}</span>
+
+          </Col>
+          <Col md="3" className="slot_select" >
+
+          <span>Total Orders {this.state.details.no_orders?this.state.details.no_orders:null}</span>
+
+          </Col>
             <Col md="3" className="slot_select"  onClick={()=>{this.goto(1)}}>
 
                 <span>Services</span>
