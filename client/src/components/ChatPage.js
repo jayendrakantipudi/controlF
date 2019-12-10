@@ -78,7 +78,6 @@ class ChatPage extends Component{
     const user_id = this.props.auth.user?this.props.auth.user._id:null;
     const professional_id = this.props.order?this.props.order.professional_id==user_id?this.props.order.user_id:this.props.order.professional_id:null;
 
-
   const stylesRight={textAlign:'right',marginRight:'10%',marginTop:'3px',marginBottom:'3px'}
   const stylesLeft={textAlign:'left',marginLeft:'10%',marginTop:'3px',marginBottom:'3px'}
   if (!this.props.auth.token) {

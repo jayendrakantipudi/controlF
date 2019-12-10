@@ -59,7 +59,8 @@ static propTypes ={
   isProf:PropTypes.func.isRequired,
   loadUser:PropTypes.func.isRequired,
   getNotification:PropTypes.func.isRequired,
-  notifications:PropTypes.array.isRequired
+  notifications:PropTypes.array.isRequired,
+  sendMessage:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
