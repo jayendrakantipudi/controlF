@@ -59,8 +59,14 @@ class ChatPage extends Component{
     this.props.loadUser();
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)
+    // this.timer = setInterval(() => this.props.getMessages(this.props.order.user_id,this.props.order.professional_id), 1000);
   }
-  }
+}
+
+// componentWillUnmount() {
+//         clearInterval(this.timer);
+//         this.timer = null;
+//     }
   componentDidUpdate(){
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)

@@ -56,7 +56,7 @@ router.post('/booking',async(req,res)=>{
             type.is_confirmed = true
             await type.save()
             let professional = await Professional.findById(type.professional)
-            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
+            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
             console.log(type)
             res.send(type._id)
@@ -66,12 +66,12 @@ router.post('/booking',async(req,res)=>{
     console.log(flag)
     if (flag===0) return res.status(400).send('slot not found')
 
-    
+
 })
 
 
 router.post('/messagenotification',async(req,res)=>{
-	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url})
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
 	await notification.save()
 	res.send(notification.id)
 })
@@ -199,6 +199,20 @@ router.post('/chat',async(req,res)=>{
 router.post('/getmessages',async(req,res)=>{
 	const prof_to_user=await Chat.find({$or:[{to:req.body.user_id,from:req.body.professional_id},{to:req.body.professional_id,from:req.body.user_id}]})
 	res.send(prof_to_user)
+})
+
+router.post('/allNotificationsChecked',async(req,res)=>{
+	const notifications_notseen= await Notifications.find({new:true,to:req.body.user_id})
+	res.send(notifications_notseen)
+})
+
+router.post('/clearNotifications',async(req,res)=>{
+	Notifications.find({new:true,to:req.body.user_id},function (err, docs){
+  docs.map(doc=>{doc.new = false;
+  doc.save();}
+	)
+})
+	res.send("done")
 })
 
 module.exports = router;
