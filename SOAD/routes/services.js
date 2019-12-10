@@ -25,6 +25,7 @@ router.post('/', async(req, res) => {
 		service_worker: req.body.service_worker
 	});
 	await service.save()
+	console.log(service)
 	 res.send(service);
 });
 

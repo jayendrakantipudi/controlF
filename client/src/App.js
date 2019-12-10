@@ -48,6 +48,7 @@ import Notifications from './components/Notifications'
 import Services from './components/admin/Services'
 import AdminSlots from './components/admin/AdminSlots'
 import Admincity from './components/admin/Admincity'
+import Adminservicetype from './components/admin/Adminservicetype'
 
 class App extends Component{
 
@@ -111,6 +112,7 @@ class App extends Component{
             <Route exact path='/admin/services' component={Services} />
             <Route exact path='/admin/slots' component={AdminSlots} />
             <Route exact path='/admin/cities' component={Admincity} />
+            <Route exact path='/admin/servicetypes/:name' component={Adminservicetype} />
             </Switch>
               </div>
               </Router>
