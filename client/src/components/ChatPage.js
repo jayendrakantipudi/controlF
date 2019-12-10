@@ -73,8 +73,8 @@ class ChatPage extends Component{
     this.props.sendMessage(user_id,professional_id,this.state.message)
   }
   render(){
-    const user_id = this.props.order?this.props.order.user_id:null;
-    const professional_id = this.props.order?this.props.order.professional_id:null;
+    const user_id = this.props.auth.user?this.props.auth.user._id:null;
+    const professional_id = this.props.order?this.props.order.professional_id==user_id?this.props.order.user_id:this.props.order.professional_id:null;
 
   const stylesRight={textAlign:'right',marginRight:'10%',marginTop:'3px',marginBottom:'3px'}
   const stylesLeft={textAlign:'left',marginLeft:'10%',marginTop:'3px',marginBottom:'3px'}

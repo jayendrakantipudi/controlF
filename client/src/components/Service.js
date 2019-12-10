@@ -89,7 +89,7 @@ class Service extends React.Component{
 		const {services} = this.state;
 		const br = '\n'
 		const worker=this.props.service.ser?this.props.service.ser.service_worker:null;
-		// console.log(`checking the serviceWorkers ${this.state.serviceWorkers}`)
+
 		for (var i = this.state.serviceWorkers.length - 1; i >= 0; i--) {
 			console.log(this.state.serviceWorkers[i])
 		}
