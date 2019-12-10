@@ -21,13 +21,13 @@ console.log(res.data)
 })
 }
 
-export const messageNotification = (user_id,professional_id,url) => dispatch =>{
+export const messageNotification = (user_id,professional_id,url,order_id) => dispatch =>{
   const config={
     headers:{
       'Content-Type':'application/json'
     }
   }
-  const body=JSON.stringify({user_id,professional_id,url})
+  const body=JSON.stringify({user_id,professional_id,url,order_id})
   axios.post('api/booking/messagenotification',body,config)
   .then(res=>{dispatch({
     type:MESSAGE_NOTIFICATION,

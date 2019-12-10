@@ -21,6 +21,7 @@ sendAddress(markers,address){
   var city = this.props.initial_center.city;
   console.log(markers)
   this.props.bookSlot(id,markers[0].position.lat,markers[0].position.lng,address,city)
+  console.log(this.props.order_id)
   this.setState({flag:2})
 }
 
@@ -75,7 +76,11 @@ sendAddress(markers,address){
 
       if(this.state.flag==2)
       {
-        return <Redirect to="/displaybooking" />;
+        return <Redirect  to={{
+          pathname: "/displaybooking",
+          state: { order_id: this.props.order.order_id }
+      }}
+         />;
       }
       return (
         <div>
@@ -145,13 +150,15 @@ sendAddress(markers,address){
 
 Getmarker.propTypes={
   order:PropTypes.object.isRequired,
+  order_id:PropTypes.object.isRequired,
   bookSlot:PropTypes.func.isRequired,
   initial_center:PropTypes.object.isRequired
 }
 
 const mapStateToProps=state=>({
 order:state.order,
-initial_center:state.booking.initial_center
+initial_center:state.booking.initial_center,
+order_id:state.booking.order
 })
 export default connect(mapStateToProps,{bookSlot})( GoogleApiWrapper({
   apiKey: ('AIzaSyBM9hBBwzMOrDHqOB9harB9AqXS6HZdiX8'),

@@ -6,13 +6,14 @@ import {Container, ListGroup, ListGroupItem, Button, Modal,
   ModalBody} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
 import {messageNotification} from '../actions/notificationActions'
-
+import { getOrder } from '../actions/locationAction'
 import {
   Redirect,
   Link
 } from "react-router-dom";
 import PropTypes from 'prop-types'
 
+import ReactTimeout from "react-timeout";
 
 
 class DisplayBooking extends Component{
@@ -20,6 +21,17 @@ class DisplayBooking extends Component{
     flag:null,
     modal:true
   }
+
+
+  myBookings = () =>{
+    console.log('in my bookings')
+    this.props.getOrder(this.props.location.state.order_id)
+ }
+
+ async componentDidMount(){
+  this.props.setTimeout(this.myBookings, 100);
+}
+
 
   toggle=()=>{
     this.setState({
@@ -41,10 +53,11 @@ class DisplayBooking extends Component{
   sendhello=(user_id,professional_id)=>{
     const message="hello"
     this.props.sendMessage(user_id,professional_id,message)
-    this.props.messageNotification(user_id,professional_id,"/chatpage")
+    this.props.messageNotification(user_id,professional_id,"/chatpage",this.props.location.state.order_id)
   }
 
 render(){
+
 
 const name=this.props.order?this.props.order.name:null;
 const services_chosen = this.props.order?this.props.order.services_chosen:null;
@@ -70,6 +83,8 @@ if(this.state.flag===1){
     return <Redirect to="/slots" />;
   }
 
+
+  
 if(professional===null)
 {
   return (
@@ -87,6 +102,7 @@ if(professional===null)
       </Modal>
   );
 }
+
 return(
 <div>
 <div style={{fontSize:'200%'}}>
@@ -122,7 +138,11 @@ return(
   </ListGroupItem>
 </ListGroup>
 <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-<Link to="/chatpage"><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
+<Link to={{
+          pathname: "/chatpage",
+          state: { order_id: this.props.location.state.order_id }
+      }}
+><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
 
 </div>
 )
@@ -130,6 +150,7 @@ return(
 }
 
 DisplayBooking.propTypes={
+  getOrder:PropTypes.func.isRequired,
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
   sendMessage:PropTypes.func.isRequired,
@@ -137,7 +158,7 @@ DisplayBooking.propTypes={
 }
 
 const mapStateToProps=state=>({
-order:state.booking.order,
-token:state.auth.token
+order:state.booking.order_details,
+token:state.auth.token,
 })
-export default connect(mapStateToProps,{sendMessage,messageNotification})(DisplayBooking)
+export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(DisplayBooking))

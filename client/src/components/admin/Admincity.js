@@ -1,4 +1,5 @@
-import {allServices,addService} from '../../actions/adminActions'
+import { addCity } from '../../actions/adminActions'
+import { getCities } from '../../actions/locationAction'
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {
@@ -26,18 +27,20 @@ import PropTypes from 'prop-types'
 
 
 
-class AdminSlots extends Component{
+class Admincity extends Component{
 
    state= {
      flag:null,
      modal:false,
-     start:null,
+     city:null,
+     lat:null,
+     lng:null,
      end:null,
      msg:null,
         }
 
   componentDidMount(){
-     this.props.getSlots()
+     this.props.getCities()
   }
 
   toggle=()=>{
@@ -52,99 +55,87 @@ class AdminSlots extends Component{
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
-    var all_slots = this.props.slots
-    if(e.target.name==='start'){
+    var all_cities = this.props.cities
+    if(e.target.name==='city'){
     
-      for (k in all_slots)
+      for (k in all_cities)
       {
-        if (all_slots[k]["start_time"] === e.target.value)
+        if (all_cities[k]["city"] === e.target.value)
         {
-          if (all_slots[k]["end_time"] === this.state.end)
-          {
-
-          this.setState({msg:'slot already exists'})
+          this.setState({msg:'City already exists'})
           break;
-          }
         }
+
         else{
           this.setState({msg:null})
         }
       }      
     
     }
-    if(e.target.name==='end'){
-      for (k in all_slots)
-      {
-        if (all_slots[k]["start_time"] === this.state.start)
-        {
-          if (all_slots[k]["end_time"] === e.target.value)
-          {
-
-          this.setState({msg:'slot already exists'})
-          break;
-          }
-        }
-        else{
-          this.setState({msg:null})
-        }
-      }  
-
-    }
-
-
+    
   }
 
   onSubmit= async(e)=>{
     // e.preventDefault()
 
-     const {start,end}=this.state
-     const service_added={start,end}
+     const {city,lat,lng}=this.state
+     const service_added={city,lat,lng}
      if (service_added!=null){
-       const value = await this.props.addSlot(service_added)
+       const value = await this.props.addCity(service_added)
        this.setState({flag:1})
      }
  }
 
  
   render(){
-      const slots = this.props.slots?this.props.slots:null;
+      const cities = this.props.cities?this.props.cities:null;
 
       return(
         <div>
           <br/>
-            <Button onClick={this.toggle}>Add Slot</Button>
+            <Button onClick={this.toggle}>Add City</Button>
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
         >
-        <ModalHeader toggle={this.toggle}>Enter the slot details</ModalHeader>
+        <ModalHeader toggle={this.toggle}>Enter the city details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
        
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
          
-            <Label for="Slot">Start Time</Label>
+            <Label for="City">City Name</Label>
             <Input
               type="string"
-              name="start"
-              id="start"
-              placeholder ="start time"
+              name="city"
+              id="city"
+              placeholder ="City name"
               onChange={this.onChange}
             />
             <br/>
-            <Label for="Slot">End Time</Label>
+            <Label for="City">Latitude :</Label>
             <Input
-              type="string"
-              name="end"
-              id="end"
-              placeholder ="end time"
+              type="number"
+              step="0.0001"
+              name="lat"
+              id="lat"
+              placeholder ="Latitude"
+              onChange={this.onChange}
+            />
+            <Label for="City">Longitude :</Label>
+            <Input
+              type="number"
+              step="0.0001"
+              name="lng"
+              id="lng"
+              placeholder ="Longitude"
               onChange={this.onChange}
             />
             
             {(this.state.msg)?' ':
             <Button color="dark" block>
-            Add Slot
+            Add city
             </Button>
             }
           </FormGroup>
@@ -156,7 +147,7 @@ class AdminSlots extends Component{
 <br/><br/>
   <Row>
     <Col md="12">
-      <h1>Available Slots</h1>
+      <h1>Available cities</h1>
     </Col>
   </Row>
   <br/>
@@ -168,14 +159,13 @@ class AdminSlots extends Component{
           <Row>
 
           {
-              slots?
+              cities?
 
-              slots.map((item) => (
+              cities.map((item) => (
             <Col md="3" className="slot_select" >
 
-                <span>{item.start_time} - </span>
-                <span>{item.end_time}</span>
-
+                <span>{item.city}  </span>
+                
                 
             </Col>
 
@@ -198,15 +188,15 @@ class AdminSlots extends Component{
 
 }
 
-AdminSlots.propTypes={
-slots:PropTypes.object.isRequired,
-getSlots:PropTypes.func.isRequired,
-addSlot:PropTypes.func.isRequired
+Admincity.propTypes={
+cities:PropTypes.object.isRequired,
+getCities:PropTypes.func.isRequired,
+addCity:PropTypes.func.isRequired
 }
 
 const mapStateToProps=state=>({
-slots:state.slots.all_slots
+cities:state.booking.all_cities
 })
     
 
-export default connect(mapStateToProps,{getSlots,addSlot})(AdminSlots)
+export default connect(mapStateToProps,{addCity,getCities})(Admincity)

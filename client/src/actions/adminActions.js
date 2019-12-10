@@ -3,7 +3,8 @@ import {returnErrors}from './errorActions'
 import {
 GET_SERVICES,
 ADD_SERVICE,
-ADD_SLOT
+ADD_SLOT,
+ADD_CITY
 } from './types'
 
 export const allServices = () => (dispatch,getState) => {
@@ -43,6 +44,23 @@ export const addSlot=({start,end})=>dispatch=>{
   axios.post('/api/slot/addslot',body,config)
   .then(res=>dispatch({
     type:ADD_SLOT,
+    payload:res.data
+  }))
+  .catch(err=>console.log(err.response))
+
+}
+
+
+export const addCity=({city,lat,lng})=>dispatch=>{
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({city,lat,lng})
+  axios.post('/api/location/addloco',body,config)
+  .then(res=>dispatch({
+    type:ADD_CITY,
     payload:res.data
   }))
   .catch(err=>console.log(err.response))

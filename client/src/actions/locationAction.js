@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {SEND_LOCATION,GET_CITIES,SELECT_CITY} from './types'
+import {SEND_LOCATION,GET_CITIES,SELECT_CITY,GET_ORDER} from './types'
 
 export const bookSlot = (id,lat,lng,address,city) => dispatch => {
     const config={
@@ -32,6 +32,7 @@ export const getCities = () => dispatch => {
 }
 
 
+
 export const setLocation =(city,latitude,longitude)=> {
   return{
     type:SELECT_CITY,
@@ -44,3 +45,21 @@ export const setLocation =(city,latitude,longitude)=> {
     }
   }
 }
+
+export const getOrder = (id) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id})
+  axios
+    .post('/api/booking/getOrder',body,config)
+    .then(res =>
+      dispatch({
+        type: GET_ORDER,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+

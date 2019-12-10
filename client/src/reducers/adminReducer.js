@@ -1,7 +1,8 @@
 import {
 GET_SERVICES,
 ADD_SERVICE,
-ADD_SLOT
+ADD_SLOT,
+ADD_CITY
 } from '../actions/types'
 
 const initialState={
@@ -18,6 +19,8 @@ export default function(state=initialState,action){
     case ADD_SERVICE:
       return state
     case ADD_SLOT:
+      return state
+    case ADD_CITY:
       return state
     default:
       return state

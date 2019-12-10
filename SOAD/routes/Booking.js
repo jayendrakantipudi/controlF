@@ -27,8 +27,10 @@ router.post('/slotbooking',async(req, res) => {
 });
 
 router.post('/booking',async(req,res)=>{
+    console.log(`in booking ${req.body.id}`)
     let type =await Order.findById(req.body.id);
 	if (!type) return res.status(400).send('Order Does Not Exist!')
+    console.log(type)
     lat1 = req.body.lat;
     lng1 = req.body.lng;
     address1 = req.body.address;
@@ -46,56 +48,30 @@ router.post('/booking',async(req,res)=>{
        const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
        console.log(prof_bookings)
        const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
-
+       console.log(service_bookings)
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0)
         {
+            flag=1;
             type.professional=proffs[k]._id
             type.is_confirmed = true
             await type.save()
-						let professional = await Professional.findById(type.professional)
-						var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
-						await notification.save()
-            flag=1;
-            break;
+            let professional = await Professional.findById(type.professional)
+            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
+            await notification.save()
+            console.log(type)
+            res.send(type._id)
+            return;
         }
     }
+    console.log(flag)
     if (flag===0) return res.status(400).send('slot not found')
 
-    const user = await User.findById(type.user_id)
-    const professional = await Professional.findById(type.professional)
-    const slot = await Slot.findById(type.slot._id)
-    console.log(`${slot}`)
-    var chosen = [];
-    var k = null;
-    var temp = type.services_chosen;
-    for(k in temp)
-    {
-        chosen.push(temp[k].service_type)
-    }
-
-    var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
-
-
-    Orderdetails= {
-				user_id:user._id,
-				professional_id:professional.user._id,
-        name:user.name,
-        services_chosen:chosen,
-        total_cost:type.total_cost,
-        date:ordered_date,
-        prof_name:professional.user.name,
-        prof_phone:professional.phonenumber,
-        slot:slot.start_time,
-        address:type.address[2],
-        city:type.address[3],
-    }
-
-    res.send(Orderdetails)
+    
 })
 
 
 router.post('/messagenotification',async(req,res)=>{
-	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",to:req.body.professional_id,url:req.body.url})
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url})
 	await notification.save()
 	res.send(notification.id)
 })
@@ -112,6 +88,36 @@ router.post('/addorganisation',async(req,res)=>{
     seruser.token= token
     await seruser.save()
     res.send(seruser)
+})
+
+router.post('/getOrder',async(req,res)=>{
+    let type =await Order.findById(req.body.id);
+	if (!type) return res.status(400).send('Order Does Not Exist!')
+    var chosen = [];
+    var k = null;
+    var temp = type.services_chosen;
+    for(k in temp)
+    {
+        chosen.push(temp[k].service_type)
+    }
+    const professional = await Professional.findById(type.professional)
+    const user = await User.findById(type.user_id)
+    const slot = await Slot.findById(type.slot._id)
+    var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
+    Orderdetails= {
+        user_id:type.user_id,
+        professional_id:professional.user._id,
+    name:user.name,
+    services_chosen:chosen,
+    total_cost:type.total_cost,
+    date:ordered_date,
+    prof_name:professional.user.name,
+    prof_phone:professional.phonenumber,
+    slot:slot.start_time,
+    address:type.address[2],
+    city:type.address[3],
+}
+res.send(Orderdetails)
 })
 
 router.get('/service/orderbooking',async(req,res)=>{
