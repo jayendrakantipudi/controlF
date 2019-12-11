@@ -120,6 +120,45 @@ router.post('/getOrder',async(req,res)=>{
 res.send(Orderdetails)
 })
 
+router.get('service/bulkbooking',async(req,res)=>{
+    var res_token = req.query.api;
+    let serorg = Serviceuser.find({token:res_token})
+    if (!serorg) return res.status(400).send('Organisation Invalid')
+    var service_worker = req.query.profession;
+    let service = await Service.findOne({service_worker:service_worker})
+    let service_type = await ServiceType.findOne({service_type:'Installation','service._id':service._id})
+    var total_cost = service_type.cost;
+    var order_year = req.query.year;
+    var order_month = req.query.month;
+    var order_date = req.query.date;
+    var phone_number = req.query.phonenumber;
+    var username = req.query.username;
+    var address = req.query.address;
+    var city = req.query.city;
+    var duration = req.query.days;
+    var persons = req.query.count;
+    const professionals = Professional.find({profession:service_worker,'locality.3':city})
+    if(professionals.length<persons){
+        res.send({})
+    }
+    else{
+        var dates = []
+        var tomorrow = new Date(order_year+'-'+order_month+'-'+order_date);
+
+        for(var i;i<duration;i++){
+        dates.push({date:tomorrow.getDate(),month:tomorrow.getMonth()+1,year:tomorrow.getFullYear()})
+        tomorrow.setDate(tomorrow.getDate()+1);
+        }
+
+        for(var d in dates){
+            
+
+        }
+
+    }
+
+})
+
 router.get('/service/orderbooking',async(req,res)=>{
     var res_token = req.query.api;
     let serorg = Serviceuser.find({token:res_token})
