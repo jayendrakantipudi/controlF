@@ -7,7 +7,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container
+  Container,Row, Col, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText,Button
 } from 'reactstrap'
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
@@ -22,6 +22,7 @@ import {loadUser} from '../actions/authActions'
 import {getNotification,clearnewNotifications} from '../actions/notificationActions'
 import ReactTimeout from 'react-timeout'
 import {sendMessage} from '../actions/mainchatActions'
+import '../styles/serviceDisplay.css'
 class Notifications extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -34,8 +35,6 @@ constructor(props){
   // this.toggle=this.toggle.bind(this)
 }
 
-
-
 async componentDidMount()
 {
   await this.props.loadUser();
@@ -47,6 +46,7 @@ async componentDidMount()
 
 componentDidUpdate(){
   this.getNotifi()
+  this.clearNotifi()
 }
 
 getNotifi=()=>{
@@ -91,14 +91,28 @@ getNoti=(id)=>{
     if(!this.props.auth.token){
       return <Redirect to="/"/>
     }
-    return(
-      <div>
+  //   <Link to={{
+  //     pathname: notification.url?notification.url:"/",
+  //     state: { order_id: notification.order_id?notification.order_id:null }
+  // }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>
+    return(<div>
+      <Row style={{textAlign:'center',marginTop:'2%'}}>
+        <Col md="12">
+        <h3>Notifications</h3>
+        </Col>
+      </Row><br/>
+      <div style={{margin:'20%',marginTop:'0%'}}>
       {
-        this.props.notifications?this.props.notifications.map(notification=><Link to={{
-          pathname: notification.url?notification.url:"/",
-          state: { order_id: notification.order_id?notification.order_id:null }
-      }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>):null
+        this.props.notifications?this.props.notifications.map(notification=><ListGroupItem className="listgrp_serdisp">
+          <Link to={{
+            pathname: notification.url?notification.url:"/",
+            state: { order_id: notification.order_id?notification.order_id:null }
+        }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null} className="link_sd" style={{textDecoration:'none'}}>
+            <div>{notification.notification?notification.notification:null}</div>
+          </Link>
+        </ListGroupItem>):null
       }
+      </div>
       </div>
     )
   }

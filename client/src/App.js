@@ -35,7 +35,7 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
-
+import Dummy from './components/Dummy'
 import Mybookings from './components/Mybookings'
 import Myorders from './components/Myorders'
 import {connect} from 'react-redux'
@@ -63,7 +63,7 @@ class App extends Component{
       this.setState({
         user: store.getState().auth.user
       });
-    });  
+    });
   }
   componentDidMount(){
     store.dispatch(loadUser())
@@ -74,8 +74,8 @@ class App extends Component{
       <Provider store={store}>
           <Router>
         <div className="App">
-            
-            
+
+
           <AppNavbar/>
 
           <Switch>
@@ -102,11 +102,11 @@ class App extends Component{
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
-       
+        <Route exact path='/dummy' component={Dummy}/>
           </Switch>
-          
+
         </div>
-          
+
               <div className='Admin'>
               <Switch>
             <Route exact path='/admin/services' component={Services} />
@@ -119,7 +119,7 @@ class App extends Component{
           <div className='App'>
           <br/><br/>
           <br/><br/>
-      
+
           <Footer>
           <Footer/>
           </Footer>
