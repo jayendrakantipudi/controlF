@@ -38,15 +38,14 @@ constructor(props){
 async componentDidMount()
 {
   await this.props.loadUser();
-  this.props.setTimeout(this.clearNotifi,100)
-  this.props.setTimeout(this.getNotifi,100)
+  this.props.setTimeout(this.clearNotifi,10)
+  this.props.setTimeout(this.getNotifi,10)
 
 
 }
 
 componentDidUpdate(){
   this.getNotifi()
-  this.clearNotifi()
 }
 
 getNotifi=()=>{

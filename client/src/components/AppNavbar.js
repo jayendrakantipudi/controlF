@@ -30,58 +30,10 @@ constructor(props){
   super(props)
   this.state={
     isOpen:false,
-    count:0
+
   }
   // this.toggle=this.toggle.bind(this)
 }
-notificationAlert = React.createRef();
-  notify(place) {
-    var color = Math.floor(Math.random() * 5 + 1);
-    var type;
-    switch (color) {
-      case 1:
-        type = "primary";
-        break;
-      case 2:
-        type = "success";
-        break;
-      case 3:
-        type = "danger";
-        break;
-      case 4:
-        type = "warning";
-        break;
-      case 5:
-        type = "info";
-        break;
-      default:
-        break;
-    }
-    var options = {};
-    const notification= this.props.notifications?this.props.notifications[this.props.notifications.length-1]:null
-    options = {
-      place: place,
-
-      message: (
-        <div>
-          <div>
-
-          <Link to={{
-            pathname: notification?notification.url:"/",
-            state: { order_id: notification?notification.order_id:null }
-        }} onClick={notification?()=>this.sendhello(notification.from,this.props.auth.user._id):null} className="link_sd" style={{textDecoration:'none'}}>
-            <div>{notification?notification.notification:null}</div>
-          </Link>
-          </div>
-        </div>
-      ),
-      type: type,
-      icon: "nc-icon nc-bell-55",
-      autoDismiss: 7
-    };
-    this.notificationAlert.current.notificationAlert(options);
-  }
-
 
 async componentDidMount()
 {
@@ -100,18 +52,8 @@ componentWillUnmount() {
 componentDidUpdate(){
   if(this.props.auth.user)
   {this.props.newNotifications(this.props.auth.user._id)}
-  this.getNotifi()
-  if(this.props.count!=this.state.count && this.props.count){
-    this.notify("tl")
-    this.setState({
-      count:this.props.count
-    })
 }
-}
-getNotifi=()=>{
-  if(this.props.auth.user)
-  {this.props.getNotification(this.props.auth.user._id)}
-}
+
 
 static propTypes ={
   auth: PropTypes.object.isRequired,
@@ -121,7 +63,6 @@ static propTypes ={
   getNotification:PropTypes.func.isRequired,
   count:PropTypes.number.isRequired,
   newNotifications:PropTypes.func.isRequired,
-  notifications:PropTypes.array.isRequired,
   // isProf:PropTypes.func.isRequired
 }
 
@@ -218,7 +159,6 @@ const mapStateToProps = state => ({
   auth:state.auth,
   isProfessional:state.prof.isProfessional,
   count:state.notification.count,
-  notifications:state.notification.notifications
 })
 
 

@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
 import {Container, ListGroup, ListGroupItem, Button, Modal,
-  ModalHeader,
+  ModalHeader, Row, Col, Table,
   ModalBody} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
 import {messageNotification} from '../actions/notificationActions'
@@ -14,6 +14,7 @@ import {
 import PropTypes from 'prop-types'
 
 import ReactTimeout from "react-timeout";
+import {FaUserAlt} from "react-icons/fa"
 
 
 class DisplayBooking extends Component{
