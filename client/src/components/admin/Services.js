@@ -13,7 +13,8 @@ import {
   Alert,
   } from 'reactstrap'
 
-  
+  import AppNavbar from '../AppNavbar'
+  import Footer from '../Footer'
 
 import {Container,  Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import '../../index.css'
@@ -43,7 +44,7 @@ class Services extends Component{
   }
 
   toggle=()=>{
-    
+
     this.setState({
       flag:null,
       flag2:null,
@@ -64,13 +65,13 @@ class Services extends Component{
           if (all_services[k]["name"]===e.target.value)
           {
             this.setState({msg:'service already exists'})
-            
+
             break
           }
           else{
             this.setState({msg:null})
           }
-        }      
+        }
     }
     else if (e.target.name==='service_worker'){
       var k =null;
@@ -85,7 +86,7 @@ class Services extends Component{
           else{
             this.setState({msg2:null})
           }
-        }   
+        }
     }
     else{
       this.setState({msg:null,msg2:null})
@@ -98,7 +99,7 @@ class Services extends Component{
      const {name,about,service_worker}=this.state
      const service_added={name,about,service_worker}
      if (service_added!=null){
-       
+
        this.props.addService(service_added)
        this.setState({flag2:true})
      }
@@ -115,6 +116,7 @@ class Services extends Component{
     }
       return(
         <div>
+        <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add Service</Button>
             <Modal
@@ -124,10 +126,10 @@ class Services extends Component{
         <ModalHeader toggle={this.toggle}>Enter the service details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
-       
+
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-         
+
             <Label for="Service">Service Name</Label>
             <Input
               type="string"
@@ -155,7 +157,7 @@ class Services extends Component{
               placeholder ="service worker"
               onChange={this.onChange}
             />
-            
+
             {(this.state.msg || this.state.msg2)?' ':
             <Button color="dark" block>
             Add Service
@@ -188,7 +190,7 @@ class Services extends Component{
             <Col md="3" className="slot_select"  onClick={()=>{this.selectService(item.name)}}>
 
                 <span>{item.name}</span>
-                
+
             </Col>
 
           ))
@@ -203,7 +205,9 @@ class Services extends Component{
     </Col>
   </Row>
 </Container>
-
+<Footer>
+<Footer/>
+</Footer>
             </div>
       )
   }
@@ -219,6 +223,6 @@ addService:PropTypes.func.isRequired
 const mapStateToProps=state=>({
 services:state.admin.services
 })
-    
+
 
 export default connect(mapStateToProps,{allServices,addService})(Services)

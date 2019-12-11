@@ -1,4 +1,4 @@
-import React,{Component} from 'react'; 
+import React,{Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { Container,Button,Form,FormGroup,Label,Input } from 'reactstrap';
 import {connect} from 'react-redux'
@@ -7,14 +7,16 @@ import {sendLocation} from '../../actions/profActions'
 import {
   Redirect
 } from "react-router-dom";
+import AppNavbar from'../AppNavbar';
+import Footer from '../Footer'
 
 class ProfGetmarker extends React.Component {
-  
+
 
 onChange=(e)=>{
   this.setState({[e.target.name]:e.target.value})
 }
-  
+
 sendAddress(markers,address){
   var id = this.props.user._id;
   var city = this.props.initial_center.city;
@@ -25,14 +27,14 @@ sendAddress(markers,address){
   })
 }
 
- 
+
   state = {
     address:null,
     flag:null,
     initial_center:{
       lat:13.09,
       lng:77.89
-    },    
+    },
       markers: [
         {
           name: "Current position",
@@ -43,19 +45,19 @@ sendAddress(markers,address){
         }
       ]
     };
-  
+
     onMarkerDragEnd = (coord, index) => {
       const { latLng } = coord;
       const lat = latLng.lat();
       const lng = latLng.lng();
-  
+
       this.setState(prevState => {
         const markers = [...this.state.markers];
         markers[index] = { ...markers[index], position: { lat, lng } };
         return { markers };
       });
     };
-  
+
     render() {
       if(this.state.flag===2)
       {
@@ -77,6 +79,7 @@ sendAddress(markers,address){
       }
       return (
         <div>
+        <AppNavbar />
         <div className="maps" style={{position:"relative"}}>
         <Container>
         <Map
@@ -97,7 +100,7 @@ sendAddress(markers,address){
                 />
               ))}
             </Map>
-            
+
         </Container>
         </div>
 
@@ -113,8 +116,11 @@ sendAddress(markers,address){
           />
           </FormGroup>
           </Form>
-          
+
         <Button style={{marginTop:'550px',height:'50px'}} onClick={()=>{this.sendAddress(this.state.markers,this.state.address)}}>Become Professional</Button>
+        <Footer>
+        <Footer/>
+        </Footer>
         </div>
       );
     }
@@ -134,5 +140,3 @@ user:state.auth.user
 export default connect(mapStateToProps,{sendLocation})( GoogleApiWrapper({
   apiKey: ('AIzaSyBM9hBBwzMOrDHqOB9harB9AqXS6HZdiX8'),
 })(ProfGetmarker))
-
-

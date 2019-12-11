@@ -13,7 +13,8 @@ import {
   Alert,
   } from 'reactstrap'
 
-  
+import AppNavbar from '../AppNavbar'
+import Footer from '../Footer'
 
 import {Container,  Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import '../../index.css'
@@ -34,7 +35,7 @@ class Adminservicetype extends Component{
      service_type:null,
      cost:null,
      msg:null,
-     
+
    }
 
   componentDidMount(){
@@ -43,7 +44,7 @@ class Adminservicetype extends Component{
   }
 
   toggle=()=>{
-    
+
     this.setState({
       modal: !this.state.modal,
       msg:null,
@@ -62,15 +63,15 @@ class Adminservicetype extends Component{
           if (service_types[k]["service_type"]===e.target.value)
           {
             this.setState({msg:'service type already exists'})
-            
+
             break
           }
           else{
             this.setState({msg:null})
           }
-        }      
+        }
     }
-    
+
     else{
       this.setState({msg:null})
     }
@@ -87,12 +88,13 @@ class Adminservicetype extends Component{
      }
  }
 
-  
+
   render(){
       const service_types = this.props.service_types?this.props.service_types:null;
-      
+
       return(
         <div>
+        <AppNavbar />
           <br/>
             <Button onClick={this.toggle}>Add Service Type</Button>
             <Modal
@@ -102,10 +104,10 @@ class Adminservicetype extends Component{
         <ModalHeader toggle={this.toggle}>Enter the service type details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
-       
+
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-         
+
             <Label for="service_type">Service Type</Label>
             <Input
               type="string"
@@ -124,7 +126,7 @@ class Adminservicetype extends Component{
               onChange={this.onChange}
             />
             <br/>
-            
+
             {(this.state.msg)?' ':
             <Button color="dark" block>
             Add Service Type
@@ -157,7 +159,7 @@ class Adminservicetype extends Component{
             <Col md="3" className="slot_select" >
 
                 <span>{item.service_type}</span>
-                
+
             </Col>
 
           ))
@@ -172,7 +174,9 @@ class Adminservicetype extends Component{
     </Col>
   </Row>
 </Container>
-
+<Footer>
+<Footer/>
+</Footer>
             </div>
       )
   }
@@ -188,6 +192,6 @@ addServiceType:PropTypes.func.isRequired
 const mapStateToProps=state=>({
 service_types:state.admin.service_types
 })
-    
+
 
 export default connect(mapStateToProps,{getserviceType,addServiceType})(Adminservicetype)

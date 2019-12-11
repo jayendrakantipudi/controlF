@@ -10,6 +10,8 @@ import '../index.css';
  import image from '../img.JPG'
  import { Row, Col } from 'reactstrap';
  import { Table } from 'reactstrap';
+ import AppNavbar from'./AppNavbar';
+ import Footer from './Footer'
 
 
 
@@ -103,6 +105,7 @@ if (!this.props.token) {
 
 return(
 <div className="row_class">
+<AppNavbar />
 <br/>
 
 <Container>
@@ -247,7 +250,9 @@ return(
 </Container>
 
 
-
+<Footer>
+<Footer/>
+</Footer>
 </div>
 
 )

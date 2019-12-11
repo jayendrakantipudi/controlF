@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
+import AppNavbar from'../AppNavbar';
+import Footer from '../Footer'
 
 class ProfCurrentloco extends React.Component {
   state = {
@@ -55,14 +57,14 @@ class ProfCurrentloco extends React.Component {
       },
       flag:1
     })
-    
+
   }
 
   render() {
     if(!this.props.isGeolocationAvailable)
       return(<div>Your browser does not support Geolocation</div>)
-      if(this.props.coords && !this.state.flag) 
-      { 
+      if(this.props.coords && !this.state.flag)
+      {
         this.setLocation(this.props.coords.latitude,this.props.coords.longitude)
       }
 
@@ -72,6 +74,7 @@ class ProfCurrentloco extends React.Component {
       }
     return (
       <div>
+      <AppNavbar />
         <Form style={{ height: '100px', position: 'fixed' }}>
           <FormGroup>
             <Label for="address">Address</Label>
@@ -85,7 +88,7 @@ class ProfCurrentloco extends React.Component {
           </FormGroup>
         </Form>
         <DropdownButton id="dropdown-basic-button" title={this.state.city}>
-           { 
+           {
             this.props.all_cities?
             this.props.all_cities.map((item) => (
             <Dropdown.Item value={item.city} onSelect={()=>{this.handleChange(item.city)}} >{item.city}</Dropdown.Item>
@@ -95,6 +98,9 @@ class ProfCurrentloco extends React.Component {
           }
           </DropdownButton>
         <Button style={{ marginTop: '250px', height: '50px' }} onClick={() => { this.sendAddress(this.state.position, this.state.address,this.state.city) }}>Become Professional</Button>
+        <Footer>
+        <Footer/>
+        </Footer>
       </div>
     )
   }
@@ -119,5 +125,3 @@ export default connect(mapStateToProps, { sendLocation,getCities })( geolocated(
   },
   userDecisionTimeout: 5000,
 })(ProfCurrentloco))
-
-

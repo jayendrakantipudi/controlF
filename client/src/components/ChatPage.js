@@ -14,10 +14,14 @@ import PropTypes from 'prop-types'
 import {sendMessage,getMessages} from '../actions/mainchatActions'
 import {getOrder} from '../actions/locationAction'
 import {Container } from 'reactstrap'
+import '../styles/chatpage.css'
 import {
   Redirect,
   Link
 } from "react-router-dom";
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import Container1 from './Container1'
 const useStyles = makeStyles(theme => ({
     root: {
       margin:'50px',
@@ -91,14 +95,17 @@ class ChatPage extends Component{
         return <Redirect to="/" />;
       }
   const talking_to=this.props.auth.user?this.props.order?this.props.auth.user.name==this.props.order.prof_name?this.props.order.name:this.props.order.prof_name:null:null;
+
   return(
     <div>
-      <Paper >
+    <AppNavbar />
+      <Paper>
           <Typography variant="h5" component="h5">
           {this.props.order?<div>You are talking to {talking_to}</div>:null}
           </Typography>
           <Paper style={{width:"50%",marginLeft:"30%"}}>
-          <div style={{borderBottom:'1.5px solid rgba(0,0,0,0.14)'}}>
+
+          <div style={{borderBottom:'1.5px solid rgba(0,0,0,0.14)',maxHeight: 500,width:'100%'}} className="scrollbar" id="style-1">
           {this.props.message?this.props.message.messages.map(mess=><div style={mess.from===this.props.auth.user._id? stylesRight:stylesLeft}><Chip label={mess.message}/></div>):null}
           </div>
           <div>
@@ -117,10 +124,12 @@ class ChatPage extends Component{
           </div>
           </Paper>
       </Paper>
+      <Footer>
+      <Footer/>
+      </Footer>
     </div>
 
-  )
-}
+  )}
 }
 ChatPage.propTypes={
 sendMessage:PropTypes.func.isRequired,
