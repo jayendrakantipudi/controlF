@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const review = require('../Models/review').review;
+const Service = require('../Models/service').Service;
 const {Professional}=require('../Models/professional');
 const {User}=require('../Models/user');
 
@@ -24,13 +25,15 @@ router.get('/user/reviews/:user_id', async(req, res) => {
 });
 
 router.get('/:serviceName', async(req, res) => {
-    const service_reviews = await review.find({ service_name: req.params.serviceName })
+    const find_service = await Service.findOne({ name: req.params.serviceName })
+    const service_reviews = await review.find({ service_name: find_service.service_worker })
     if(!service_reviews) return res.status(400).send('Service Does not Exist!')
     res.send(service_reviews)
 });
 
 router.get('/user_names/:serviceName', async(req, res) => {
-    const service_reviews = await review.find({ service_name: req.params.serviceName })
+    const find_service = await Service.findOne({ name: req.params.serviceName })
+    const service_reviews = await review.find({ service_name: find_service.service_worker })
     if(!service_reviews) return res.status(400).send('Service Does not Exist!')
     var users = {}
     for (var i in service_reviews){
@@ -41,12 +44,14 @@ router.get('/user_names/:serviceName', async(req, res) => {
 });
 
 router.get('/prof_names/:serviceName', async(req, res) => {
-    const service_reviews = await review.find({ service_name: req.params.serviceName })
+    const find_service = await Service.findOne({ name: req.params.serviceName })
+    const service_reviews = await review.find({ service_name: find_service.service_worker })
     if(!service_reviews) return res.status(400).send('Service Does not Exist!')
     var users = {}
     for (var i in service_reviews){
-        const user_ser = await User.findById(service_reviews[i].professional_id)
-        users[service_reviews[i].professional_id] = user_ser.name.charAt(0).toUpperCase() + user_ser.name.slice(1)
+        const user_ser = await Professional.findById(service_reviews[i].professional_id)
+        users[service_reviews[i].professional_id] = user_ser.user.name.charAt(0).toUpperCase() + user_ser.user.name.slice(1)
+        console.log(user_ser)
     }
     res.send(users)
 });
