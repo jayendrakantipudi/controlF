@@ -105,6 +105,44 @@ router.get('/mybookings/:id',async(req, res)=>{
   res.send(orders.reverse());
 })
 
+
+
+
+router.get('/mypendingpayments/:id',async(req, res)=>{
+  const order = await Order.find({user_id:req.params.id,is_paid:false,is_confirmed:true})
+  var item = null;
+  orders = [];
+  for(item in order){
+    temp =   order[item]; 
+    var professional = await Professional.findById(temp.professional)
+    var slot = await Slot.findById(temp.slot._id)  
+    var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
+    var ser_chosen= [];var item2=null;
+    for(item2 in temp.services_chosen)
+    {
+      ser_chosen.push(item2)
+    }
+    var Orderdetails= {
+      order_id:temp._id,
+      professional_id: professional._id,
+      user_id: req.body.id,
+      services_chosen:ser_chosen,
+      total_cost:temp.total_cost,
+      date:ordered_date,
+      prof_name:professional.user.name,
+      prof_phone:professional.phonenumber,
+      slot:slot.start_time,
+      address:temp.address[2],
+      city:temp.address[3],
+  }
+  orders.push(Orderdetails)
+  }
+  res.send(orders.reverse());
+})
+
+
+
+
 router.post('/showprofile',async(req, res)=>{
   const user= await User.findById(req.body.id).select('-password')
   const professional_details = await Professional.findOne({"user._id":user._id});
