@@ -123,6 +123,7 @@ class Service extends React.Component{
 		const {services} = this.state;
 		const br = '\n'
 		const worker=this.props.service.ser?this.props.service.ser.service_worker:null;
+		console.log(this.state.prof_names)
 		if (!this.props.token) {
 			// Logout
 			return <Redirect to="/" />;

@@ -73,11 +73,10 @@ router.get('/:id',async(req,res)=>{
   res.send(user);
 })
 
-router.post('/mybookings',async(req, res)=>{
-  const order = await Order.find({user_id:req.body.id,is_confirmed:true})
+router.get('/mybookings/:id',async(req, res)=>{
+  const order = await Order.find({user_id:req.params.id,is_confirmed:true})
   var item = null;
   orders = [];
-  console.log(order)
   for(item in order){
     temp =   order[item]; 
     var professional = await Professional.findById(temp.professional)
