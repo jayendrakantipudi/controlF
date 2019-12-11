@@ -1,8 +1,9 @@
-import {GET_SERVICE, GET_SERVICETYPES, STORE_ORDER} from '../actions/types'
+import {GET_SERVICE, GET_SERVICETYPES, STORE_ORDER,SERVICETYPES_LOADING} from '../actions/types'
 
 const initialState={
   ser:[],
-  order_id:null
+  order_id:null,
+  isLoading:false
 }
 
 export default function(state=initialState,action){
@@ -13,7 +14,13 @@ export default function(state=initialState,action){
     case GET_SERVICE:
       return {
         ...state,
-        ser:action.payload
+        ser:action.payload,
+        isLoading:false
+      }
+    case SERVICETYPES_LOADING:
+      return {
+        ...state,
+        isLoading:true
       }
     case STORE_ORDER:
       return {

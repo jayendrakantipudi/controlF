@@ -10,10 +10,10 @@ import '../index.css'
 import {
   Redirect
 } from "react-router-dom";
-
-
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 import PropTypes from 'prop-types'
-
+import Container1 from './Container1'
 
 
 class serviceTypes extends Component{
@@ -126,8 +126,13 @@ if (!this.props.token) {
     // Logout
       return <Redirect to="/" />;
     }
+    if(this.props.order.isLoading){
+      return <Container1/>
+    }
+    else{
 return(
   <div>
+  <AppNavbar />
   <br/>
   <br/>
   <Container className="container_stype">
@@ -218,8 +223,12 @@ return(
       </Col>
     </Row>
     </Container>
+    <Footer>
+    <Footer/>
+    </Footer>
   </div>
 )
+}
 }
 }
 
@@ -228,7 +237,8 @@ serviceTypes.propTypes={
   token:PropTypes.string.isRequired,
   get_services:PropTypes.func.isRequired,
   service:PropTypes.object.isRequired,
-  store_order:PropTypes.func.isRequired
+  store_order:PropTypes.func.isRequired,
+  order:PropTypes.func.isRequired
 }
 
 
@@ -237,5 +247,6 @@ const mapStateToProps=state=>({
 user:state.auth.user,
 token:state.auth.token,
 service:state.service,
+order:state.order
 })
 export default connect(mapStateToProps,{loadUser, get_services, store_order})(serviceTypes)

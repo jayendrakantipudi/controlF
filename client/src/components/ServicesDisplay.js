@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import {Button, Container, Row, Col, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap'
 import '../styles/serviceDisplay.css'
 import ScrollUpButton from "react-scroll-up-button";
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 class ServicesDisplay extends Component{
   state = {
@@ -31,13 +33,13 @@ class ServicesDisplay extends Component{
     console.log(this.state.disp_services)
     var disp = []
     for (var i in this.state.all_services) {
-      var temp = this.state.all_services[i].name    
-      var tempSmall = temp.toLowerCase()  
+      var temp = this.state.all_services[i].name
+      var tempSmall = temp.toLowerCase()
       var bol = tempSmall.includes(target.value.toLowerCase())
       if(bol){
         console.log(this.state.all_services[i].name )
         disp.push(this.state.all_services[i])
-      }      
+      }
     }
     this.setState({ disp_services: disp })
   }
@@ -46,6 +48,7 @@ class ServicesDisplay extends Component{
     var mybutton = document.getElementById("myBtn");
     return(
       <div>
+      <AppNavbar />
       <br/>
       <br/>
       <input placeholder="Search for a service..." className="search" onChange={this.suggestion}></input>
@@ -64,9 +67,9 @@ class ServicesDisplay extends Component{
               <ListGroupItem className="listgrp_serdisp">
                 <Link className="link_sd" to={'/service/'+item.name} style={{textDecoration:'none'}}>
                   <ListGroupItemHeading>
-                      
+
                         {item.name}
-                    
+
                   </ListGroupItemHeading>
                   <ListGroupItemText>
                     {item.about}
@@ -80,6 +83,9 @@ class ServicesDisplay extends Component{
         </Row>
       </Container>
       <br/><br/><br/><br/>
+      <Footer>
+      <Footer/>
+      </Footer>
       </div>
 
 

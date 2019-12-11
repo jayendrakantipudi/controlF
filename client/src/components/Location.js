@@ -4,6 +4,8 @@ import {Container, Button, Row, Col, Table, TabContent, TabPane, Card} from 'rea
 import {
   Redirect
 } from "react-router-dom";
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 import { FaCrosshairs } from 'react-icons/fa';
 class Location extends Component{
@@ -30,6 +32,7 @@ class Location extends Component{
         }
         return(
           <div>
+          <AppNavbar />
           <br/><br/>
           <Container style={{border:'1px solid gray'}}>
           <br/><br/>
@@ -53,7 +56,9 @@ class Location extends Component{
             </Row>
 <br/><br/>
           </Container>
-
+          <Footer>
+          <Footer/>
+          </Footer>
           </div>
         )
     }

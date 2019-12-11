@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import {getCities,setLocation} from '../actions/locationAction'
 import '../index.css'
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 import {
   Redirect
@@ -38,7 +40,7 @@ if (this.state.flag){
 return(
 
 <div >
-
+<AppNavbar />
 <br/><br/><br/>
 
 <Container>
@@ -75,6 +77,9 @@ return(
 </Col>
 </Row>
 </Container>
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }
