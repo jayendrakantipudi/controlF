@@ -12,7 +12,7 @@ import showProfReducer from './showProfReducer'
 import notificationReducer from './notificationReducer'
 import mainchatReducer from './mainchatReducer'
 import adminReducer from './adminReducer'
-
+import reviewReducer from './reviewReducer'
 
 export default combineReducers({
   item: itemReducer,
@@ -27,5 +27,6 @@ export default combineReducers({
   showProf:showProfReducer,
   notification:notificationReducer,
   message:mainchatReducer,
-  admin:adminReducer
+  admin:adminReducer,
+  review:reviewReducer
 })

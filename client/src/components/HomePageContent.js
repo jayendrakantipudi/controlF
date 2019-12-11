@@ -57,7 +57,7 @@ class HomePageContent extends Component{
 			<Row>
 
 				<Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Carpentry">
+        <Link className="hpc_row2_link" to="/service/carpenter">
 					<br/>
 					<img src={carpenter} className="img2"/>	<br/><br/>
           </Link>
@@ -67,7 +67,7 @@ class HomePageContent extends Component{
 
 
         <Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Plumbing">
+        <Link className="hpc_row2_link" to="/service/plumber">
 					<br/>
 					<img src={plumber} className="img2"/>	<br/><br/>
           </Link>
@@ -77,7 +77,7 @@ class HomePageContent extends Component{
 
 
         <Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Electrician">
+        <Link className="hpc_row2_link" to="/service/electrician">
 					<br/>
 					<img src={electrician} className="img2"/>	<br/><br/>
           </Link>
@@ -87,7 +87,7 @@ class HomePageContent extends Component{
 
 
         <Col md="3" className="hpc_row2">
-        <Link className="hpc_row2_link" to="/service/Saloon and Spa">
+        <Link className="hpc_row2_link" to="/service/hair stylist">
 					<br/>
 					<img src={hair_stylist} className="img2"/>	<br/><br/>
           </Link>

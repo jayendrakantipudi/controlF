@@ -56,7 +56,7 @@ router.post('/booking',async(req,res)=>{
             type.is_confirmed = true
             await type.save()
             let professional = await Professional.findById(type.professional)
-            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id})
+            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
             console.log(type)
             res.send(type._id)
@@ -66,12 +66,12 @@ router.post('/booking',async(req,res)=>{
     console.log(flag)
     if (flag===0) return res.status(400).send('slot not found')
 
-    
+
 })
 
 
 router.post('/messagenotification',async(req,res)=>{
-	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url})
+	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
 	await notification.save()
 	res.send(notification.id)
 })
@@ -118,6 +118,45 @@ router.post('/getOrder',async(req,res)=>{
     city:type.address[3],
 }
 res.send(Orderdetails)
+})
+
+router.get('service/bulkbooking',async(req,res)=>{
+    var res_token = req.query.api;
+    let serorg = Serviceuser.find({token:res_token})
+    if (!serorg) return res.status(400).send('Organisation Invalid')
+    var service_worker = req.query.profession;
+    let service = await Service.findOne({service_worker:service_worker})
+    let service_type = await ServiceType.findOne({service_type:'Installation','service._id':service._id})
+    var total_cost = service_type.cost;
+    var order_year = req.query.year;
+    var order_month = req.query.month;
+    var order_date = req.query.date;
+    var phone_number = req.query.phonenumber;
+    var username = req.query.username;
+    var address = req.query.address;
+    var city = req.query.city;
+    var duration = req.query.days;
+    var persons = req.query.count;
+    const professionals = Professional.find({profession:service_worker,'locality.3':city})
+    if(professionals.length<persons){
+        res.send({})
+    }
+    else{
+        var dates = []
+        var tomorrow = new Date(order_year+'-'+order_month+'-'+order_date);
+
+        for(var i;i<duration;i++){
+        dates.push({date:tomorrow.getDate(),month:tomorrow.getMonth()+1,year:tomorrow.getFullYear()})
+        tomorrow.setDate(tomorrow.getDate()+1);
+        }
+
+        for(var d in dates){
+            
+
+        }
+
+    }
+
 })
 
 router.get('/service/orderbooking',async(req,res)=>{
@@ -182,7 +221,7 @@ router.post('/notification',async(req,res)=>{
 	console.log(req.body)
 	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
 	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
-	res.send(a);
+	res.send(a.reverse());
 })
 
 
@@ -199,6 +238,20 @@ router.post('/chat',async(req,res)=>{
 router.post('/getmessages',async(req,res)=>{
 	const prof_to_user=await Chat.find({$or:[{to:req.body.user_id,from:req.body.professional_id},{to:req.body.professional_id,from:req.body.user_id}]})
 	res.send(prof_to_user)
+})
+
+router.post('/allNotificationsChecked',async(req,res)=>{
+	const notifications_notseen= await Notifications.find({new:true,to:req.body.user_id})
+	res.send(notifications_notseen)
+})
+
+router.post('/clearNotifications',async(req,res)=>{
+	Notifications.find({new:true,to:req.body.user_id},function (err, docs){
+  docs.map(doc=>{doc.new = false;
+  doc.save();}
+	)
+})
+	res.send("done")
 })
 
 module.exports = router;

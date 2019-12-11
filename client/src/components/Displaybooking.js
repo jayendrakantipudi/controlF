@@ -1,8 +1,8 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
-import {Container, ListGroup, ListGroupItem, Button, Table, Modal,
-  ModalHeader, Row, Col,
+import {Container, ListGroup, ListGroupItem, Button, Modal,
+  ModalHeader, Row, Col, Table,
   ModalBody} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
 import {messageNotification} from '../actions/notificationActions'
@@ -11,10 +11,10 @@ import {
   Redirect,
   Link
 } from "react-router-dom";
-import PropTypes from 'prop-types';
-import { FaUserAlt } from "react-icons/fa";
+import PropTypes from 'prop-types'
 
 import ReactTimeout from "react-timeout";
+import {FaUserAlt} from "react-icons/fa"
 
 
 class DisplayBooking extends Component{
@@ -30,7 +30,7 @@ class DisplayBooking extends Component{
  }
 
  async componentDidMount(){
-  this.props.setTimeout(this.myBookings, 100);
+  this.props.setTimeout(this.myBookings, 200);
 }
 
 
@@ -39,7 +39,7 @@ class DisplayBooking extends Component{
       modal: !this.state.modal
     })
   }
-  
+
   closebutton(){
     this.setState({flag:1})
   }
@@ -71,7 +71,6 @@ const address = this.props.order?this.props.order.address:null;
 const city = this.props.order?this.props.order.city:null;
 const user_id = this.props.order?this.props.order.user_id:null;
 const professional_id = this.props.order?this.props.order.professional_id:null;
-console.log(services_chosen)
 
 if (!this.props.token) {
     // Logout
@@ -86,7 +85,7 @@ if(this.state.flag===1){
   }
 
 
-  
+
 if(professional===null)
 {
   return (
@@ -108,7 +107,7 @@ if(professional===null)
 return(
 <div>
 <div style={{fontSize:'200%'}}>
-  <h2>Your Booking</h2>
+  Your Booking<br/><br/>
 </div>
 <Container>
     <Row>
@@ -194,7 +193,11 @@ return(
   <Row style={{textAlign:'center'}}>
     <Col md="5">
     <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-<Link to="/chatpage"><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
+    <Link to={{
+              pathname: "/chatpage",
+              state: { order_id: this.props.location.state.order_id }
+          }}
+    ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
 
     </Col>
   </Row>
@@ -204,11 +207,6 @@ return(
 </Row>
 </Container>
 <ListGroup>
-
-  <ListGroupItem>
-    Services Chosen:{services_chosen?services_chosen:null}
-  </ListGroupItem>
-
   <ListGroupItem>
     Address:{address?address:null}
   </ListGroupItem>
@@ -216,7 +214,12 @@ return(
     City:{city?city:null}
   </ListGroupItem>
 </ListGroup>
-
+<Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
+<Link to={{
+          pathname: "/chatpage",
+          state: { order_id: this.props.location.state.order_id }
+      }}
+><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
 
 </div>
 )
