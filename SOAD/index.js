@@ -20,7 +20,7 @@ const location = require('./routes/location');
 const booking = require('./routes/Booking');
 const reviews = require('./routes/reviews')
 // const {route} = require('./routes/payments');
-const {pay} = require('./routes/pay')
+const pay = require('./routes/pay')
 const {webhook} = require('./routes/webhook')
 app.use(cors());
 
