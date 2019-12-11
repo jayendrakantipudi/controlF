@@ -18,7 +18,8 @@ import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { FaUserAlt } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
-
+import AppNavbar from './AppNavbar'
+import Footer from './Footer'
 
 class pendingOrders extends Component{
 
@@ -80,7 +81,7 @@ class pendingOrders extends Component{
   paying123(order_id, user_id, total_cost){
     console.log('helllooooo badu')
     console.log(order_id, user_id, total_cost)
-    // this.props.payment(order_id, user_id, total_cost)
+    this.props.payment(order_id, user_id, total_cost)
   }
 
 render(){
@@ -100,7 +101,7 @@ if (this.state.flag){
 // console.log('hlooooooooooooo')
 return(
 <div>
-
+<AppNavbar/>
 <div style={{alignContent:'center',marginTop:'20px'}}>
 <center>
 <br/>
@@ -151,8 +152,8 @@ return(
 
     <Col md="1">
       <a>
-      <Button onClick={() => {console.log('helosdhjvsfhsfhv')}}  color="warning">
-        Pay    
+      <Button href={"http://localhost:3000/api/payments/".concat(item.order_id).concat('/').concat(this.props.user._id).concat('/').concat(item.total_cost.toString())} onClick={() => {this.paying123(item.order_id, this.props.user._id, item.total_cost)}}  color="warning">
+        Pay
       </Button>
     </a>
     </Col>
@@ -181,9 +182,9 @@ return(
 </div>
 
 
-
-
-
+<Footer>
+<Footer/>
+</Footer>
 
 </div>
 )
