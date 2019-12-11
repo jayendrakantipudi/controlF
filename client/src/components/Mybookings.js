@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
-import {Container, ListGroup, ListGroupItem, Button, Row, Col, 
+import {Container, ListGroup, ListGroupItem, Button, Row, Col,
   Table, TabContent, TabPane, Modal, ModalHeader,  ModalBody, Form,
   FormGroup, Label, Input} from 'reactstrap'
 
@@ -21,7 +21,7 @@ import { TiTick } from "react-icons/ti";
 
 
 class Mybookings extends Component{
- 
+
   constructor(props)
   {
     super(props)
@@ -36,7 +36,7 @@ class Mybookings extends Component{
       check_reviews:[],
       check_reviews_bool:{}
       }
-      
+
   }
 
   toggle=(key)=>{
@@ -62,8 +62,8 @@ class Mybookings extends Component{
   modalToggle = (order_list) =>{
     console.log('heyyyyyyyyyyyyyyyyyyyyy')
     console.log(this.props.user._id)
-    console.log(this.props.orderList)
-
+    // console.log(this.props.orderList)
+    console.log(this.state.order_list)
     const temp_dict = {}
     for (var i in order_list){
       temp_dict[order_list[i].order_id] = false
@@ -102,16 +102,16 @@ class Mybookings extends Component{
   async componentDidMount(){
     await this.props.loadUser()
     this.props.setTimeout(this.myBookings, 200);
-    this.props.setTimeout(() => {this.modalToggle(this.state.order_list)}, 300);
+    this.props.setTimeout(() => {this.modalToggle(this.state.order_list)}, 250);
     this.props.setTimeout(this.check_review, 200);
-    this.props.setTimeout(() => {this.review_bool(this.state.check_reviews, this.state.check_reviews_bool)}, 300);
+    this.props.setTimeout(() => {this.review_bool(this.state.check_reviews, this.state.check_reviews_bool)}, 700);
   }
 
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     console.log(this.state.review)
     // console
-    
+
   }
 
   onSubmit= async(order_id, professional_id, user_id1)=>{
@@ -123,9 +123,9 @@ class Mybookings extends Component{
        const value = await this.props.addReview(service_added)
       }
   }
- 
+
 render(){
-  
+
 //  const user_orders = this.props.orderList?this.props.orderList:null;
 const user_orders = this.state.order_list
 console.log('review bool')
@@ -163,13 +163,13 @@ return(
     user_orders?
     user_orders.map((item) => (
       item?
-    
+
 <Row className="mybooks_row" style={{borderTop: '1px solid #EDE8FF', borderBottom: '1px solid #EDE8FF', padding: '10px 10px'}}>
     <Col md="1">{item.date}</Col>
     <Col md="2">
       <ul>
       {item.services_chosen.map((ser) =>(
-        <li> {ser} </li> 
+        <li> {ser} </li>
       ))}
       </ul>
     </Col>
@@ -199,7 +199,7 @@ return(
       Review
     </Button>}
     </Col>
-     
+
      <br/>
 
 
@@ -207,8 +207,8 @@ return(
 
 </Row>
   :
-    null      
-    )) 
+    null
+    ))
     :
   null
 
@@ -250,11 +250,11 @@ return(
       </ModalBody>
       </Modal>
       :
-      null      
-      )) 
+      null
+      ))
       :
     null
-  
+
   }
 
 </div>

@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 
 import {Container, ListGroup, ListGroupItem, Button, Modal,
-  ModalHeader,
+  ModalHeader, Row, Col, Table,
   ModalBody} from 'reactstrap'
 import {sendMessage} from '../actions/mainchatActions'
 import {messageNotification} from '../actions/notificationActions'
@@ -14,6 +14,7 @@ import {
 import PropTypes from 'prop-types'
 
 import ReactTimeout from "react-timeout";
+import {FaUserAlt} from "react-icons/fa"
 
 
 class DisplayBooking extends Component{
@@ -38,7 +39,7 @@ class DisplayBooking extends Component{
       modal: !this.state.modal
     })
   }
-  
+
   closebutton(){
     this.setState({flag:1})
   }
@@ -84,7 +85,7 @@ if(this.state.flag===1){
   }
 
 
-  
+
 if(professional===null)
 {
   return (
@@ -106,30 +107,106 @@ if(professional===null)
 return(
 <div>
 <div style={{fontSize:'200%'}}>
-  YOUR Booking<br/><br/>
+  Your Booking<br/><br/>
 </div>
+<Container>
+    <Row>
+      <Col md="8">
+<Container style={{border: '1px solid #EDE8FF', padding: '10px 10px'}}>
+  <Row>
+    <Col md="5" style={{textAlign:'center'}}>
+      <div style={{padding:'100px 10px',border:'1px solid black',marginTop:'2%'}}>
+        <FaUserAlt style={{fontSize:'30px'}} />
+      </div>
+    </Col>
+    <Col md="7" style={{marginTop:'5%'}}>
+      <h3>Professional</h3>
+      <Table borderless style={{marginLeft:'5%'}}>
+        <tr>
+          <th>Name</th>
+          <th>:</th>
+          <td>{professional?professional:null}</td>
+        </tr>
+        <tr>
+          <th>Number</th>
+          <th>:</th>
+          <td>{professional_number?professional_number:null}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <th>:</th>
+          <td>jayk@gmail.com</td>
+        </tr>
+      </Table>
+    </Col>
+  </Row>
+  <br/>
+  <Row>
+    <Col md="12">
+      <Table bordered>
+        <thead>
+          <tr>
+            <th>Service Chosen</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Water Leakage</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Pipe Fitting</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </Table>
+    </Col>
+  </Row>
+  <br/>
+  <Row>
+    <Col  sm={{ size: '5'}} style={{border:'1px solid black', marginLeft:'5%'}}>
+      <div style={{marginTop:'6%'}}>
+      <h5>Slot Booked</h5>
+      <Table borderless>
+        <tr>
+          <th>Date</th>
+          <th>:</th>
+          <td>{date?date:null}</td>
+        </tr>
+        <tr>
+          <th>Slot</th>
+          <th>:</th>
+          <td>{slot?slot:null}</td>
+        </tr>
+      </Table>
+      </div>
+    </Col>
+    <Col  sm={{ size: '5', offset: 1 }} style={{border:'1px solid black'}}>
+      <div style={{marginTop:'10%'}}>
+        <h5>Total Cost</h5>
+        <span style={{color:'red', fontSize:'30px'}}>Rs. {total_cost?total_cost:null} /-</span>
+      </div>
+    </Col>
+  </Row>
+  <br/>
+  <Row style={{textAlign:'center'}}>
+    <Col md="5">
+    <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
+    <Link to={{
+              pathname: "/chatpage",
+              state: { order_id: this.props.location.state.order_id }
+          }}
+    ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
+
+    </Col>
+  </Row>
+  <br/><br/>
+</Container>
+</Col>
+</Row>
+</Container>
 <ListGroup>
-  <ListGroupItem>
-    Name:{name?name:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    Services Chosen:{services_chosen?services_chosen:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    Total Cost:{total_cost?total_cost:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    Professional Name:{professional?professional:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    Professional Phone Number:{professional_number?professional_number:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    Date:{date?date:null}
-  </ListGroupItem>  
-  <ListGroupItem>
-    Slot:{slot?slot:null}
-  </ListGroupItem>
   <ListGroupItem>
     Address:{address?address:null}
   </ListGroupItem>

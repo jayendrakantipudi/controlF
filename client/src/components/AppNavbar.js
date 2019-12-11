@@ -9,6 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap'
+import NotificationAlert from "react-notification-alert";
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -28,20 +29,19 @@ class AppNavbar extends Component{
 constructor(props){
   super(props)
   this.state={
-    isOpen:false
+    isOpen:false,
+
   }
   // this.toggle=this.toggle.bind(this)
 }
-
-
 
 async componentDidMount()
 {
   await this.props.loadUser();
   if(this.props.auth.user)
   this.props.newNotifications(this.props.auth.user._id)
+  this.props.setTimeout(this.getNotifi,100)
   this.timer = setInterval(() =>this.props.auth.user? this.props.newNotifications(this.props.auth.user._id):null, 1000);
-
 }
 
 componentWillUnmount() {
@@ -54,10 +54,6 @@ componentDidUpdate(){
   {this.props.newNotifications(this.props.auth.user._id)}
 }
 
-getNotifi=()=>{
-  //this.props.getNotification(this.props.auth.user._id)
-}
-
 
 static propTypes ={
   auth: PropTypes.object.isRequired,
@@ -66,7 +62,7 @@ static propTypes ={
   loadUser:PropTypes.func.isRequired,
   getNotification:PropTypes.func.isRequired,
   count:PropTypes.number.isRequired,
-  newNotifications:PropTypes.func.isRequired
+  newNotifications:PropTypes.func.isRequired,
   // isProf:PropTypes.func.isRequired
 }
 
@@ -102,7 +98,7 @@ getNoti=(id)=>{
         </NavItem>
         <NavItem>
           <NavLink  >
-          <Link to="/notifications" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications {this.props.count}</Link>
+          <Link to="/notifications" className="notification" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}><i className="fas fa-bell"></i> <span className="badge" style={{display:this.props.count?'block':'none'}} onChange={()=>this.notify("tr")}>{this.props.count}</span></Link>
           </NavLink>
         </NavItem>
       </Fragment>
@@ -139,6 +135,7 @@ getNoti=(id)=>{
   // }
     return(
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
+      <NotificationAlert ref={this.notificationAlert} />
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <Link to="/"><NavbarBrand><span className="head_nav_name">CtrlF</span> </NavbarBrand></Link>
@@ -161,7 +158,7 @@ getNoti=(id)=>{
 const mapStateToProps = state => ({
   auth:state.auth,
   isProfessional:state.prof.isProfessional,
-  count:state.notification.count
+  count:state.notification.count,
 })
 
 

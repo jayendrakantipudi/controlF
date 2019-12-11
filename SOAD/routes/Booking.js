@@ -265,7 +265,7 @@ router.post('/notification',async(req,res)=>{
 
 	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
 	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
-	res.send(a);
+	res.send(a.reverse());
 })
 
 
