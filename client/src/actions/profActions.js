@@ -6,11 +6,12 @@ CREATE_PROFESSIONAL_FAIL,
 IS_PROFESSIONAL_TRUE,
 IS_PROFESSIONAL_FALSE,
 GET_PROFESSIONS,
-PROF_LOCATION
+PROF_LOCATION,
+MY_ORDERS
 } from './types'
 
 
-export const createProfessional=({user,profession,phonenumber})=>(dispatch,getState)=>{
+export const createProfessional=({user,profession,phonenumber,city})=>(dispatch,getState)=>{
   const token =getState().auth.token
 
   const config={
@@ -21,7 +22,7 @@ export const createProfessional=({user,profession,phonenumber})=>(dispatch,getSt
 
 if(token){
   config.headers['x-auth-token']=token
-  const body=JSON.stringify({user,profession,phonenumber})
+  const body=JSON.stringify({user,profession,phonenumber,city})
   axios.post('/api/professional',body,config)
   .then(res=>dispatch({
     type:CREATE_PROFESSIONAL_SUCCESS,
@@ -92,4 +93,20 @@ export const sendLocation = (user_id,lat,lng,address,city) => dispatch => {
 }
 
 
+export const myorders = (id) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id})
+  axios
+    .post('/api/professional/myorders',body,config)
+    .then(res =>
+      dispatch({
+        type: MY_ORDERS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
 

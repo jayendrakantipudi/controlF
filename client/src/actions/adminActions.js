@@ -1,107 +1,111 @@
 import axios from 'axios'
 import {returnErrors}from './errorActions'
 import {
-USER_LOADING,
-USER_LOADED,
-AUTH_ERROR,
-LOGIN_SUCCESS,
-LOGIN_FAIL,
-LOGOUT_SUCCESS,
-REGISTER_SUCCESS,
-REGISTER_FAIL,
-GET_SERVICETYPES
+GET_SERVICES,
+ADD_SERVICE,
+ADD_SLOT,
+ADD_CITY,
+ADD_SERVICETYPE,
+SHOW_SERVICETYPE
 } from './types'
 
-export const loadUser = () => (dispatch,getState) => {
-  // User Loading
-  console.log('running')
-  dispatch({type:USER_LOADING})
-  axios.get('/api/users/loggedin',tokenConfig(getState))
-    .then(res => dispatch({
-      type: USER_LOADED,
-      payload:res.data
-    }))
-    .catch(err=>{
-      // dispatch(returnErrors(err.response.data,err.response.status))
-      dispatch({
-        type:AUTH_ERROR
-      })
-    })
-}
-
-
 export const allServices = () => (dispatch,getState) => {
-  // User Loading
-  console.log('running')
-  dispatch({type:GET_SERVICETYPES})
-  axios.get('/api/serviceType/all')
+  dispatch({type:GET_SERVICES})
+  axios.get('/api/service/all')
     .then(res => dispatch({
-      type: GET_SERVICETYPES,
+      type: GET_SERVICES,
       payload:res.data
     }))
 }
 
-export const register=({name,email,password})=>dispatch=>{
+
+export const addService=({name,about,service_worker})=>dispatch=>{
   const config={
     headers:{
       'Content-Type':'application/json'
     }
   }
-  const body=JSON.stringify({name,email,password})
-  axios.post('/api/users',body,config)
+  const body=JSON.stringify({name,about,service_worker})
+  axios.post('/api/service/',body,config)
   .then(res=>dispatch({
-    type:REGISTER_SUCCESS,
+    type:ADD_SERVICE,
     payload:res.data
   }))
-  .catch(err=>{
-    dispatch(returnErrors(err.response.data,err.response.status,'REGISTER_FAIL'))
-    dispatch({
-    type:REGISTER_FAIL
-  })
-})
+  .catch(err=>console.log(err.response))
 
 }
 
-
-export const login=({email,password})=>dispatch=>{
+export const addServiceType=({name,service_type,cost})=>dispatch=>{
   const config={
     headers:{
       'Content-Type':'application/json'
     }
   }
-  const body=JSON.stringify({email,password})
-  axios.post('/api/auth',body,config)
+  const body=JSON.stringify({name,service_type,cost})
+  axios.post('/api/serviceType/addType',body,config)
   .then(res=>dispatch({
-    type:LOGIN_SUCCESS,
+    type:ADD_SERVICETYPE,
     payload:res.data
   }))
-  .catch(err=>{
-    dispatch(returnErrors(err.response.data,err.response.status,'LOGIN_FAIL'))
-    dispatch({
-    type:LOGIN_FAIL
-  })
-})
+  .catch(err=>console.log(err.response))
 
 }
 
-export const logout =()=> {
-  return{
-    type:LOGOUT_SUCCESS
-  }
-}
 
-
-export const tokenConfig = getState => {
-  const token =getState().auth.token
-
+export const addSlot=({start,end})=>dispatch=>{
   const config={
     headers:{
-      "Content-type":"application/json"
+      'Content-Type':'application/json'
     }
   }
+  const body=JSON.stringify({start,end})
+  axios.post('/api/slot/addslot',body,config)
+  .then(res=>dispatch({
+    type:ADD_SLOT,
+    payload:res.data
+  }))
+  .catch(err=>console.log(err.response))
 
-if(token){
-  config.headers['x-auth-token']=token
 }
-return config
+
+
+export const addCity=({city,lat,lng})=>dispatch=>{
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({city,lat,lng})
+  axios.post('/api/location/addloco',body,config)
+  .then(res=>dispatch({
+    type:ADD_CITY,
+    payload:res.data
+  }))
+  .catch(err=>console.log(err.response))
+
 }
+
+
+export const getserviceType=(service)=>dispatch=>{
+    const config={
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }
+    var url = '/api/serviceType/';
+    const ser = url.concat(service);
+    axios.get(ser,config)
+      .then(res => {
+         
+        dispatch({
+        type: SHOW_SERVICETYPE,
+        payload:res.data
+      }
+  
+      )}).catch(err => console.log(err));
+  
+      
+  
+  }
+  
+

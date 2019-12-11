@@ -1,9 +1,10 @@
-import {SEND_LOCATION,SELECT_CITY,GET_CITIES} from '../actions/types'
+import {SEND_LOCATION,SELECT_CITY,GET_CITIES,GET_ORDER} from '../actions/types'
 
 const initialState={
   order:null,
   all_cities:null,
-  initial_center:null
+  initial_center:null,
+  order_details:null
 }
 
 export default function(state=initialState,action){
@@ -22,6 +23,11 @@ export default function(state=initialState,action){
     return {
       ...state,
       all_cities:action.payload
+    }
+    case GET_ORDER:
+    return {
+      ...state,
+      order_details:action.payload
     }
     default:
       return state

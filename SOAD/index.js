@@ -18,6 +18,7 @@ var cors = require('cors');
 const slot = require('./routes/slot');
 const location = require('./routes/location');
 const booking = require('./routes/Booking');
+const reviews = require('./routes/reviews')
 app.use(cors());
 
 
@@ -41,6 +42,7 @@ app.use('/api/order', order);
 app.use('/api/slot',slot);
 app.use('/api/location',location);
 app.use('/api/booking',booking);
+app.use('/api/reviews',reviews);
 
 
 

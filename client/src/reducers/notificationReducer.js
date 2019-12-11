@@ -1,9 +1,12 @@
 import {
-GET_NOTIFICATION
+GET_NOTIFICATION,
+MESSAGE_NOTIFICATION,
+NEW_NOTIFICATIONS
 } from '../actions/types'
 
 const initialState={
-  notifications:[]
+  notifications:[],
+  count:null
 }
 
 export default function(state=initialState,action){
@@ -13,6 +16,14 @@ export default function(state=initialState,action){
         ...state,
         notifications:action.payload
       }
+      case MESSAGE_NOTIFICATION:
+      return state
+      case NEW_NOTIFICATIONS:
+      return{
+        ...state,
+        count:action.payload.length
+      }
+      return state
     default:
     return state
   }

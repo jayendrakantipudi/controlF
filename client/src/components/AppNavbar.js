@@ -9,17 +9,19 @@ import {
   NavLink,
   Container
 } from 'reactstrap'
+import NotificationAlert from "react-notification-alert";
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import RegisterModal from './auth/RegisterModal'
 import Logout from './auth/Logout'
 import LoginModal from './auth/LoginModal'
-import {Link} from 'react-router-dom'
+import {Redirect,Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
-import {getNotification} from '../actions/notificationActions'
+import {getNotification,newNotifications} from '../actions/notificationActions'
+import ReactTimeout from 'react-timeout'
 class AppNavbar extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -27,24 +29,40 @@ class AppNavbar extends Component{
 constructor(props){
   super(props)
   this.state={
-    isOpen:false
+    isOpen:false,
+
   }
   // this.toggle=this.toggle.bind(this)
 }
 
-
-
-componentDidMount()
+async componentDidMount()
 {
-  this.props.loadUser();
+  await this.props.loadUser();
+  if(this.props.auth.user)
+  this.props.newNotifications(this.props.auth.user._id)
+  this.props.setTimeout(this.getNotifi,100)
+  this.timer = setInterval(() =>this.props.auth.user? this.props.newNotifications(this.props.auth.user._id):null, 1000);
 }
+
+componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
+componentDidUpdate(){
+  if(this.props.auth.user)
+  {this.props.newNotifications(this.props.auth.user._id)}
+}
+
 
 static propTypes ={
   auth: PropTypes.object.isRequired,
   isProfessional:PropTypes.bool,
   isProf:PropTypes.func.isRequired,
   loadUser:PropTypes.func.isRequired,
-  getNotification:PropTypes.func.isRequired
+  getNotification:PropTypes.func.isRequired,
+  count:PropTypes.number.isRequired,
+  newNotifications:PropTypes.func.isRequired,
   // isProf:PropTypes.func.isRequired
 }
 
@@ -80,7 +98,7 @@ getNoti=(id)=>{
         </NavItem>
         <NavItem>
           <NavLink  >
-          <Link to="/" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}>Notifications</Link>
+          <Link to="/notifications" className="notification" onClick={()=>this.getNoti(user._id)} style={{color:'rgba(255,255,255,.5)'}}><i className="fas fa-bell"></i> <span className="badge" style={{display:this.props.count?'block':'none'}} onChange={()=>this.notify("tr")}>{this.props.count}</span></Link>
           </NavLink>
         </NavItem>
       </Fragment>
@@ -106,19 +124,21 @@ getNoti=(id)=>{
 
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
-      <td><Link to="/contact"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Contact </NavbarBrand></Link></td>
-
-      <td><Link to="/chat"><NavbarBrand  className="cool-link" style={extraNavbarstyles}>Chatroom </NavbarBrand></Link></td>
+      <td><Link to="/mybookings"><NavbarBrand className="cool-link" style={extraNavbarstyles}>My Bookings </NavbarBrand></Link></td>
     </tr>
     </table>
     </Container>
     </Navbar>
   )
+  // if(!this.props.auth.token){
+  //   return <Redirect to="/"/>
+  // }
     return(
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
+      <NotificationAlert ref={this.notificationAlert} />
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <Link to="/"><NavbarBrand>CtrlF </NavbarBrand></Link>
+            <Link to="/"><NavbarBrand><span className="head_nav_name">CtrlF</span> </NavbarBrand></Link>
             <NavbarToggler onClick={this.toggle}/>
             {this.state.isOpen}
             <Collapse isOpen={this.state.isOpen} navbar>
@@ -137,8 +157,9 @@ getNoti=(id)=>{
 }
 const mapStateToProps = state => ({
   auth:state.auth,
-  isProfessional:state.prof.isProfessional
+  isProfessional:state.prof.isProfessional,
+  count:state.notification.count,
 })
 
 
-export default connect(mapStateToProps,{loadUser,getNotification})(AppNavbar)
+export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,newNotifications})(AppNavbar))

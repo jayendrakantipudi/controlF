@@ -12,7 +12,22 @@ const notificationSchema = new mongoose.Schema({
 	to:{
     type:String,
     required:true
-  }
+  },
+	date:{
+		type:Date,
+		required:true,
+		default:Date.now
+	},
+url:{
+	type:String,
+	required:false
+},
+new:{
+	type:Boolean,
+	required:true,
+	default:true
+}
+
 });
 
 const Notifications = mongoose.model('Notifications', notificationSchema)
