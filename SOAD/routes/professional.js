@@ -83,9 +83,9 @@ router.post('/myorders',async(req, res)=>{
   var item = null;
   orders = [];
   for(item in order){
-    temp =   order[item]; 
+    temp =   order[item];
     var user = await User.findById(temp.user_id)
-    var slot = await Slot.findById(temp.slot._id)  
+    var slot = await Slot.findById(temp.slot._id)
     var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
     var ser_chosen= [];var item2=null;
     for(item2 in temp.services_chosen)
@@ -109,8 +109,8 @@ const serord = await Serviceorder.find({professional:thisprofessional._id})
 console.log(serord)
 var item = null;
 for(item in serord){
-  temp =   serord[item]; 
-  var slot = await Slot.findById(temp.slot._id)  
+  temp =   serord[item];
+  var slot = await Slot.findById(temp.slot._id)
   var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
   var Orderdetails= {
     is_organisation:true,

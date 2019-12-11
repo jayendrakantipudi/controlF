@@ -46,9 +46,9 @@ router.post('/booking',async(req,res)=>{
     for ( k in proffs)
     {
        const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
-       console.log(prof_bookings)
+       // console.log(prof_bookings)
        const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:type.order_date, 'slot._id':type.slot})
-       console.log(service_bookings)
+       // console.log(service_bookings)
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0)
         {
             flag=1;
@@ -58,12 +58,12 @@ router.post('/booking',async(req,res)=>{
             let professional = await Professional.findById(type.professional)
             var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
-            console.log(type)
+            // console.log(type)
             res.send(type._id)
             return;
         }
     }
-    console.log(flag)
+    // console.log(flag)
     if (flag===0) return res.status(400).send('slot not found')
 
 
@@ -71,13 +71,14 @@ router.post('/booking',async(req,res)=>{
 
 
 router.post('/messagenotification',async(req,res)=>{
-	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
+	const user= await User.findOne({_id:req.body.user_id})
+	var notification=new Notifications({from:req.body.user_id,notification: `You can contact ${user.name} here`,order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
 	await notification.save()
 	res.send(notification.id)
 })
 
 router.post('/addorganisation',async(req,res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     org_name = req.body.org_name;
     email1 = req.body.email;
     const seruser = new Serviceuser({
@@ -151,7 +152,7 @@ router.get('service/bulkbooking',async(req,res)=>{
         }
 
         for(var d in dates){
-            
+
 
         }
 
@@ -174,7 +175,7 @@ router.get('/service/orderbooking',async(req,res)=>{
     var username = req.query.username;
     var address = req.query.address;
     var city = req.query.city;
-    console.log(service_worker)
+    // console.log(service_worker)
     var order = new Serviceorder({
         token:res_token,
         service_name:service.name,
@@ -189,9 +190,9 @@ router.get('/service/orderbooking',async(req,res)=>{
     order.order_date.date=order_date;
 
     const proffs = await Professional.find({profession:service_worker,'locality.3':city})
-    console.log(`proffs:${proffs}`)
+    // console.log(`proffs:${proffs}`)
     const all_slots = await Slot.find()
-    console.log(`slots:${all_slots}`)
+    // console.log(`slots:${all_slots}`)
     var k = null;var s = null;
 
     for ( k in proffs)
@@ -201,8 +202,8 @@ router.get('/service/orderbooking',async(req,res)=>{
         {
         const prof_bookings = await Order.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
         const service_bookings = await Serviceorder.find({professional:proffs[k]._id, order_date:order.order_date, 'slot._id':all_slots[s]._id})
-        console.log(prof_bookings)
-        console.log(service_bookings)
+        // console.log(prof_bookings)
+        // console.log(service_bookings)
         if(prof_bookings.length===0 && service_bookings.length===0)
 	        {
 	            order.professional = proffs[k]._id,
@@ -218,7 +219,7 @@ router.get('/service/orderbooking',async(req,res)=>{
 
 
 router.post('/notification',async(req,res)=>{
-	console.log(req.body)
+	// console.log(req.body)
 	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
 	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
 	res.send(a.reverse());

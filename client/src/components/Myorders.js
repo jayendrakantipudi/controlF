@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 
 import PropTypes from 'prop-types'
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 
 class Myorders extends Component{
@@ -44,7 +46,7 @@ if (this.state.flag){
 }
 return(
 <div>
-
+<AppNavbar />
 <div style={{alignContent:'center',marginTop:'20px'}}>
 <center>
   <h1>My Orders</h1>
@@ -88,6 +90,9 @@ return(
 }
 </center>
 </div>
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }

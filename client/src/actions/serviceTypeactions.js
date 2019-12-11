@@ -1,4 +1,4 @@
-import {GET_SERVICETYPES, GET_SERVICE, STORE_ORDER} from './types';
+import {GET_SERVICETYPES, GET_SERVICE, STORE_ORDER,SERVICETYPES_LOADING} from './types';
 import axios from 'axios';
 
 
@@ -12,11 +12,12 @@ export const get_services=(service)=>dispatch=>{
       'Content-Type':'application/json'
     }
   }
+
   var url = '/api/serviceType/';
+  dispatch({type:SERVICETYPES_LOADING})
   const ser = url.concat(service);
   axios.get(ser,config)
     .then(res => {
-       console.log("hiiiiii");
       dispatch({
       type: GET_SERVICE,
       payload:res.data
@@ -34,7 +35,7 @@ export const store_order = (selected_services) => dispatch => {
       'Content-Type':'application/json'
     }
   }
-  
+
   const body=JSON.stringify(selected_services)
   console.log(`qwerty store ${body}`)
   axios

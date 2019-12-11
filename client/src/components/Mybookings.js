@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col,
   Table, TabContent, TabPane, Modal, ModalHeader,  ModalBody, Form,
   FormGroup, Label, Input} from 'reactstrap'
+  import AppNavbar from'./AppNavbar';
+  import Footer from './Footer'
 
 import {loadUser,mybookings} from '../actions/authActions'
 import {addReview} from '../actions/reviewActions'
@@ -18,7 +20,7 @@ import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { FaUserAlt } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
-
+import Container1 from './Container1'
 
 class Mybookings extends Component{
 
@@ -34,7 +36,8 @@ class Mybookings extends Component{
       modal_toggle:{},
       order_list:[],
       check_reviews:[],
-      check_reviews_bool:{}
+      check_reviews_bool:{},
+      isLoading:true
       }
 
   }
@@ -56,12 +59,12 @@ class Mybookings extends Component{
       fetch(ser)
        .then(response => response.json())
        .then(data => this.setState({ order_list: data }))
+
     }
   }
 
   modalToggle = (order_list) =>{
-    console.log('heyyyyyyyyyyyyyyyyyyyyy')
-    console.log(this.props.user._id)
+    // console.log(this.props.user._id)
     // console.log(this.props.orderList)
     console.log(this.state.order_list)
     const temp_dict = {}
@@ -83,7 +86,7 @@ class Mybookings extends Component{
 
   check_review = () =>{
     console.log('in check review')
-    console.log(this.props.user._id)
+    // console.log(this.props.user._id)
     var url = 'http://localhost:3000/api/reviews/user/reviews/';
     const ser = url.concat(this.props.user._id)
     fetch(ser)
@@ -103,8 +106,10 @@ class Mybookings extends Component{
     await this.props.loadUser()
     this.props.setTimeout(this.myBookings, 200);
     this.props.setTimeout(() => {this.modalToggle(this.state.order_list)}, 250);
-    this.props.setTimeout(this.check_review, 200);
+    //if(this.props.user)
+    this.props.setTimeout(this.check_review, 500);
     this.props.setTimeout(() => {this.review_bool(this.state.check_reviews, this.state.check_reviews_bool)}, 700);
+      this.props.setTimeout(() => {this.setState({isLoading:false})}, 2000);
   }
 
   onChange=(e)=>{
@@ -139,9 +144,14 @@ if (this.state.flag){
   return <Redirect to="/location" />;
 }
 // console.log('hlooooooooooooo')
+if(this.state.isLoading){
+  return <Container1 />
+}
+
+else{
 return(
 <div>
-
+<AppNavbar />
 <div style={{alignContent:'center',marginTop:'20px'}}>
 <center>
 <br/>
@@ -199,12 +209,8 @@ return(
       Review
     </Button>}
     </Col>
-
      <br/>
-
-
 <br/>
-
 </Row>
   :
     null
@@ -256,9 +262,12 @@ return(
     null
 
   }
-
+  <Footer>
+  <Footer/>
+  </Footer>
 </div>
 )
+}
 }
 }
 

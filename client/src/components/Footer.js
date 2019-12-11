@@ -17,7 +17,9 @@ export default class Footer extends Component{
   render(){
     return(
 			<div>
-      <div style={{backgroundColor:"black",color:'white'}}><br/><br/>
+			<br/>
+			<br/><br/>
+      <div style={{backgroundColor:'#262626',color:'white'}}><br/><br/>
 	  <Container>
 		  <Row className="test" style={{textAlign:"left"}}>
 			  <Col md="6">
@@ -92,7 +94,7 @@ export default class Footer extends Component{
 	  <br/><br/>
 
 
-      <div width="100%" style={{backgroundColor:'#262626'}}>
+      <div width="100%" style={{backgroundColor:'black'}}>
 	  <span className="foot_hpc">CtrlF</span> <FaRegCopyright style={{marginLeft:"3%"}}/> 2019 CtrlF Technologies India Pvt. Ltd.
 	  <br/><br/></div>
       </div>

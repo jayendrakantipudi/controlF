@@ -2,6 +2,8 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import {getCities,setLocation} from '../../actions/locationAction'
+import AppNavbar from'../AppNavbar';
+import Footer from '../Footer'
 
 import {
   Redirect
@@ -36,6 +38,7 @@ if (this.state.flag){
 return(
 
 <div >
+<AppNavbar />
 <Table>
   <tbody>
 {
@@ -49,7 +52,7 @@ return(
      </tr>
      :
      null
-          
+
     ))
   :
   null
@@ -57,6 +60,9 @@ return(
 }
 </tbody>
 </Table>
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }

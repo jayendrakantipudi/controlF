@@ -14,7 +14,9 @@ import PropTypes from 'prop-types'
 import '../index.css'
 import {FaUserAlt, FaStar, FaRegStar} from "react-icons/fa";
 //import Example from '../components/minNav.js'
-
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import Container1 from './Container1'
 
 class Service extends React.Component{
 
@@ -133,9 +135,13 @@ class Service extends React.Component{
 		};
 		console.log(`CHECKING STATE VALUESSSSSSS ${this.state}`)
 		console.log(this.state)
-
+		if(this.props.service.isLoading){
+			return <Container1/>
+		}
+		else{
 		return(
 			<div>
+			<AppNavbar />
 			<div className='jumb'>
 				<Jumbotron fluid className="jumb2 serviceMainSlide">
 					<Container fluid>
@@ -152,7 +158,7 @@ class Service extends React.Component{
 										<li><b>Doorstep repair within 90 mins</b></li>
 										<li><b>Protection Against Damage Upto INR 10,000</b></li>
 										<li><b>30 day post-service guarantee</b></li>
-									</ul>  
+									</ul>
 								</span>
 							</Col>
 						</Row>
@@ -247,23 +253,23 @@ class Service extends React.Component{
         <TabPane tabId="3">
 		<br/>
 		<Row>
-			
+
             <Col sm="6" style={Style} className="head_ser_rev">
               <h2>Customer Reviews</h2>
             </Col>
-					
-             
+
+
 			<br/>
 
 
 			</Row>
 
-            
+
             {this.state.reviews.map((item, index) => (
 				<div>
               <Row className="colgrp_reviews" style={{marginRight:'5%', border:'1px solid #e0d8d7'}}>
 				  <Col md="2" style={{textAlign:'center',marginTop:'1%'}}>
-						<FaUserAlt style={{fontSize:'30px'}}/>						
+						<FaUserAlt style={{fontSize:'30px'}}/>
 					<br/>
 					<div className='forstyle_username'>
 						{this.state.user_names[item.user_id]}
@@ -273,13 +279,13 @@ class Service extends React.Component{
 				  <h3>
 				  {this.state.prof_names[item.professional_id]}
 				  </h3>
-						
+
 						{item.review}
 				  </Col>
 				  <Col md="3">
 					<span style={{fontSize:'25px'}}>{item.rating}</span>
 					<span style={{fontSize:'15px'}}>/5</span><br/>
-												
+
 					{(item.rating===1)?
 						<span>
 							<span style={{color:'#ffe100'}}><FaStar/></span>
@@ -314,18 +320,18 @@ class Service extends React.Component{
 						</span>
 					:''}
 
-					
+
 				  </Col>
 
 			  </Row>
 			  <br/>
 			  </div>
             ))}
-            
 
 
 
-		  
+
+
         </TabPane>
 
         <TabPane tabId="4">
@@ -372,9 +378,13 @@ class Service extends React.Component{
 				</Row>
 
 			</div>
-
+			<br/><br/><br/>
+			<Footer>
+			<Footer/>
+			</Footer>
 			</div>
 		)
+	}
 	}
 }
 

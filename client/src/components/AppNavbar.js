@@ -9,6 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap'
+import Container1 from './Container1'
 import NotificationAlert from "react-notification-alert";
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
@@ -133,6 +134,7 @@ getNoti=(id)=>{
   // if(!this.props.auth.token){
   //   return <Redirect to="/"/>
   // }
+
     return(
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
       <NotificationAlert ref={this.notificationAlert} />
@@ -152,7 +154,6 @@ getNoti=(id)=>{
       </div>
 
     )
-
   }
 }
 const mapStateToProps = state => ({
