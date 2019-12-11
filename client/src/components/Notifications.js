@@ -7,7 +7,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container
+  Container,Row, Col, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText,Button
 } from 'reactstrap'
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
@@ -19,9 +19,10 @@ import {Redirect,Link} from 'react-router-dom'
 import CreateProfessional from './CreateProfessional'
 import {isProf} from '../actions/profActions'
 import {loadUser} from '../actions/authActions'
-import {getNotification} from '../actions/notificationActions'
+import {getNotification,clearnewNotifications} from '../actions/notificationActions'
 import ReactTimeout from 'react-timeout'
 import {sendMessage} from '../actions/mainchatActions'
+import '../styles/serviceDisplay.css'
 class Notifications extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -34,19 +35,29 @@ constructor(props){
   // this.toggle=this.toggle.bind(this)
 }
 
-
-
 async componentDidMount()
 {
   await this.props.loadUser();
+  this.props.setTimeout(this.clearNotifi,10)
+  this.props.setTimeout(this.getNotifi,10)
 
-  this.props.setTimeout(this.getNotifi,100)
 
+}
+
+componentDidUpdate(){
+  this.getNotifi()
 }
 
 getNotifi=()=>{
-  this.props.getNotification(this.props.auth.user._id)
+  if(this.props.auth.user)
+  {this.props.getNotification(this.props.auth.user._id)}
 }
+
+clearNotifi=()=>{
+  if(this.props.auth.user){
+  this.props.clearnewNotifications(this.props.auth.user._id)}
+}
+
 
 sendhello=(user_id,professional_id)=>{
   const message="hello"
@@ -59,7 +70,9 @@ static propTypes ={
   isProf:PropTypes.func.isRequired,
   loadUser:PropTypes.func.isRequired,
   getNotification:PropTypes.func.isRequired,
-  notifications:PropTypes.array.isRequired
+  notifications:PropTypes.array.isRequired,
+  sendMessage:PropTypes.func.isRequired,
+  clearnewNotifications:PropTypes.func.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -77,11 +90,28 @@ getNoti=(id)=>{
     if(!this.props.auth.token){
       return <Redirect to="/"/>
     }
-    return(
-      <div>
+  //   <Link to={{
+  //     pathname: notification.url?notification.url:"/",
+  //     state: { order_id: notification.order_id?notification.order_id:null }
+  // }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>
+    return(<div>
+      <Row style={{textAlign:'center',marginTop:'2%'}}>
+        <Col md="12">
+        <h3>Notifications</h3>
+        </Col>
+      </Row><br/>
+      <div style={{margin:'20%',marginTop:'0%'}}>
       {
-        this.props.notifications?this.props.notifications.map(notification=><Link to={notification.url?notification.url:"/"} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>):null
+        this.props.notifications?this.props.notifications.map(notification=><ListGroupItem className="listgrp_serdisp">
+          <Link to={{
+            pathname: notification.url?notification.url:"/",
+            state: { order_id: notification.order_id?notification.order_id:null }
+        }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null} className="link_sd" style={{textDecoration:'none'}}>
+            <div>{notification.notification?notification.notification:null}</div>
+          </Link>
+        </ListGroupItem>):null
       }
+      </div>
       </div>
     )
   }
@@ -93,4 +123,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,sendMessage})(Notifications))
+export default ReactTimeout(connect(mapStateToProps,{loadUser,getNotification,sendMessage,clearnewNotifications})(Notifications))

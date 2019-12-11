@@ -12,6 +12,7 @@ import {connect} from 'react-redux'
 import {loadUser} from '../actions/authActions'
 import PropTypes from 'prop-types'
 import {sendMessage,getMessages} from '../actions/mainchatActions'
+import {getOrder} from '../actions/locationAction'
 import {Container } from 'reactstrap'
 import {
   Redirect,
@@ -54,11 +55,18 @@ class ChatPage extends Component{
     allChats:[]
   }
   componentDidMount(){
+    this.props.getOrder(this.props.location.state.order_id)
     this.props.loadUser();
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)
+    // this.timer = setInterval(() => this.props.getMessages(this.props.order.user_id,this.props.order.professional_id), 1000);
   }
-  }
+}
+
+// componentWillUnmount() {
+//         clearInterval(this.timer);
+//         this.timer = null;
+//     }
   componentDidUpdate(){
     if(this.props.order){
     this.props.getMessages(this.props.order.user_id,this.props.order.professional_id)
@@ -73,8 +81,8 @@ class ChatPage extends Component{
     this.props.sendMessage(user_id,professional_id,this.state.message)
   }
   render(){
-    const user_id = this.props.order?this.props.order.user_id:null;
-    const professional_id = this.props.order?this.props.order.professional_id:null;
+    const user_id = this.props.auth.user?this.props.auth.user._id:null;
+    const professional_id = this.props.order?this.props.order.professional_id==user_id?this.props.order.user_id:this.props.order.professional_id:null;
 
   const stylesRight={textAlign:'right',marginRight:'10%',marginTop:'3px',marginBottom:'3px'}
   const stylesLeft={textAlign:'left',marginLeft:'10%',marginTop:'3px',marginBottom:'3px'}
@@ -82,12 +90,12 @@ class ChatPage extends Component{
       // Logout
         return <Redirect to="/" />;
       }
-
+  const talking_to=this.props.auth.user?this.props.order?this.props.auth.user.name==this.props.order.prof_name?this.props.order.name:this.props.order.prof_name:null:null;
   return(
     <div>
       <Paper >
           <Typography variant="h5" component="h5">
-          {this.props.order?<div>You are talking to {this.props.order.prof_name}</div>:null}
+          {this.props.order?<div>You are talking to {talking_to}</div>:null}
           </Typography>
           <Paper style={{width:"50%",marginLeft:"30%"}}>
           <div style={{borderBottom:'1.5px solid rgba(0,0,0,0.14)'}}>
@@ -122,16 +130,16 @@ message:PropTypes.object.isRequired,
 loadUser:PropTypes.func.isRequired,
 auth: PropTypes.object.isRequired,
 order:PropTypes.object.isRequired,
-token:PropTypes.string
+token:PropTypes.string,
+getOrder:PropTypes.func.isRequired
 }
 
 
 const mapStateToProps = state =>({
-order:state.booking.order,
+order:state.booking.order_details,
 message:state.message,
 auth:state.auth,
-order:state.booking.order,
 })
 
 
-export default connect(mapStateToProps,{sendMessage,getMessages,loadUser})(ChatPage)
+export default connect(mapStateToProps,{sendMessage,getMessages,loadUser,getOrder})(ChatPage)

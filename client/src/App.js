@@ -35,7 +35,7 @@ import ProfStates from './components/profLocation/States'
 import ProfCurrentloco from './components/profLocation/Currentloco'
 import ProfGetmarker from './components/profLocation/Getmarker'
 import DisplayBooking from './components/Displaybooking'
-
+import Dummy from './components/Dummy'
 import Mybookings from './components/Mybookings'
 import Myorders from './components/Myorders'
 import {connect} from 'react-redux'
@@ -44,6 +44,11 @@ import PropTypes from 'prop-types'
 
 import ChatPage from './components/ChatPage'
 import Notifications from './components/Notifications'
+
+import Services from './components/admin/Services'
+import AdminSlots from './components/admin/AdminSlots'
+import Admincity from './components/admin/Admincity'
+import Adminservicetype from './components/admin/Adminservicetype'
 
 class App extends Component{
 
@@ -58,7 +63,7 @@ class App extends Component{
       this.setState({
         user: store.getState().auth.user
       });
-    });  
+    });
   }
   componentDidMount(){
     store.dispatch(loadUser())
@@ -69,8 +74,8 @@ class App extends Component{
       <Provider store={store}>
           <Router>
         <div className="App">
-            
-            
+
+
           <AppNavbar/>
 
           <Switch>
@@ -97,15 +102,28 @@ class App extends Component{
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
+        <Route exact path='/dummy' component={Dummy}/>
           </Switch>
+
+        </div>
+
+              <div className='Admin'>
+              <Switch>
+            <Route exact path='/admin/services' component={Services} />
+            <Route exact path='/admin/slots' component={AdminSlots} />
+            <Route exact path='/admin/cities' component={Admincity} />
+            <Route exact path='/admin/servicetypes/:name' component={Adminservicetype} />
+            </Switch>
+              </div>
+              </Router>
+          <div className='App'>
           <br/><br/>
           <br/><br/>
-      
+
           <Footer>
           <Footer/>
           </Footer>
-        </div>
-            </Router>
+            </div>
       </Provider>
     )
 }

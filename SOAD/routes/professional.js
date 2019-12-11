@@ -15,12 +15,14 @@ const {Service}= require('../Models/service')
 
 router.post('/',auth,async(req, res)=>{
   const {error} = validate(req.body);
+  console.log(req.body)
   if(error) return res.status (400).send(error.details[0].message);
 
   let professional =await Professional.findOne( {"user.email":req.body.user.email});
   if (professional) return res.status(400).send('You\'ve already registered as a Professional')
 
   professional= new Professional(_.pick(req.body,['user','profession','phonenumber']));
+  professional.locality = [0,0,'None',req.body.city]
   /* can also be written as
   user= new User({
     name: req.body.name,
@@ -64,7 +66,14 @@ router.get('/professions',async(req,res)=>{
 
 
 router.get('/:serviceName',async(req,res)=>{
-  const professionals = await Professional.find({profession:req.params.serviceName});
+  const serv = await Service.findOne({name:req.params.serviceName})
+  const professionals = await Professional.find({profession:serv.service_worker});
+  res.send(professionals);
+})
+
+
+router.get('/all',async(req,res)=>{
+  const professionals = await Professional.find();
   res.send(professionals);
 })
 
@@ -84,7 +93,7 @@ router.post('/myorders',async(req, res)=>{
       ser_chosen.push(item2)
     }
     var Orderdetails= {
-      is_organisation:false,
+      is_organisation:0,
       services_chosen:ser_chosen,
       total_cost:temp.total_cost,
       date:ordered_date,
@@ -96,7 +105,8 @@ router.post('/myorders',async(req, res)=>{
   }
   orders.push(Orderdetails)
   }
-const serord = await Serviceorder.find({professional:thisprofessional._id})
+
+var serord = await Serviceorder.find({professional:thisprofessional._id,is_bulk:false})
 console.log(serord)
 var item = null;
 for(item in serord){
@@ -104,13 +114,32 @@ for(item in serord){
   var slot = await Slot.findById(temp.slot._id)  
   var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
   var Orderdetails= {
-    is_organisation:true,
+    is_organisation:1,
     services_chosen:[temp.service_type],
     total_cost:temp.total_cost,
     date:ordered_date,
     user_name:temp.user_name,
     user_phone:temp.phone_number,
     slot:slot.start_time,
+    address:temp.address[2],
+    city:temp.address[3],
+}
+orders.push(Orderdetails)
+}
+
+var serord = await Serviceorder.find({professional:thisprofessional._id,is_bulk:true})
+console.log(serord)
+var item = null;
+for(item in serord){
+  temp =   serord[item]; 
+  var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
+  var Orderdetails= {
+    is_organisation:2,
+    services_chosen:[temp.service_type],
+    total_cost:temp.total_cost,
+    date:ordered_date,
+    user_name:temp.user_name,
+    user_phone:temp.phone_number,
     address:temp.address[2],
     city:temp.address[3],
 }

@@ -122,6 +122,7 @@ render(){
             onChange={this.onChange}
           />
           <br/>
+          Profile Picture<br/>
           <input type="file" className="form__input" name="profilepicparse" onChange={this.fileSelectHandler} id="profilepic_parse" placeholder="Upload pic"/>
           <Button color="dark" block>
           Register

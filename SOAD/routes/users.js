@@ -42,6 +42,21 @@ const upload = multer({
 }).single("profilepicparse");
 
 
+router.get('/adetails',async(req,res)=>{
+  console.log('inconsole')
+  const users= await User.find()
+  const professionals = await Professional.find()
+  const orders = await Order.find({is_confirmed:true})
+  var Admindetails = {
+    no_users : users.length,
+    no_professionals : professionals.length,
+    no_orders : orders.length
+  }
+ 
+  res.send(Admindetails);
+});
+
+
 router.get('/loggedin',auth,async(req,res)=>{
   const user= await User.findById(req.user._id).select('-password')
   res.send(user);
@@ -52,11 +67,16 @@ router.get('/all',async(req,res)=>{
   res.send(user);
 })
 
-router.post('/mybookings',async(req, res)=>{
-  const order = await Order.find({user_id:req.body.id,is_confirmed:true})
+
+router.get('/:id',async(req,res)=>{
+  const user = await User.findById(req.params.id)
+  res.send(user);
+})
+
+router.get('/mybookings/:id',async(req, res)=>{
+  const order = await Order.find({user_id:req.params.id,is_confirmed:true})
   var item = null;
   orders = [];
-  console.log(order)
   for(item in order){
     temp =   order[item]; 
     var professional = await Professional.findById(temp.professional)
@@ -68,6 +88,9 @@ router.post('/mybookings',async(req, res)=>{
       ser_chosen.push(item2)
     }
     var Orderdetails= {
+      order_id:temp._id,
+      professional_id: professional._id,
+      user_id: req.body.id,
       services_chosen:ser_chosen,
       total_cost:temp.total_cost,
       date:ordered_date,
@@ -130,5 +153,7 @@ router.post('/',upload,async(req, res)=>{
   res.send(userDetails)
 
 });
+
+
 
 module.exports = router;

@@ -18,12 +18,14 @@ router.get('/:name', async(req, res) => {
 router.post('/', async(req, res) => {
 	let service =await Service.findOne({name:req.body.name});
 	if (service) return res.status(400).send('Service already Exists!')
+	console.log(req.body)
 	service = new Service({
 		name: req.body.name,
 		about: req.body.about,
 		service_worker: req.body.service_worker
 	});
 	await service.save()
+	console.log(service)
 	 res.send(service);
 });
 

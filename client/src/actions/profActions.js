@@ -11,7 +11,7 @@ MY_ORDERS
 } from './types'
 
 
-export const createProfessional=({user,profession,phonenumber})=>(dispatch,getState)=>{
+export const createProfessional=({user,profession,phonenumber,city})=>(dispatch,getState)=>{
   const token =getState().auth.token
 
   const config={
@@ -22,7 +22,7 @@ export const createProfessional=({user,profession,phonenumber})=>(dispatch,getSt
 
 if(token){
   config.headers['x-auth-token']=token
-  const body=JSON.stringify({user,profession,phonenumber})
+  const body=JSON.stringify({user,profession,phonenumber,city})
   axios.post('/api/professional',body,config)
   .then(res=>dispatch({
     type:CREATE_PROFESSIONAL_SUCCESS,
