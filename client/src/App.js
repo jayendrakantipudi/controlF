@@ -39,7 +39,6 @@ import Dummy from './components/Dummy'
 import Mybookings from './components/Mybookings'
 import Myorders from './components/Myorders'
 import {connect} from 'react-redux'
-import $ from 'jquery'
 import PropTypes from 'prop-types'
 
 import ChatPage from './components/ChatPage'

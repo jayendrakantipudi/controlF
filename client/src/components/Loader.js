@@ -1,6 +1,5 @@
 import React from 'react'
 import '../styles/loader.scss'
-import $ from 'jquery'
 const { PropTypes } = React;
 const TIMER = 150; // Milliseconds between moving the next block
 const TRANSITION = .5 // Seconds to actually move one block
