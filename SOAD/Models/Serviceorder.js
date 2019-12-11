@@ -16,7 +16,12 @@ const Serviceorderschema = new mongoose.Schema({
 			type:String,
 			required:false,
 		}
-    },
+		},
+
+	is_bulk:{
+		type:Boolean,
+		default:false
+	},
     
 	service_type:{
 		type:String,
