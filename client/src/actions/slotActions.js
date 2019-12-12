@@ -15,13 +15,13 @@ export const getSlots = () => dispatch => {
 }
 
 
-export const bookSlot = (id,orderid) => dispatch => {
+export const bookSlot = (id,orderid,select_date) => dispatch => {
   const config={
     headers:{
       'Content-Type':'application/json'
     }
   }
-  const body=JSON.stringify({id,orderid})
+  const body=JSON.stringify({id,orderid,select_date})
   console.log('function called')
   axios
     .post('/api/booking/slotbooking',body,config)

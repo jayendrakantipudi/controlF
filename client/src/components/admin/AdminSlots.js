@@ -1,5 +1,6 @@
 import {allServices,addService} from '../../actions/adminActions'
 import React,{Component} from 'react'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {connect} from 'react-redux'
 import {
   Button,
@@ -31,6 +32,7 @@ class AdminSlots extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      start:null,
      end:null,
@@ -49,7 +51,9 @@ class AdminSlots extends Component{
 
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
@@ -109,12 +113,16 @@ class AdminSlots extends Component{
 
   render(){
       const slots = this.props.slots?this.props.slots:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin' />
+      }
       return(
         <div>
         <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add Slot</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
+            
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
