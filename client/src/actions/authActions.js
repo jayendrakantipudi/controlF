@@ -11,7 +11,8 @@ REGISTER_SUCCESS,
 REGISTER_FAIL,
 CLEAR_PROFESSIONAL,
 MY_BOOKINGS,
-EDIT_PROFILE
+EDIT_PROFILE,
+ORDER_PAYMENT
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
@@ -129,13 +130,29 @@ export const editProfile = (id,about,contact,email,address) => dispatch => {
       'Content-Type':'application/json'
     }
   }
-  // console.log('...........................................................................')
   const body=JSON.stringify({id,about,contact,email,address})
   axios
     .post('/api/users/updateprofile',body,config)
     .then(res =>
       dispatch({
         type: EDIT_PROFILE,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+ export const payment = (order_id, user_id, total_cost) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({order_id, user_id, total_cost})
+  axios
+    .post('/api/payments/',body,config)
+    .then(res =>
+      dispatch({
+        type: ORDER_PAYMENT,
         payload:res.data
       }))
       .catch(err =>console.log(err.response))

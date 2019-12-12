@@ -23,6 +23,9 @@ import {getNotification,clearnewNotifications} from '../actions/notificationActi
 import ReactTimeout from 'react-timeout'
 import {sendMessage} from '../actions/mainchatActions'
 import '../styles/serviceDisplay.css'
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import Container1 from './Container1'
 class Notifications extends Component{
 // componentDidUpdate(){
 //   this.props.isProf()
@@ -30,17 +33,19 @@ class Notifications extends Component{
 constructor(props){
   super(props)
   this.state={
-    isOpen:false
+    isOpen:false,
+    isLoading:true
   }
   // this.toggle=this.toggle.bind(this)
 }
 
 async componentDidMount()
 {
+
   await this.props.loadUser();
   this.props.setTimeout(this.clearNotifi,10)
   this.props.setTimeout(this.getNotifi,10)
-
+  this.props.setTimeout(()=>{this.setState({isLoading:false})},2000)
 
 }
 
@@ -72,7 +77,8 @@ static propTypes ={
   getNotification:PropTypes.func.isRequired,
   notifications:PropTypes.array.isRequired,
   sendMessage:PropTypes.func.isRequired,
-  clearnewNotifications:PropTypes.func.isRequired
+  clearnewNotifications:PropTypes.func.isRequired,
+  isLoading:PropTypes.bool.isRequired
   // isProf:PropTypes.func.isRequired
 }
 
@@ -94,7 +100,13 @@ getNoti=(id)=>{
   //     pathname: notification.url?notification.url:"/",
   //     state: { order_id: notification.order_id?notification.order_id:null }
   // }} onClick={notification.url?()=>this.sendhello(notification.from,this.props.auth.user._id):null}><div>{notification.notification?notification.notification:null}</div></Link>
+
+    if(this.state.isLoading){
+      return <Container1/>
+    }
+    else{
     return(<div>
+      <AppNavbar />
       <Row style={{textAlign:'center',marginTop:'2%'}}>
         <Col md="12">
         <h3>Notifications</h3>
@@ -111,15 +123,21 @@ getNoti=(id)=>{
           </Link>
         </ListGroupItem>):null
       }
+      <h4 style={{color:'#9a9da0',display:this.props.notifications.length==0?'block':'none'}}><i className="fas fa-sad-tear"></i><span>  No Notifications to display yet</span></h4>
       </div>
+      <Footer>
+      <Footer/>
+      </Footer>
       </div>
     )
+  }
   }
 }
 const mapStateToProps = state => ({
   auth:state.auth,
   isProfessional:state.prof.isProfessional,
-  notifications:state.notification.notifications
+  notifications:state.notification.notifications,
+  isLoading:state.notification.isLoading
 })
 
 

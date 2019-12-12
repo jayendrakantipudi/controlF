@@ -2,6 +2,7 @@ import { addCity } from '../../actions/adminActions'
 import { getCities } from '../../actions/locationAction'
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {
   Button,
   Modal,
@@ -13,7 +14,8 @@ import {
   Input,
   Alert,
   } from 'reactstrap'
-
+  import AppNavbar from '../AppNavbar'
+  import Footer from '../Footer'
 import {getSlots} from '../../actions/slotActions'
 import {addSlot} from '../../actions/adminActions'
 import {Container,  Row, Col, Table, TabContent, TabPane} from 'reactstrap'
@@ -31,6 +33,7 @@ class Admincity extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      city:null,
      lat:null,
@@ -44,20 +47,22 @@ class Admincity extends Component{
   }
 
   toggle=()=>{
-    
+
     this.setState({
       modal: !this.state.modal,
       msg:null,
-      
+
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
     var all_cities = this.props.cities
     if(e.target.name==='city'){
-    
+
       for (k in all_cities)
       {
         if (all_cities[k]["city"] === e.target.value)
@@ -69,10 +74,10 @@ class Admincity extends Component{
         else{
           this.setState({msg:null})
         }
-      }      
-    
+      }
+
     }
-    
+
   }
 
   onSubmit= async(e)=>{
@@ -86,14 +91,18 @@ class Admincity extends Component{
      }
  }
 
- 
+
   render(){
       const cities = this.props.cities?this.props.cities:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin' />
+      }
       return(
         <div>
+        <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add City</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -101,10 +110,10 @@ class Admincity extends Component{
         <ModalHeader toggle={this.toggle}>Enter the city details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
-       
+
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-         
+
             <Label for="City">City Name</Label>
             <Input
               type="string"
@@ -132,7 +141,7 @@ class Admincity extends Component{
               placeholder ="Longitude"
               onChange={this.onChange}
             />
-            
+
             {(this.state.msg)?' ':
             <Button color="dark" block>
             Add city
@@ -165,8 +174,8 @@ class Admincity extends Component{
             <Col md="3" className="slot_select" >
 
                 <span>{item.city}  </span>
-                
-                
+
+
             </Col>
 
           ))
@@ -181,7 +190,9 @@ class Admincity extends Component{
     </Col>
   </Row>
 </Container>
-
+<Footer>
+<Footer/>
+</Footer>
             </div>
       )
   }
@@ -197,6 +208,6 @@ addCity:PropTypes.func.isRequired
 const mapStateToProps=state=>({
 cities:state.booking.all_cities
 })
-    
+
 
 export default connect(mapStateToProps,{addCity,getCities})(Admincity)

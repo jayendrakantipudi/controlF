@@ -8,7 +8,8 @@ LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
 MY_BOOKINGS,
-EDIT_PROFILE
+EDIT_PROFILE,
+ORDER_PAYMENT
 } from '../actions/types'
 
 const initialState={
@@ -61,6 +62,8 @@ export default function(state=initialState,action){
       ...state,
       mybookings:action.payload,
     }
+    case ORDER_PAYMENT:
+      return state
     default:
     return state
   }

@@ -9,6 +9,21 @@ router.get('/allslots',async(req, res) => {
 	res.send(types);
 });
 
+router.get('/dates',async(req, res) => {
+    dates = []
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+    var today = new Date()
+    dates.push(today.getDate()+' '+monthNames[today.getMonth()]+' '+today.getFullYear())
+	today.setDate(today.getDate()+1);
+    dates.push(today.getDate()+' '+monthNames[today.getMonth()]+' '+today.getFullYear())
+	today.setDate(today.getDate()+1);
+    dates.push(today.getDate()+' '+monthNames[today.getMonth()]+' '+today.getFullYear())
+    res.send(dates);
+})
+
+
 router.post('/addslot',async(req, res) => {
     const start = req.body.start;
     const end = req.body.end;

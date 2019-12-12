@@ -4,6 +4,8 @@ import { Container, Button, Row, Col,} from 'reactstrap'
 import {
   Redirect
 } from "react-router-dom";
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 
 
@@ -12,7 +14,7 @@ class Admin extends Component{
     flag:null,
     details:[]
   }
-  
+
 
   goto(value){
     this.setState({flag:value})
@@ -41,6 +43,7 @@ render(){
   }
 return(
 <div>
+<AppNavbar />
 <Container>
 <br/><br/>
   <Row>
@@ -73,21 +76,21 @@ return(
             <Col md="3" className="slot_select"  onClick={()=>{this.goto(1)}}>
 
                 <span>Services</span>
-                
+
             </Col>
 
             <Col md="3" className="slot_select"  onClick={()=>{this.goto(2)}}>
 
                 <span>Slots</span>
-                
+
             </Col>
 
             <Col md="3" className="slot_select"  onClick={()=>{this.goto(3)}}>
 
                 <span>Cities</span>
-                
+
             </Col>
-      
+
 
           </Row>
         </Container>
@@ -96,6 +99,9 @@ return(
     </Col>
   </Row>
 </Container>
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }

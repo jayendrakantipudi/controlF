@@ -4,6 +4,8 @@ import {Container, Button, Row, Col, Table, TabContent, TabPane, Card} from 'rea
 import {
   Redirect
 } from "react-router-dom";
+import AppNavbar from'../AppNavbar';
+import Footer from '../Footer'
 
 import { FaCrosshairs } from 'react-icons/fa';
 class ProfLocation extends Component{
@@ -25,6 +27,8 @@ class ProfLocation extends Component{
             return <Redirect to="/professional/states" />;
         }
         return(
+          <div>
+          <AppNavbar />
             <Card style={{width:"30%",size:"70px",alignItems:"center",justifyContent:"center"}}>
             <Button onClick = {()=>{this.getCurrentloco()}}>
             <FaCrosshairs/>Current Location
@@ -33,6 +37,10 @@ class ProfLocation extends Component{
             Other Location
             </Button>
             </Card>
+            <Footer>
+            <Footer/>
+            </Footer>
+          </div>
         )
     }
 

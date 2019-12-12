@@ -6,6 +6,8 @@ import {loadUser} from '../actions/authActions'
 import {
   Redirect
 } from "react-router-dom";
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 
 import PropTypes from 'prop-types'
@@ -36,6 +38,7 @@ if (!this.props.token) {
     }
 return(
 <div>
+<AppNavbar />
 <div style={{fontSize:'200%'}}>
   Professional Profile<br/><br/>
 </div>
@@ -47,6 +50,9 @@ return(
     EMAIL:{data?email:null}
   </ListGroupItem>
 </ListGroup>
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }

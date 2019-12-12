@@ -1,4 +1,4 @@
-import {GET_SERVICE, GET_SERVICETYPES} from './types';
+import {GET_SERVICE, GET_SERVICETYPES,SERVICE_LOADING} from './types';
 import axios from 'axios';
 
 
@@ -11,6 +11,7 @@ console.log('working')
       'Content-Type':'application/json'
     }
   }
+  dispatch({type:SERVICE_LOADING})
   var url = '/api/service/';
   const ser = url.concat(service);
   axios.get(ser,config)

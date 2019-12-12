@@ -2,7 +2,8 @@ import axios from 'axios'
 import {returnErrors}from './errorActions'
 import {
 GET_MESSAGES,
-SEND_MESSAGE
+SEND_MESSAGE,
+MESSAGES_LOADING
 } from './types'
 
 export const sendMessage = (from,to,message) => dispatch => {

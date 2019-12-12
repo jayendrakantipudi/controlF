@@ -14,14 +14,26 @@ import plumber from '../assets/plumber.jpg';
 import electrician from '../assets/electrician.jpg';
 import hair_stylist from '../assets/hair_stylist.jpg';
 import {Redirect, Link} from "react-router-dom"
-
 import { FaTools, FaWallet, FaClock, FaMapMarkedAlt } from 'react-icons/fa';
-
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import ReactTimeout from "react-timeout";
+import Container1 from './Container1'
 
 class HomePageContent extends Component{
+  state={isLoading :true}
+componentDidMount(){
+  this.props.setTimeout(()=>{this.setState({isLoading:false})},2500)
+}
+
   render(){
+    if(this.state.isLoading){
+      return <Container1/>
+    }
+    else{
     return(
     <div className="hpc">
+    <AppNavbar />
 	  <Jumbotron className="mainSlide">
         <h1 className="display-3 display-31">CtrlF</h1>
         <p className="lead lead1">Find Your Service</p>
@@ -184,10 +196,14 @@ class HomePageContent extends Component{
 				</Col>
 			</Row>
 		</Container>
+    <Footer>
+    <Footer/>
+    </Footer>
 	</div>
     )
+  }
   }
 
 }
 
-export default HomePageContent
+export default ReactTimeout(HomePageContent)

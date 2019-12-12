@@ -83,9 +83,9 @@ router.post('/myorders',async(req, res)=>{
   var item = null;
   orders = [];
   for(item in order){
-    temp =   order[item]; 
+    temp =   order[item];
     var user = await User.findById(temp.user_id)
-    var slot = await Slot.findById(temp.slot._id)  
+    var slot = await Slot.findById(temp.slot._id)
     var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
     var ser_chosen= [];var item2=null;
     for(item2 in temp.services_chosen)
@@ -93,7 +93,7 @@ router.post('/myorders',async(req, res)=>{
       ser_chosen.push(item2)
     }
     var Orderdetails= {
-      is_organisation:false,
+      is_organisation:0,
       services_chosen:ser_chosen,
       total_cost:temp.total_cost,
       date:ordered_date,
@@ -105,21 +105,41 @@ router.post('/myorders',async(req, res)=>{
   }
   orders.push(Orderdetails)
   }
-const serord = await Serviceorder.find({professional:thisprofessional._id})
+
+var serord = await Serviceorder.find({professional:thisprofessional._id,is_bulk:false})
 console.log(serord)
 var item = null;
 for(item in serord){
-  temp =   serord[item]; 
-  var slot = await Slot.findById(temp.slot._id)  
+  temp =   serord[item];
+  var slot = await Slot.findById(temp.slot._id)
   var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
   var Orderdetails= {
-    is_organisation:true,
+    is_organisation:1,
     services_chosen:[temp.service_type],
     total_cost:temp.total_cost,
     date:ordered_date,
     user_name:temp.user_name,
     user_phone:temp.phone_number,
     slot:slot.start_time,
+    address:temp.address[2],
+    city:temp.address[3],
+}
+orders.push(Orderdetails)
+}
+
+var serord = await Serviceorder.find({professional:thisprofessional._id,is_bulk:true})
+console.log(serord)
+var item = null;
+for(item in serord){
+  temp =   serord[item]; 
+  var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
+  var Orderdetails= {
+    is_organisation:2,
+    services_chosen:[temp.service_type],
+    total_cost:temp.total_cost,
+    date:ordered_date,
+    user_name:temp.user_name,
+    user_phone:temp.phone_number,
     address:temp.address[2],
     city:temp.address[3],
 }

@@ -1,7 +1,5 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import AppNavbar from'./AppNavbar';
-import Footer from './Footer'
 
 import {Container, ListGroup, ListGroupItem, Button, Modal,
   ModalHeader, Row, Col, Table,
@@ -17,13 +15,12 @@ import PropTypes from 'prop-types'
 
 import ReactTimeout from "react-timeout";
 import {FaUserAlt} from "react-icons/fa"
-import Container1 from './Container1'
 
-class DisplayBooking extends Component{
+
+class Displayorder extends Component{
   state = {
     flag:null,
-    modal:true,
-    isLoading:true
+    modal:true
   }
 
 
@@ -34,7 +31,6 @@ class DisplayBooking extends Component{
 
  async componentDidMount(){
   this.props.setTimeout(this.myBookings, 200);
-  this.props.setTimeout(()=>{this.setState({isLoading:false})},2000)
 }
 
 
@@ -59,7 +55,6 @@ class DisplayBooking extends Component{
     const message="hello"
     this.props.sendMessage(user_id,professional_id,message)
     this.props.messageNotification(user_id,professional_id,"/chatpage",this.props.location.state.order_id)
-    this.props.messageNotification(professional_id,user_id,"/chatpage",this.props.location.state.order_id)
   }
 
 render(){
@@ -76,11 +71,9 @@ const address = this.props.order?this.props.order.address:null;
 const city = this.props.order?this.props.order.city:null;
 const user_id = this.props.order?this.props.order.user_id:null;
 const professional_id = this.props.order?this.props.order.professional_id:null;
-var ser_cho = []
-for(var i in services_chosen){
-  const temp = [i, services_chosen[i]]
-  ser_cho.push(temp)
-}
+const user_email = this.props.order?this.props.order.user_email:null
+console.log(this.props.order)
+console.log('services choosen')
 if (!this.props.token) {
     // Logout
       return <Redirect to="/" />;
@@ -93,10 +86,12 @@ if(this.state.flag===1){
     return <Redirect to="/slots" />;
   }
 
-if(this.state.isLoading){
-    return <Container1/>
+  var ser_cho = []
+  for(var i in services_chosen){
+    const temp = [i, services_chosen[i]]
+    ser_cho.push(temp)
   }
-else{
+
 if(professional===null)
 {
   return (
@@ -115,10 +110,8 @@ if(professional===null)
   );
 }
 
-
 return(
 <div>
-<AppNavbar />
 <div style={{fontSize:'200%'}}>
   Your Booking<br/><br/>
 </div>
@@ -138,17 +131,12 @@ return(
         <tr>
           <th>Name</th>
           <th>:</th>
-          <td>{professional?professional:null}</td>
-        </tr>
-        <tr>
-          <th>Number</th>
-          <th>:</th>
-          <td>{professional_number?professional_number:null}</td>
+          <td>{name?name:null}</td>
         </tr>
         <tr>
           <th>Email</th>
           <th>:</th>
-          <td>jayk@gmail.com</td>
+          <td>{user_email?user_email:null}</td>
         </tr>
       </Table>
     </Col>
@@ -159,7 +147,7 @@ return(
       <Table bordered>
         <thead>
           <tr>
-            <th>Service Chosen</th>
+            <th>Service Chosen </th>
             <th>Quantity</th>
           </tr>
         </thead>
@@ -167,6 +155,7 @@ return(
 
         {
               ser_cho?
+
               ser_cho.map((item) => (
 
                 <tr>
@@ -178,6 +167,8 @@ return(
 
         :null
       }
+
+
         </tbody>
       </Table>
     </Col>
@@ -209,6 +200,12 @@ return(
     </Col>
   </Row>
   <br/>
+  <Row style={{textAlign:'center'}}>
+    <Col md="5">
+    <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
+   
+    </Col>
+  </Row>
   <br/><br/>
 </Container>
 </Col>
@@ -228,27 +225,22 @@ return(
           state: { order_id: this.props.location.state.order_id }
       }}
 ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
-<Footer>
-<Footer/>
-</Footer>
+
 </div>
 )
 }
 }
-}
 
-DisplayBooking.propTypes={
+Displayorder.propTypes={
   getOrder:PropTypes.func.isRequired,
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
   sendMessage:PropTypes.func.isRequired,
-  messageNotification:PropTypes.func.isRequired,
-  isLoading:PropTypes.bool.isRequired
+  messageNotification:PropTypes.func.isRequired
 }
 
 const mapStateToProps=state=>({
 order:state.booking.order_details,
 token:state.auth.token,
-isLoading:state.booking.isLoading
 })
-export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(DisplayBooking))
+export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(Displayorder))
