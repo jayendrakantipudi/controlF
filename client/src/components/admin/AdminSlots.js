@@ -122,7 +122,7 @@ class AdminSlots extends Component{
           <br/>
             <Button onClick={this.toggle}>Add Slot</Button>
             <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
-            
+
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -172,7 +172,7 @@ class AdminSlots extends Component{
   <br/>
   <Row>
   <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
+    <Col md="8">
 
         <Container>
           <Row>
@@ -181,10 +181,9 @@ class AdminSlots extends Component{
               slots?
 
               slots.map((item) => (
-            <Col md="3" className="slot_select" >
+            <Col md={{size:3, offset:1}} className="slot_select" >
 
-                <span>{item.start_time} - </span>
-                <span>{item.end_time}</span>
+                {item.start_time} -  {item.end_time}
 
 
             </Col>
