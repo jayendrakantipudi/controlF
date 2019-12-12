@@ -43,6 +43,18 @@ router.get('/user_names/:serviceName', async(req, res) => {
     res.send(users)
 });
 
+router.get('/user_names/profile/:id', async(req, res) => {
+    const service_reviews = await review.find({ user_id: req.params.id })
+    if(!service_reviews) return res.status(400).send('User Does not Exist!')
+    var users = {}
+    for (var i in service_reviews){
+        const user_ser = await Professional.findById(service_reviews[i].professional_id)
+        users[service_reviews[i].professional_id] = user_ser.user.name.charAt(0).toUpperCase() + user_ser.user.name.slice(1)
+        console.log(user_ser)
+    }
+    res.send(users)
+});
+
 router.get('/prof_names/:serviceName', async(req, res) => {
     const find_service = await Service.findOne({ name: req.params.serviceName })
     const service_reviews = await review.find({ service_name: find_service.service_worker })

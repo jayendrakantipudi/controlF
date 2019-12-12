@@ -65,6 +65,32 @@ code {
   margin-left: 5%;
  }
 
+ .profile1{
+   margin-left: 0%;
+
+ }
+
+ .profile2{
+   margin-left: 10%;
+
+ }
+
+.update_btn1{
+    margin-left:0%;
+ }
+ .update_btn2{
+   margin-left: 45%;
+ }
+
+.update_btn{
+
+    font-size: 75%;
+    width: 100%;
+}
+
+.update_profile{
+
+}
 .email{
     font-size: 75%;
     padding-top: 0px;
