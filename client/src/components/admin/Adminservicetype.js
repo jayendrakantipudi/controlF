@@ -1,5 +1,6 @@
 import {getserviceType,addServiceType} from '../../actions/adminActions'
 import React,{Component} from 'react'
+import { Card,CardTitle, CardText} from 'reactstrap'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 import {connect} from 'react-redux'
 import {
@@ -104,7 +105,7 @@ class Adminservicetype extends Component{
           <br/>
             <Button onClick={this.toggle}>Add Service Type</Button>
             <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
-            
+
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -155,7 +156,7 @@ class Adminservicetype extends Component{
   <br/>
   <Row>
   <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
+    <Col md="8">
 
         <Container>
           <Row>
@@ -164,9 +165,14 @@ class Adminservicetype extends Component{
               service_types?
 
               service_types.map((item) => (
-            <Col md="3" className="slot_select" >
+            <Col md={{size:3, offset:1}} className="service_type" >
 
-                <span>{item.service_type}</span>
+            {item.service_type}<br/>
+            Rs.{item.cost}
+
+
+
+
 
             </Col>
 
