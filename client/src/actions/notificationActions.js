@@ -12,13 +12,11 @@ export const getNotification = (id) => dispatch => {
     }
   }
 const body=JSON.stringify({id})
-console.log(body)
 axios.post('api/booking/notification',body,config)
 .then(res=>{dispatch({
   type:GET_NOTIFICATION,
   payload:res.data
 })
-console.log(res.data)
 })
 }
 
@@ -34,7 +32,6 @@ export const messageNotification = (user_id,professional_id,url,order_id) => dis
     type:MESSAGE_NOTIFICATION,
     payload:res.data
   })
-  console.log(res.data)
   })
 
 }

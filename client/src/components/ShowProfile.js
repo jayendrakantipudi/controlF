@@ -1,28 +1,29 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import {Container, ListGroup, ListGroupItem, Button} from 'reactstrap'
+import {Container, ListGroup, ListGroupItem, Button, Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Label, Input, FormText} from 'reactstrap'
 import store from '../store'
-import {loadUser} from '../actions/authActions'
+import {loadUser,editProfile} from '../actions/authActions'
 import {
   Redirect
 } from "react-router-dom";
 import '../index.css';
- import image from '../img.JPG'
+ import image from '../img.JPG';
  import { Row, Col } from 'reactstrap';
  import { Table } from 'reactstrap';
  import AppNavbar from'./AppNavbar';
  import Footer from './Footer'
 
-
-
+import {FaUserAlt, FaStar, FaRegStar} from "react-icons/fa";
+import {ButtonToolbar} from 'react-bootstrap';
 import PropTypes from 'prop-types'
-
-
+import ReactTimeout from "react-timeout";
 
 class ShowProfile extends Component{
-  componentDidMount(){
-    console.log('mounted');
-     this.props.loadUser()
+  async componentDidMount(){
+     await this.props.loadUser();
+     this.props.setTimeout(()=>{this.getReviews(this.props.user._id)}, 200)
+     this.props.setTimeout(()=>{this.getNames(this.props.user._id)}, 200)
+
   }
 
 
@@ -33,18 +34,60 @@ class ShowProfile extends Component{
       super(props);
 
       this.state={
+        editprofileshow : false,
+        about:'',
+        contact:'',
+        email:'',
+        address:'',
+        profilepic: '',
         content1: true,
         content2 : false,
         content3 : false,
-        content4 : false
+        content4 : false,
+        modal:false,
+        prof_names:{},
+        reviews:[]
       }
-
 
       this.myfun1=this.myfun1.bind(this);
       this.myfun2=this.myfun2.bind(this);
       this.myfun3=this.myfun3.bind(this);
       this.myfun4=this.myfun4.bind(this);
+      this.handleChange=this.handleChange.bind(this);
+      this.handleSubmit=this.handleSubmit.bind(this);
   }
+
+  getReviews(id){
+    console.log(id)
+		var url = 'http://localhost:3000/api/reviews/user/reviews/';
+		const ser = url.concat(id)
+		fetch(ser)
+		 .then(response => response.json())
+		 .then(data => this.setState({ reviews: data }))
+	}
+
+  getNames(id){
+
+		var url1 = 'http://localhost:3000/api/reviews/user_names/profile/';
+		const ser1 = url1.concat(id)
+		fetch(ser1)
+		.then(response => response.json())
+		.then(data => this.setState({ prof_names: data }))
+
+	}
+
+
+  handleChange(event) {
+      this.setState({[event.target.name]: event.target.value});
+      }
+
+    handleSubmit(event) {
+      event.preventDefault();
+      const id = this.props.user._id
+      const {about,contact,email,address, profilepic} = this.state
+      this.props.editProfile(id,about,contact,email,address)
+      this.toggle()
+    }
 
   myfun1(){
      this.setState(
@@ -91,9 +134,19 @@ class ShowProfile extends Component{
 
         }
 
+ toggle = () =>{
+   this.setState({ modal: !this.state.modal })
+ }
+
+
 render(){
+
 const name=this.props.user?this.props.user.name:null;
 const email=this.props.user?this.props.user.email:null;
+const profilepic = this.props.user&& this.props.user.profilepic ? this.props.user.profilepic:'';
+console.log(profilepic);
+let editprofileclose =() => this.setState({editprofileshow:false});
+console.log(this.state.reviews)
 
 if (!this.props.token) {
     // Logout
@@ -114,18 +167,103 @@ return(
       <h1>Your Profile</h1>
     </Col>
   </Row>
+
   <Row>
     <Col md="3" className="imag">
-      <img src={image} className="imag"/>
+      <img src={profilepic} className="imag"/>
     </Col>
     <Col md="6" className="name">
+
     <h1>
-      {name?name:null}
-    </h1>
+    <span className="profile1">  {name?name:null}</span>
+
+
+
+     <Button onClick={this.toggle} className="profile2">Edit Profile</Button>
+     <Modal isOpen={this.state.modal} toggle={this.toggle}>
+       <ModalHeader toggle={this.toggle}>Update your profile</ModalHeader>
+       <ModalBody>
+       <div className="update_profile">
+       <Container>
+          <Row>
+           <Col sm="8">
+           <Form className="formclass">
+             <FormGroup>
+
+             <Label>About</Label>
+             <Input
+                type="text"
+                name="about"
+                value={this.state.value}
+               onChange={this.handleChange}
+
+             />
+             </FormGroup>
+
+             <FormGroup>
+
+              <Label>Contact</Label>
+              <Input
+                 type="tel"
+                 name="contact"
+                 value={this.state.value}
+                onChange={this.handleChange}
+
+              />
+
+              </FormGroup>
+
+              <FormGroup>
+
+              <Label>E-mail</Label>
+              <Input
+                 type="email"
+                 name="email"
+                 value={this.state.value}
+                onChange={this.handleChange}
+
+              />
+              </FormGroup>
+
+              <FormGroup>
+
+              <Label>Address</Label>
+              <Input
+                 type="text"
+                 name="address"
+                 value={this.state.value}
+                onChange={this.handleChange}
+
+              />
+
+
+              </FormGroup>
+
+           </Form>
+           <div className="update_btn">
+                <span className="update_btn1">   <Button  onClick={this.handleSubmit}>Update</Button></span>
+                <span className="update_btn2">   <Button  onClick={this.toggle}>Cancel</Button></span>
+              </div>
+           </Col>
+           </Row>
+           </Container>
+
+       </div>
+                </ModalBody>
+       <ModalFooter >
+       </ModalFooter>
+     </Modal>
+
+
+</h1>
+
+
       {email?email:null}
     </Col>
   </Row>
+
   <br/><br/>
+
   <Row>
     <Col md="3">
     <div className="prof_btn">
@@ -142,10 +280,8 @@ return(
 
             <h3>About</h3>
 
+            <p> {this.props.user?this.props.user.about:null}</p>
 
-          <p>I have began an illustrious career in hair styling more than a decade ago and today I'm one of the most sought-after stylists in Hyderabad. Get a trendy, chic hairstyle at B Blunt, Dev’s hangout! A warm personality, reassuring manner and skillful hands will take you from Plain Jane to Hot Diva in a few minutes. Ask any well-groomed lady in the city where she gets her hair and nails done, and you can bet your locks it’s at Dev More’s salon! Dev believes that women should experiment more with their face and hair for a modern, chic, smart look suited to any occasion.
-
-</p>
 
          </div> : null}
        </span>
@@ -153,15 +289,73 @@ return(
 
         <span>
           {this.state.content2 ? <div>
-            <h3>My Reviews:</h3>
-            <div className='rev1'>
-              <h6>Jayendra Kantipudi</h6>
-              <p>I'm very much satisfied with your work.</p>
+<h3>My Reviews:</h3>
+            {this.state.reviews.map((item, index) => (
+				<div>
+              <Row className="colgrp_reviews" style={{marginRight:'5%', border:'1px solid #e0d8d7'}}>
+				  <Col md="2" style={{textAlign:'center',marginTop:'1%'}}>
+						<FaUserAlt style={{fontSize:'30px'}}/>
+					<br/>
+				  </Col>
+				  <Col md="7" style={{textAlign:'left'}}>
+				  <h3>
+				  {this.state.prof_names[item.professional_id]}
+				  </h3>
+
+						{item.review}
+				  </Col>
+				  <Col md="3">
+					<span style={{fontSize:'25px'}}>{item.rating}</span>
+					<span style={{fontSize:'15px'}}>/5</span><br/>
+
+					{(item.rating===1)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===2)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===3)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===4)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/><FaStar/></span>
+							<span style={{}}><FaRegStar/></span>
+						</span>
+					:''}
+
+					{(item.rating===5)?
+						<span>
+							<span style={{color:'#ffe100'}}><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></span>
+						</span>
+					:''}
+
+
+				  </Col>
+
+			  </Row>
+			  <br/>
+			  </div>
+            ))}
+
+
+
+            <div className=''>
             </div>
               <br/>
-            <div className='rev1'>
-              <h6>Yashwanth Bhogadi</h6>
-              <p>Oh My God! You are absolutely fabulous</p>
+            <div className=''>
             </div>
           </div> : null}
         </span>
@@ -222,19 +416,19 @@ return(
                 <tr>
 
                   <td><b>Contact</b></td>
-                  <td>+91 7731066610</td>
+                  <td>{this.props.user?this.props.user.contact:null}</td>
 
                 </tr>
                 <tr>
 
                   <td><b>Email</b></td>
-                  <td>madhukar.vangala12@gmail.com</td>
+                  <td>{this.props.user?this.props.user.email:null}</td>
 
                 </tr>
                 <tr>
 
                   <td><b>Address</b></td>
-                  <td>Room no.310,Bh1,IIIT Sricity</td>
+                  <td>{this.props.user?this.props.user.address:null}</td>
 
                 </tr>
               </tbody>
@@ -255,22 +449,21 @@ return(
 </Footer>
 </div>
 
-)
+);
 }
 }
 
 
-
-// ----------------------------------------------------------------------------------------
 
 ShowProfile.propTypes={
   user:PropTypes.object.isRequired,
   loadUser:PropTypes.func.isRequired,
-  token:PropTypes.string
+  token:PropTypes.string,
+  editProfile:PropTypes.func.isRequired
 }
 
 const mapStateToProps=state=>({
 user:state.auth.user,
 token:state.auth.token
 })
-export default connect(mapStateToProps,{loadUser})(ShowProfile)
+export default ReactTimeout(connect(mapStateToProps,{loadUser,editProfile})(ShowProfile))

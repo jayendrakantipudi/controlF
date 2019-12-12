@@ -16,6 +16,18 @@ password:{
   type:String,
   required:true,
 },
+about:{
+  type:String,
+  default:'Nothing to show.Update your profile.'
+},
+contact:{
+  type:Number,
+  default:null
+},
+address:{
+  type:String,
+  default:null
+},
 isAdmin:Boolean,
 profilepic: {
     type: String,
