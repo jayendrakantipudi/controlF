@@ -86,13 +86,13 @@ return(
     <Container>
       <Row>
     <Col md="3" style={{border:this.state.date_border[0], backgroundColor: this.state.date_back[0]}}  onClick={()=>{this.setDate(0)}} className="date_select">
-    Today   
+    Today
     </Col>
     <Col md="3" style={{border:this.state.date_border[1], backgroundColor: this.state.date_back[1]}} onClick={()=>{this.setDate(1)}} className="date_select">
-     {this.state.all_dates[1]}   
+     {this.state.all_dates[1]}
     </Col>
     <Col md="3" style={{border:this.state.date_border[2], backgroundColor: this.state.date_back[2]}} onClick={()=>{this.setDate(2)}} className="date_select">
-     {this.state.all_dates[2]}   
+     {this.state.all_dates[2]}
     </Col>
     </Row>
     </Container>
@@ -117,7 +117,7 @@ return(
               slots_available?
 
               slots_available.map((item) => (
-            <Col md="3" className="slot_select"  onClick={()=>{this.bookslot(item._id)}}>
+            <Col md="3" className="slot_select1"  onClick={()=>{this.bookslot(item._id)}}>
 
                 <span>{item.start_time}:00 - </span>
                 <span>{item.end_time}:00</span>
