@@ -236,7 +236,7 @@ class Service extends React.Component{
 	                <CardTitle>
 	                	{item.user.name[0].toUpperCase() +  item.user.name.slice(1)}
 	                </CardTitle>
-	                <CardText>A hardworking and efficient {service?service:null}</CardText>
+	                <CardText>A hardworking and efficient {worker?worker:null}</CardText>
 	                <Link to='/showprofessional'><Button onClick={()=>this.onClickProf(item.user._id)}>View Profile</Button></Link>
 	              </Card>
 	              <br/>

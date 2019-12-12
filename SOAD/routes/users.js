@@ -146,9 +146,9 @@ router.get('/mypendingpayments/:id',async(req, res)=>{
   var item = null;
   orders = [];
   for(item in order){
-    temp =   order[item]; 
+    temp =   order[item];
     var professional = await Professional.findById(temp.professional)
-    var slot = await Slot.findById(temp.slot._id)  
+    var slot = await Slot.findById(temp.slot._id)
     var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
     var ser_chosen= [];var item2=null;
     for(item2 in temp.services_chosen)
@@ -185,6 +185,7 @@ router.post('/showprofile',async(req, res)=>{
   arr.push(professional_details.locality)
   arr.push(professional_details.profession)
   arr.push(professional_details.phonenumber)
+  arr.push(user.profilepic)
   res.send(arr);
 })
 

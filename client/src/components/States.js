@@ -26,7 +26,7 @@ class States extends Component{
   }
 
   bookslot =  (city1,lat1,lng1) => {
-    
+
     this.props.setLocation(city1,lat1,lng1);
     this.setState({flag:true,city:city1,lat:lat1,lng:lng1})
   }
@@ -49,7 +49,7 @@ return(
 <AppNavbar />
 <br/><br/><br/>
 
-<Container>
+<Container style={{height:'400px'}}>
 <Row>
   <Col md="12">
     <h3  style={{marginRight:'10%'}}>Select City</h3>

@@ -34,7 +34,7 @@ class Location extends Component{
           <div>
           <AppNavbar />
           <br/><br/>
-          <Container style={{border:'1px solid gray'}}>
+          <Container style={{border:'1px solid gray',height:'400px'}}>
           <br/><br/>
             <Row>
               <Col md="12">

@@ -101,11 +101,11 @@ class ChatPage extends Component{
     <AppNavbar />
       <Paper>
           <Typography variant="h5" component="h5">
-          {this.props.order?<div>You are talking to {talking_to}</div>:null}
+          {this.props.order?<div><br/>You are talking to {talking_to}</div>:null}
           </Typography>
-          <Paper style={{width:"50%",marginLeft:"30%"}}>
-
-          <div style={{borderBottom:'1.5px solid rgba(0,0,0,0.14)',maxHeight: 500,width:'100%'}} className="scrollbar" id="style-1">
+          <br/>
+          <Paper style={{width:"50%",marginLeft:"25%"}}>
+          <div style={{borderBottom:'1.5px solid rgba(0,0,0,0.14)',maxHeight: 400,width:'100%',height:'400px'}} className="scrollbar" id="style-1"><br/>
           {this.props.message?this.props.message.messages.map(mess=><div style={mess.from===this.props.auth.user._id? stylesRight:stylesLeft}><Chip label={mess.message}/></div>):null}
           </div>
           <div>

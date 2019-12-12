@@ -135,16 +135,15 @@ return(
 <Container>
     <Row>
       <Col md="8" >
-<Container style={{backgroundColor: '#EDE8FF',padding: '10px 10px', overflow:'hidden'}} className="dispbook_cont">
+<Container style={{backgroundColor: 'white',padding: '40px 40px', overflow:'hidden',boxShadow:'5px 5px 4px #EDF2F2'}} className="dispbook_cont">
   <Row>
     <Col md="5" style={{textAlign:'center'}}>
       <div style={{marginTop:'13%',marginLeft:'14%',overflow:'hidden'}}>
-        {/* <FaUserAlt style={{fontSize:'30px'}} /> */}
-        <img src={prof_pic} style={{width:'200px',height:'200px',overflow:'hidden',boxShadow:'5px 5px 7px #888888'}}/>
+        <img src={prof_pic} style={{width:'200px',height:'200px',overflow:'hidden'}}/>
       </div>
     </Col>
     <Col md="6" style={{marginTop:'5%'}}>
-      <h3>Professional</h3>
+      <h3>Professional Alloted</h3>
       <hr/>
       <Table borderless style={{marginLeft:'5%'}}>
         <tr>
@@ -216,7 +215,7 @@ return(
     <Col  sm={{ size: '5', offset: 1 }} style={{border:'1px solid black'}}>
       <div style={{marginTop:'10%'}}>
         <h5>Total Cost</h5>
-        <span style={{color:'red', fontSize:'30px'}}>Rs. {total_cost?total_cost:null} /-</span>
+        <span style={{fontSize:'30px'}}><b>Rs. {total_cost?total_cost:null} /-</b></span>
       </div>
     </Col>
   </Row>
@@ -229,7 +228,7 @@ return(
   <br/>
   <Row>
       <Col sm={{ size: '3', offset: 2 }} style={{textAlign:'center', marginLeft:'20%'}}>
-        
+
 <Button style={{width:'100%'}} onClick={()=>this.closebutton()} className="but_disp">Ok</Button>
 </Col>
 <Col md="3">

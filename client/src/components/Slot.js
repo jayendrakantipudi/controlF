@@ -8,12 +8,8 @@ import Container1 from './Container1'
 import {
   Redirect
 } from "react-router-dom";
-
-
 import PropTypes from 'prop-types'
-
-
-
+import ReactTimeout from "react-timeout";
 class Slot extends Component{
 
    state= {
@@ -21,13 +17,15 @@ class Slot extends Component{
      all_dates:[],
      select_date:0,
      date_border:['3px solid black', '2px solid gray', '2px solid gray'],
-     date_back:['#dbdbdb', '', '']
+     date_back:['#dbdbdb', '', ''],
+     isLoading:true
    }
 
 
   componentDidMount(){
      this.props.getSlots()
      this.getDates();
+     this.props.setTimeout(()=>{this.setState({isLoading:false})},2000)
   }
 
   getDates(){
@@ -65,10 +63,10 @@ if (this.state.flag){
   return <Redirect to="/location" />;
 }
 
-// if(this.props.Slots.isLoading){
-//   return <Container1/>
-// }
-// else{
+if(this.state.isLoading){
+  return <Container1/>
+}
+else{
 return(
 
 <div >
@@ -141,7 +139,7 @@ return(
 </Footer>
 </div>
 )}
-//}
+}
 }
 
 Slot.propTypes={
@@ -157,4 +155,4 @@ Slots:state.slots,
 token:state.auth.token,
 order:state.order.order_id
 })
-export default connect(mapStateToProps,{getSlots, bookSlot})(Slot)
+export default ReactTimeout(connect(mapStateToProps,{getSlots, bookSlot})(Slot))

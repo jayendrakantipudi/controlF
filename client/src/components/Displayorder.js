@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-
+import AppNavbar from'./AppNavbar';
 import {Container, ListGroup, ListGroupItem, Button, Modal,
   ModalHeader, Row, Col, Table,
   ModalBody} from 'reactstrap'
@@ -71,7 +71,8 @@ const address = this.props.order?this.props.order.address:null;
 const city = this.props.order?this.props.order.city:null;
 const user_id = this.props.order?this.props.order.user_id:null;
 const professional_id = this.props.order?this.props.order.professional_id:null;
-const user_email = this.props.order?this.props.order.user_email:null
+const user_email = this.props.order?this.props.order.user_email:null;
+const user_image = this.props.order?this.props.order.user_image:null;
 console.log(this.props.order)
 console.log('services choosen')
 if (!this.props.token) {
@@ -112,21 +113,24 @@ if(professional===null)
 
 return(
 <div>
+<AppNavbar />
+<br/>
 <div style={{fontSize:'200%'}}>
-  Your Booking<br/><br/>
+  Customer Booking<br/><br/>
 </div>
 <Container>
     <Row>
-      <Col md="8">
-<Container style={{border: '1px solid #EDE8FF', padding: '10px 10px'}}>
+      <Col md="8" style={{marginLeft:'18%'}}>
+<Container style={{backgroundColor: 'white',padding: '40px 40px', overflow:'hidden',boxShadow:'5px 5px 4px #EDF2F2'}} className="dispbook_cont">
   <Row>
     <Col md="5" style={{textAlign:'center'}}>
-      <div style={{padding:'100px 10px',border:'1px solid black',marginTop:'2%'}}>
-        <FaUserAlt style={{fontSize:'30px'}} />
+      <div style={{marginTop:'13%',marginLeft:'14%',overflow:'hidden'}}>
+        <img src={user_image} style={{width:'200px',height:'200px',overflow:'hidden'}}/>
       </div>
     </Col>
     <Col md="7" style={{marginTop:'5%'}}>
-      <h3>Professional</h3>
+      <h3>Customer Details</h3>
+      <hr/>
       <Table borderless style={{marginLeft:'5%'}}>
         <tr>
           <th>Name</th>
@@ -195,36 +199,43 @@ return(
     <Col  sm={{ size: '5', offset: 1 }} style={{border:'1px solid black'}}>
       <div style={{marginTop:'10%'}}>
         <h5>Total Cost</h5>
-        <span style={{color:'red', fontSize:'30px'}}>Rs. {total_cost?total_cost:null} /-</span>
+        <span style={{ fontSize:'30px'}}>Rs. {total_cost?total_cost:null} /-</span>
       </div>
     </Col>
   </Row>
+
   <br/>
-  <Row style={{textAlign:'center'}}>
-    <Col md="5">
-    <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-   
-    </Col>
+  <Row>
+      <Col md="10" style={{textAlign:'center'}}>
+        <span style={{fontSize:'23px', marginLeft:'7%'}}><b>Customer Address :</b> {address?address:null}, {city?city:null}.</span>
+      </Col>
   </Row>
+  <br/>
+  <br/>
+
+  <Row>
+      <Col sm={{ size: '4', offset: 2 }} style={{textAlign:'center', marginLeft:'12%'}}>
+
+<Button style={{width:'100%'}} onClick={()=>this.closebutton()} className="but_disp">Ok</Button>
+</Col>
+<Col md="4">
+
+<Link to={{
+          pathname: "/chatpage",
+          state: { order_id: this.props.location.state.order_id }
+      }}
+><Button style={{marginLeft:"5%", width:'100%'}} onClick={()=>this.sendhello(professional_id,user_id)} className="but_disp">Chat with Customer</Button></Link>
+
+
+</Col>
+  </Row>
+
+
   <br/><br/>
 </Container>
 </Col>
 </Row>
 </Container>
-<ListGroup>
-  <ListGroupItem>
-    Address:{address?address:null}
-  </ListGroupItem>
-  <ListGroupItem>
-    City:{city?city:null}
-  </ListGroupItem>
-</ListGroup>
-<Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-<Link to={{
-          pathname: "/chatpage",
-          state: { order_id: this.props.location.state.order_id }
-      }}
-><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
 
 </div>
 )

@@ -218,7 +218,7 @@ return(
        <br/>
         <b>Total Cost : {total}</b><br/><br/>
         {(total===0)?' ': <Button className='to_add_break' onClick={() => {this.storeOrder(to_store_order)}}>Continue to Checkout</Button> }
-        <br/>
+        <br/><br/>
       </div>
       </Col>
     </Row>

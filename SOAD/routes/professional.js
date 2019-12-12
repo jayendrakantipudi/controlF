@@ -69,7 +69,7 @@ router.get('/isAvailable',auth,async(req,res)=>{
     res.send(fact)
   }
   res.send('No Professional')
-  
+
 })
 
 
@@ -94,6 +94,11 @@ router.get('/:serviceName',async(req,res)=>{
   const serv = await Service.findOne({name:req.params.serviceName})
   const professionals = await Professional.find({profession:serv.service_worker});
   res.send(professionals);
+})
+
+router.get('/prof/:name',async(req,res)=>{
+  const professional = await Professional.findOne({"user.name":req.params.name});
+  res.send(professional);
 })
 
 
@@ -156,7 +161,7 @@ var serord = await Serviceorder.find({professional:thisprofessional._id,is_bulk:
 console.log(serord)
 var item = null;
 for(item in serord){
-  temp =   serord[item]; 
+  temp =   serord[item];
   var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
   var Orderdetails= {
     is_organisation:2,

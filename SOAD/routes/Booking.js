@@ -80,7 +80,7 @@ router.post('/booking',async(req,res)=>{
 
 router.post('/messagenotification',async(req,res)=>{
 	const user= await User.findOne({_id:req.body.user_id})
-	var notification=new Notifications({from:req.body.user_id,notification: `You can contact ${user.name} here`,order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
+	var notification=new Notifications({from:req.body.user_id,notification: `${user.name} wants to talk to you`,order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
 	await notification.save()
 	res.send(notification.id)
 })
@@ -246,7 +246,7 @@ router.get('/service/orderbooking',async(req,res)=>{
     order.order_date.month=order_month;
     order.order_date.date=order_date;
 
-    const proffs = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})   
+    const proffs = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})
 
     const all_slots = await Slot.find()
 
