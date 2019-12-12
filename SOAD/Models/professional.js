@@ -28,6 +28,10 @@ const professionalSchema=new mongoose.Schema({
     type:Array,
     required:false
   },
+  is_available:{
+    type:Boolean,
+    default:true
+  }
 });
 
 const Professional= mongoose.model('Professional',professionalSchema)

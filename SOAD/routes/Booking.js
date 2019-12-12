@@ -37,20 +37,18 @@ router.post('/slotbooking',async(req, res) => {
 });
 
 router.post('/booking',async(req,res)=>{
-  
     let type =await Order.findById(req.body.id);
 	if (!type) return res.status(400).send('Order Does Not Exist!')
-  
-    lat1 = req.body.lat;
-    lng1 = req.body.lng;
+    console.log(req.body)
+    lat1 = 0;
+    lng1 = 0;
     address1 = req.body.address;
     city1 = req.body.city;
     type.address=[lat1,lng1,address1,city1]
     service_name = type.service_name;
     let serviceOne = await Service.findOne({name:service_name})
     const value = serviceOne.service_worker;
-
-    const proffs = await Professional.find({profession:value,'locality.3':city1})
+    const proffs = await Professional.find({profession:value,'locality.3':city1,is_available:true})
     var k = null;
     var flag=0;
     for ( k in proffs)
@@ -153,7 +151,7 @@ router.get('/service/bulkbooking',async(req,res)=>{
     var city = req.query.city;
     var duration = req.query.days;
     var persons = req.query.count;
-    const professionals = await Professional.find({profession:service_worker,'locality.3':city})
+    const professionals = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})
     if(professionals.length<persons){
         res.send({})
     }
@@ -246,7 +244,7 @@ router.get('/service/orderbooking',async(req,res)=>{
     order.order_date.month=order_month;
     order.order_date.date=order_date;
 
-    const proffs = await Professional.find({profession:service_worker,'locality.3':city})   
+    const proffs = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})   
     const all_slots = await Slot.find()
     
     var k = null;var s = null;
