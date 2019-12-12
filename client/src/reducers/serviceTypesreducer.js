@@ -6,8 +6,6 @@ const initialState={
 }
 
 export default function(state=initialState,action){
-  console.log('In reducer');
-  console.log(GET_SERVICETYPES);
   switch (action.type){
     //console.log(GET_SERVICETYPES);
     case GET_SERVICE:

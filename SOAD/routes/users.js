@@ -52,7 +52,7 @@ router.get('/adetails',async(req,res)=>{
     no_professionals : professionals.length,
     no_orders : orders.length
   }
- 
+
   res.send(Admindetails);
 });
 
@@ -78,9 +78,9 @@ router.get('/mybookings/:id',async(req, res)=>{
   var item = null;
   orders = [];
   for(item in order){
-    temp =   order[item]; 
+    temp =   order[item];
     var professional = await Professional.findById(temp.professional)
-    var slot = await Slot.findById(temp.slot._id)  
+    var slot = await Slot.findById(temp.slot._id)
     var ordered_date = temp.order_date.date.toString() + '/' + temp.order_date.month.toString() + '/' + temp.order_date.year.toString()
     var ser_chosen= [];var item2=null;
     for(item2 in temp.services_chosen)
@@ -104,6 +104,39 @@ router.get('/mybookings/:id',async(req, res)=>{
   }
   res.send(orders.reverse());
 })
+
+router.post('/updateprofile',async(req, res)=>{
+  const about = req.body.about
+  const contact = req.body.contact
+  const email = req.body.email
+  const address = req.body.address
+  console.log('...................................................................')
+  console.log(req.body.contact)
+  User.findOne({ _id: req.body.id }, function (err, doc){
+    console.log(doc)
+    // if(doc != null){
+    if(about){
+      doc.about = about;
+    }
+    if(contact){
+      doc.contact = contact;
+    }
+    if(email){
+      doc.email = email;
+    }
+    if(address){
+      doc.address = address;
+    }
+
+
+
+    doc.save();
+  // }
+  });
+
+res.send('Updated')
+})
+
 
 router.post('/showprofile',async(req, res)=>{
   const user= await User.findById(req.body.id).select('-password')

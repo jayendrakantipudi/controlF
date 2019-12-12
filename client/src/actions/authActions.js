@@ -10,7 +10,8 @@ LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
 CLEAR_PROFESSIONAL,
-MY_BOOKINGS
+MY_BOOKINGS,
+EDIT_PROFILE
 } from './types'
 
 export const loadUser = () => (dispatch,getState) => {
@@ -116,6 +117,25 @@ export const mybookings = (id) => dispatch => {
     .then(res =>
       dispatch({
         type: MY_BOOKINGS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+
+export const editProfile = (id,about,contact,email,address) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  // console.log('...........................................................................')
+  const body=JSON.stringify({id,about,contact,email,address})
+  axios
+    .post('/api/users/updateprofile',body,config)
+    .then(res =>
+      dispatch({
+        type: EDIT_PROFILE,
         payload:res.data
       }))
       .catch(err =>console.log(err.response))
