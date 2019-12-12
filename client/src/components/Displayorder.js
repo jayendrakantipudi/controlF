@@ -17,7 +17,7 @@ import ReactTimeout from "react-timeout";
 import {FaUserAlt} from "react-icons/fa"
 
 
-class DisplayBooking extends Component{
+class Displayorder extends Component{
   state = {
     flag:null,
     modal:true
@@ -71,11 +71,9 @@ const address = this.props.order?this.props.order.address:null;
 const city = this.props.order?this.props.order.city:null;
 const user_id = this.props.order?this.props.order.user_id:null;
 const professional_id = this.props.order?this.props.order.professional_id:null;
-var ser_cho = []
-for(var i in services_chosen){
-  const temp = [i, services_chosen[i]]
-  ser_cho.push(temp)
-}
+const user_email = this.props.order?this.props.order.user_email:null
+console.log(this.props.order)
+console.log('services choosen')
 if (!this.props.token) {
     // Logout
       return <Redirect to="/" />;
@@ -87,8 +85,12 @@ if(this.state.flag===1){
   if(this.state.flag===2){
     return <Redirect to="/slots" />;
   }
-console.log(services_chosen)
 
+  var ser_cho = []
+  for(var i in services_chosen){
+    const temp = [i, services_chosen[i]]
+    ser_cho.push(temp)
+  }
 
 if(professional===null)
 {
@@ -129,17 +131,12 @@ return(
         <tr>
           <th>Name</th>
           <th>:</th>
-          <td>{professional?professional:null}</td>
-        </tr>
-        <tr>
-          <th>Number</th>
-          <th>:</th>
-          <td>{professional_number?professional_number:null}</td>
+          <td>{name?name:null}</td>
         </tr>
         <tr>
           <th>Email</th>
           <th>:</th>
-          <td>jayk@gmail.com</td>
+          <td>{user_email?user_email:null}</td>
         </tr>
       </Table>
     </Col>
@@ -150,7 +147,7 @@ return(
       <Table bordered>
         <thead>
           <tr>
-            <th>Service Chosen</th>
+            <th>Service Chosen </th>
             <th>Quantity</th>
           </tr>
         </thead>
@@ -158,6 +155,7 @@ return(
 
         {
               ser_cho?
+
               ser_cho.map((item) => (
 
                 <tr>
@@ -169,6 +167,8 @@ return(
 
         :null
       }
+
+
         </tbody>
       </Table>
     </Col>
@@ -203,12 +203,7 @@ return(
   <Row style={{textAlign:'center'}}>
     <Col md="5">
     <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-    <Link to={{
-              pathname: "/chatpage",
-              state: { order_id: this.props.location.state.order_id }
-          }}
-    ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
-
+   
     </Col>
   </Row>
   <br/><br/>
@@ -236,7 +231,7 @@ return(
 }
 }
 
-DisplayBooking.propTypes={
+Displayorder.propTypes={
   getOrder:PropTypes.func.isRequired,
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
@@ -248,4 +243,4 @@ const mapStateToProps=state=>({
 order:state.booking.order_details,
 token:state.auth.token,
 })
-export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(DisplayBooking))
+export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(Displayorder))

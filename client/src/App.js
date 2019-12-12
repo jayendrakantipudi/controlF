@@ -49,7 +49,7 @@ import Services from './components/admin/Services'
 import AdminSlots from './components/admin/AdminSlots'
 import Admincity from './components/admin/Admincity'
 import Adminservicetype from './components/admin/Adminservicetype'
-
+import Displayorder from './components/Displayorder'
 class App extends Component{
 
   constructor(props) {
@@ -103,6 +103,8 @@ class App extends Component{
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
         <Route exact path='/dummy' component={Dummy}/>
+        <Route exact path='/displayorder' component={Displayorder}/>
+        
           </Switch>
 
         </div>

@@ -2,6 +2,7 @@ import { addCity } from '../../actions/adminActions'
 import { getCities } from '../../actions/locationAction'
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {
   Button,
   Modal,
@@ -31,6 +32,7 @@ class Admincity extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      city:null,
      lat:null,
@@ -51,7 +53,9 @@ class Admincity extends Component{
       
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
@@ -89,11 +93,14 @@ class Admincity extends Component{
  
   render(){
       const cities = this.props.cities?this.props.cities:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin' />
+      }
       return(
         <div>
           <br/>
             <Button onClick={this.toggle}>Add City</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}

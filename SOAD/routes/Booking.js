@@ -19,10 +19,20 @@ router.post('/slotbooking',async(req, res) => {
 	let type =await Order.findById(req.body.orderid);
 	if (!type) return res.status(400).send('Order Does Not Exist!')
     let slot1 = await Slot.findById(req.body.id)
-  
+    date_type = req.body.select_date
+    var d = new Date();
+    if(date_type===1){
+        d.setDate(d.getDate()+1);
+    }
+    if(date_type===2){
+        d.setDate(d.getDate()+2);
+    }
+    type.order_date.date = d.getDate();
+	type.order_date.month = d.getMonth()+1;
+	type.order_date.year = d.getFullYear();
     type.slot=slot1
     await type.save()
-  
+    console.log(type)
     res.send(type.id);
 });
 
@@ -56,7 +66,7 @@ router.post('/booking',async(req,res)=>{
             type.is_confirmed = true
             await type.save()
             let professional = await Professional.findById(type.professional)
-            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id,new:true})
+            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",url:'/displayorder',order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
            
             res.send(type._id)
@@ -92,13 +102,14 @@ router.post('/addorganisation',async(req,res)=>{
 
 router.post('/getOrder',async(req,res)=>{
     let type =await Order.findById(req.body.id);
-	if (!type) return res.status(400).send('Order Does Not Exist!')
-    var chosen = [];
+    if (!type) return res.status(400).send('Order Does Not Exist!')
+    console.log(type.services_chosen)
+    var chosen = {};
     var k = null;
     var temp = type.services_chosen;
     for(k in temp)
     {
-        chosen.push(temp[k].service_type)
+        chosen[k] = temp[k].quantity
     }
     const professional = await Professional.findById(type.professional)
     const user = await User.findById(type.user_id)
@@ -108,6 +119,7 @@ router.post('/getOrder',async(req,res)=>{
         user_id:type.user_id,
         professional_id:professional.user._id,
     name:user.name,
+    user_email:user.email,
     services_chosen:chosen,
     total_cost:type.total_cost,
     date:ordered_date,

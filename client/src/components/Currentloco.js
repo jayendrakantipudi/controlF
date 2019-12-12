@@ -66,7 +66,11 @@ class Currentloco extends React.Component {
       }
       if(this.state.flag==2)
       {
-        return <Redirect to="/displaybooking" />;
+        return <Redirect  to={{
+          pathname: "/displaybooking",
+          state: { order_id: this.props.order.order_id }
+      }}
+         />;
       }
     return (
       <div>
