@@ -17,7 +17,7 @@ import {FaUserAlt, FaStar, FaRegStar} from "react-icons/fa";
 import AppNavbar from'./AppNavbar';
 import Footer from './Footer'
 import Container1 from './Container1'
-
+import '../styles/chatpage.css'
 class Service extends React.Component{
 
 
@@ -133,8 +133,6 @@ class Service extends React.Component{
 		const Style = {
 			textAlign:'left',
 		};
-		console.log(`CHECKING STATE VALUESSSSSSS ${this.state}`)
-		console.log(this.state)
 		if(this.props.service.isLoading){
 			return <Container1/>
 		}
@@ -264,7 +262,7 @@ class Service extends React.Component{
 
 			</Row>
 
-
+				<div className="scrollbar" id="style-1" style={{maxHeight: 300,width:'100%'}}>
             {this.state.reviews.map((item, index) => (
 				<div>
               <Row className="colgrp_reviews" style={{marginRight:'5%', border:'1px solid #e0d8d7'}}>
@@ -276,9 +274,9 @@ class Service extends React.Component{
 					</div>
 				  </Col>
 				  <Col md="7" style={{textAlign:'left'}}>
-				  <h3>
+				  <h5>
 				  {this.state.prof_names[item.professional_id]}
-				  </h3>
+				  </h5>
 
 						{item.review}
 				  </Col>
@@ -327,6 +325,7 @@ class Service extends React.Component{
 			  <br/>
 			  </div>
             ))}
+				</div>
 
 
 

@@ -48,7 +48,7 @@ class ServicesDisplay extends Component{
     var mybutton = document.getElementById("myBtn");
     return(
       <div>
-        
+
       <AppNavbar />
       <br/>
       <br/>
