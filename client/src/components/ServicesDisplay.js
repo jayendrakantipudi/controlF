@@ -48,9 +48,8 @@ class ServicesDisplay extends Component{
     var mybutton = document.getElementById("myBtn");
     return(
       <div>
-        
+
       <AppNavbar />
-<a href="http://localhost:3000/api/payments/">pay</a>
       <br/>
       <br/>
       <input placeholder="Search for a service..." className="search" onChange={this.suggestion}></input>
