@@ -112,11 +112,14 @@ router.post('/getOrder',async(req,res)=>{
     const professional = await Professional.findById(type.professional)
     const user = await User.findById(type.user_id)
     const slot = await Slot.findById(type.slot._id)
+    const prof_user = await User.findById(professional.user._id)
     var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
     Orderdetails= {
+        order_id:req.body.id,
         user_id:type.user_id,
         professional_id:professional.user._id,
     name:user.name,
+    user_id:user._id,
     user_email:user.email,
     services_chosen:chosen,
     total_cost:type.total_cost,
@@ -126,6 +129,9 @@ router.post('/getOrder',async(req,res)=>{
     slot:slot.start_time,
     address:type.address[2],
     city:type.address[3],
+    prof_image: prof_user.profilepic,
+    prof_email: prof_user.email,
+    user_image: user.profilepic
 }
 res.send(Orderdetails)
 })
