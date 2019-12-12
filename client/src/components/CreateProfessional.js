@@ -10,6 +10,9 @@ import {
   Input,
   NavLink,
   Alert,
+  Container,
+  Row,
+  Col
   } from 'reactstrap'
   import {
     Redirect
@@ -43,7 +46,8 @@ class CreateProfessional extends Component{
     getProfessions:PropTypes.func.isRequired,
     professions:PropTypes.array.isRequired,
     all_cities:PropTypes.object.isRequired,
-    getCities:PropTypes.func.isRequired
+    getCities:PropTypes.func.isRequired,
+
   }
 
   componentDidMount(){
@@ -122,6 +126,8 @@ class CreateProfessional extends Component{
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
+         <Container>
+           <Row>
           <DropdownButton id="dropdown-basic-button" title={this.state.profession}>
            {
             this.props.professions?
@@ -132,6 +138,8 @@ class CreateProfessional extends Component{
             : null
           }
           </DropdownButton>
+          </Row>
+          <Row>
             <Label for="phonenumber">phonenumber</Label>
             <Input
               type="string"
@@ -140,7 +148,9 @@ class CreateProfessional extends Component{
               placeholder ="phonenumber"
               onChange={this.onChange}
             />
+            </Row>
             <br/>
+            <Row>
             <DropdownButton id="dropdown-basic-button" title={this.state.city}>
            {
             this.props.all_cities?
@@ -151,10 +161,13 @@ class CreateProfessional extends Component{
             : null
           }
           </DropdownButton>
-          
+          <br/>
+          <br/>
             <Button color="dark" block>
             Become professional
             </Button>
+            </Row>
+            </Container>
           </FormGroup>
         </Form>
         </ModalBody>

@@ -1,5 +1,7 @@
 import {allServices,addService} from '../../actions/adminActions'
 import React,{Component} from 'react'
+import { Card,CardTitle, CardText} from 'reactstrap'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {connect} from 'react-redux'
 import {
   Button,
@@ -31,6 +33,7 @@ class Services extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      name:null,
      service_worker:null,
@@ -47,7 +50,6 @@ class Services extends Component{
 
     this.setState({
       flag:null,
-      flag2:null,
       modal: !this.state.modal,
       msg:null,
       msg2:null
@@ -56,7 +58,6 @@ class Services extends Component{
 
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
-    // console.log(e.target.value)
     if (e.target.name==='name'){
       var k =null;
       var all_services = this.props.services
@@ -104,7 +105,9 @@ class Services extends Component{
        this.setState({flag2:true})
      }
  }
-
+ goBack=()=>{
+   this.setState({flag2:true})
+ }
   selectService(service){
     this.setState({flag:service})
   }
@@ -114,11 +117,16 @@ class Services extends Component{
       const url = "/admin/servicetypes/".concat(this.state.flag)
       return <Redirect  to={url} />
     }
+    if(this.state.flag2){
+      return <Redirect  to='/admin' />
+    }
       return(
         <div>
         <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add Service</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
+
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -169,27 +177,25 @@ class Services extends Component{
         </Modal>
 
             <Container>
-<br/><br/>
+
   <Row>
     <Col md="12">
-      <h1>Available Services</h1>
+      <h1><center>Available Services</center></h1>
     </Col>
   </Row>
+
+
   <br/>
+
   <Row>
-  <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
-
-        <Container>
-          <Row>
-
-          {
+    {
               services?
-
               services.map((item) => (
-            <Col md="3" className="slot_select"  onClick={()=>{this.selectService(item.name)}}>
+            <Col md={{size:3, offset:1}} className="service_card"  onClick={()=>{this.selectService(item.name)}}>
 
-                <span>{item.name}</span>
+               <center><b>{item.name}</b></center><br/>
+               <span>{item.about}</span>
+
 
             </Col>
 
@@ -197,13 +203,8 @@ class Services extends Component{
 
         :null
       }
-
-          </Row>
-        </Container>
-
-    </Col>
-    </Col>
   </Row>
+  <br/><br/>
 </Container>
 <Footer>
 <Footer/>

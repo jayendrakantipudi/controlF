@@ -176,21 +176,21 @@ componentDidMount(){
 					<ListGroup>
 					  <ListGroupItem>
 						<ListGroupItemText>
-						<i>" Great service by plumber Lokesh Reddy. Fixed the problems with ease."</i>
+						<i>" Great service by plumber Jayendra Kantipudi. Fixed the problems with ease."</i>
 						</ListGroupItemText>
-						- <b>Mahesh Babu</b>
+						- <b>Ram Charan K</b>
 					  </ListGroupItem>
 					  <ListGroupItem>
 						<ListGroupItemText>
 						<i>" With the help of CtrlF I started getting many opportunities and earn more."</i>
 						</ListGroupItemText>
-						- <b>Prakash Malhotra</b>
+						- <b>Madhukar Reddy V</b>
 					  </ListGroupItem>
 					  <ListGroupItem>
 						<ListGroupItemText>
 						<i>" Made my job easier to make a slot at my convenient time to avail the service "</i>
 						</ListGroupItemText>
-						- <b>Yashwanth Bhogadi</b>
+						- <b>Mahesh Babu G</b>
 					  </ListGroupItem>
 					</ListGroup>
 				</Col>

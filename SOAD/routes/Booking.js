@@ -19,28 +19,38 @@ router.post('/slotbooking',async(req, res) => {
 	let type =await Order.findById(req.body.orderid);
 	if (!type) return res.status(400).send('Order Does Not Exist!')
     let slot1 = await Slot.findById(req.body.id)
-  
+    date_type = req.body.select_date
+    var d = new Date();
+    if(date_type===1){
+        d.setDate(d.getDate()+1);
+    }
+    if(date_type===2){
+        d.setDate(d.getDate()+2);
+    }
+    type.order_date.date = d.getDate();
+	type.order_date.month = d.getMonth()+1;
+	type.order_date.year = d.getFullYear();
     type.slot=slot1
     await type.save()
-  
+    console.log(type)
     res.send(type.id);
 });
 
 router.post('/booking',async(req,res)=>{
-  
     let type =await Order.findById(req.body.id);
 	if (!type) return res.status(400).send('Order Does Not Exist!')
-  
-    lat1 = req.body.lat;
-    lng1 = req.body.lng;
+
+//     lat1 = req.body.lat;
+//     lng1 = req.body.lng;
+    lat1 = 0;
+    lng1 = 0;
     address1 = req.body.address;
     city1 = req.body.city;
     type.address=[lat1,lng1,address1,city1]
     service_name = type.service_name;
     let serviceOne = await Service.findOne({name:service_name})
     const value = serviceOne.service_worker;
-
-    const proffs = await Professional.find({profession:value,'locality.3':city1})
+    const proffs = await Professional.find({profession:value,'locality.3':city1,is_available:true})
     var k = null;
     var flag=0;
     for ( k in proffs)
@@ -48,7 +58,7 @@ router.post('/booking',async(req,res)=>{
        const prof_bookings = await Order.find({professional:proffs[k]._id, "order_date.date":type.order_date.date,"order_date.month":type.order_date.month,"order_date.year":type.order_date.year, 'slot._id':type.slot})
        const service_bookings = await Serviceorder.find({professional:proffs[k]._id, "order_date.date":type.order_date.date,"order_date.month":type.order_date.month,"order_date.year":type.order_date.year, 'slot._id':type.slot})
        const service_booking2 = await Serviceorder.find({professional:proffs[k]._id,is_bulk:true, "order_date.date":type.order_date.date,"order_date.month":type.order_date.month,"order_date.year":type.order_date.year})
-        
+
        if(prof_bookings.length===0 && proffs[k].user._id != type.user_id && service_bookings.length===0 && service_booking2.length===0)
         {
             flag=1;
@@ -56,7 +66,7 @@ router.post('/booking',async(req,res)=>{
             type.is_confirmed = true
             await type.save()
             let professional = await Professional.findById(type.professional)
-            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",order_id:type._id,to:professional.user._id,new:true})
+            var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",url:'/displayorder',order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
             res.send(type._id)
             return;
@@ -90,22 +100,27 @@ router.post('/addorganisation',async(req,res)=>{
 
 router.post('/getOrder',async(req,res)=>{
     let type =await Order.findById(req.body.id);
-	if (!type) return res.status(400).send('Order Does Not Exist!')
-    var chosen = [];
+    if (!type) return res.status(400).send('Order Does Not Exist!')
+    console.log(type.services_chosen)
+    var chosen = {};
     var k = null;
     var temp = type.services_chosen;
     for(k in temp)
     {
-        chosen.push(temp[k].service_type)
+        chosen[k] = temp[k].quantity
     }
     const professional = await Professional.findById(type.professional)
     const user = await User.findById(type.user_id)
     const slot = await Slot.findById(type.slot._id)
+    const prof_user = await User.findById(professional.user._id)
     var ordered_date = type.order_date.date.toString() + '/' + type.order_date.month.toString() + '/' + type.order_date.year.toString()
     Orderdetails= {
+        order_id:req.body.id,
         user_id:type.user_id,
         professional_id:professional.user._id,
     name:user.name,
+    user_id:user._id,
+    user_email:user.email,
     services_chosen:chosen,
     total_cost:type.total_cost,
     date:ordered_date,
@@ -114,6 +129,9 @@ router.post('/getOrder',async(req,res)=>{
     slot:slot.start_time,
     address:type.address[2],
     city:type.address[3],
+    prof_image: prof_user.profilepic,
+    prof_email: prof_user.email,
+    user_image: user.profilepic
 }
 res.send(Orderdetails)
 })
@@ -135,7 +153,7 @@ router.get('/service/bulkbooking',async(req,res)=>{
     var city = req.query.city;
     var duration = req.query.days;
     var persons = req.query.count;
-    const professionals = await Professional.find({profession:service_worker,'locality.3':city})
+    const professionals = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})
     if(professionals.length<persons){
         res.send({})
     }
@@ -147,31 +165,31 @@ router.get('/service/bulkbooking',async(req,res)=>{
         dates.push({date:tomorrow.getDate(),month:tomorrow.getMonth()+1,year:tomorrow.getFullYear()})
         tomorrow.setDate(tomorrow.getDate()+1);
         }
-      
+
         var bookings = []
         for(var d in dates){
             var count = 0;
             var day_bookings=[]
             for (var k=0;k< professionals.length;k++  ){
-            
+
             const prof_bookings = await Order.find({professional:professionals[k]._id, "order_date.date":dates[d].date,"order_date.month":dates[d].month,"order_date.year":dates[d].year})
             const service_bookings = await Serviceorder.find({professional:professionals[k]._id, "order_date.date":dates[d].date,"order_date.month":dates[d].month,"order_date.year":dates[d].year})
             if(prof_bookings.length===0 && service_bookings.length===0){
                 day_bookings.push(professionals[k]._id)
-                count=count+1;  
+                count=count+1;
             }
             if(count>=persons){
                 break;
             }
             }
             if(count != persons){
-               
+
                 res.send({})
                 return;
             }
             bookings.push(day_bookings)
     }
-   
+
     var to_send = {}
     for(var i in bookings){
         to_send_date = []
@@ -228,15 +246,16 @@ router.get('/service/orderbooking',async(req,res)=>{
     order.order_date.month=order_month;
     order.order_date.date=order_date;
 
-    const proffs = await Professional.find({profession:service_worker,'locality.3':city})   
+    const proffs = await Professional.find({profession:service_worker,'locality.3':city,is_available:true})   
+
     const all_slots = await Slot.find()
-    
+
     var k = null;var s = null;
 
     for ( k in proffs)
     {
         const service_booking = await Serviceorder.find({professional:proffs[k]._id,is_bulk:true, "order_date.date":order.order_date.date,"order_date.month":order.order_date.month,"order_date.year":order.order_date.year})
-        
+
         if(service_booking.length===0)
         {
         for(s in all_slots)

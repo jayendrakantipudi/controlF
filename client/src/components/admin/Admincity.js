@@ -2,6 +2,7 @@ import { addCity } from '../../actions/adminActions'
 import { getCities } from '../../actions/locationAction'
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {
   Button,
   Modal,
@@ -32,6 +33,7 @@ class Admincity extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      city:null,
      lat:null,
@@ -52,7 +54,9 @@ class Admincity extends Component{
 
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
@@ -90,12 +94,15 @@ class Admincity extends Component{
 
   render(){
       const cities = this.props.cities?this.props.cities:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin' />
+      }
       return(
         <div>
         <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add City</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -155,7 +162,7 @@ class Admincity extends Component{
   <br/>
   <Row>
   <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
+    <Col md="8">
 
         <Container>
           <Row>
@@ -164,9 +171,9 @@ class Admincity extends Component{
               cities?
 
               cities.map((item) => (
-            <Col md="3" className="slot_select" >
+            <Col md={{size:3, offset:1}} className="city" >
 
-                <span>{item.city}  </span>
+                {item.city}
 
 
             </Col>

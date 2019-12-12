@@ -7,7 +7,9 @@ IS_PROFESSIONAL_TRUE,
 IS_PROFESSIONAL_FALSE,
 GET_PROFESSIONS,
 PROF_LOCATION,
-MY_ORDERS
+MY_ORDERS,
+IS_AVAILABLE,
+UPDATE_AVAILABLE
 } from './types'
 
 
@@ -37,6 +39,17 @@ if(token){
 
 }
 }
+
+export const isAvailable = () => (dispatch,getState) => {
+  // User Loading
+  axios.get('/api/professional/isAvailable',tokenConfig(getState))
+    .then(res => dispatch({
+      type:IS_AVAILABLE,
+      payload:res.data
+    }))
+  }
+  
+
 
 export const isProf = () => (dispatch,getState) => {
   // User Loading
@@ -105,6 +118,23 @@ export const myorders = (id) => dispatch => {
     .then(res =>
       dispatch({
         type: MY_ORDERS,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+export const updateAvailable = (id) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id})
+  axios
+    .post('/api/professional/updateAvailable',body,config)
+    .then(res =>
+      dispatch({
+        type: UPDATE_AVAILABLE,
         payload:res.data
       }))
       .catch(err =>console.log(err.response))

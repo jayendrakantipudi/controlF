@@ -1,5 +1,6 @@
 import {allServices,addService} from '../../actions/adminActions'
 import React,{Component} from 'react'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {connect} from 'react-redux'
 import {
   Button,
@@ -31,6 +32,7 @@ class AdminSlots extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      start:null,
      end:null,
@@ -49,7 +51,9 @@ class AdminSlots extends Component{
 
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     var k =null;
@@ -109,12 +113,16 @@ class AdminSlots extends Component{
 
   render(){
       const slots = this.props.slots?this.props.slots:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin' />
+      }
       return(
         <div>
         <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add Slot</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
+
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}
@@ -164,7 +172,7 @@ class AdminSlots extends Component{
   <br/>
   <Row>
   <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
+    <Col md="8">
 
         <Container>
           <Row>
@@ -173,10 +181,9 @@ class AdminSlots extends Component{
               slots?
 
               slots.map((item) => (
-            <Col md="3" className="slot_select" >
+            <Col md={{size:3, offset:1}} className="slot_select" >
 
-                <span>{item.start_time} - </span>
-                <span>{item.end_time}</span>
+                {item.start_time} -  {item.end_time}
 
 
             </Col>
