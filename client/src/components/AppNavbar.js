@@ -133,7 +133,7 @@ getNoti=(id)=>{
     )
 
     const extraNavbar=(
-    <Navbar style={{marginTop:'-2%'}}>
+    <Navbar style={{marginTop:'-2%',marginLeft:'10%',fontFamily: 'Yanone Kaffeesatz, sans-serif'}}>
     <Container>
     <table style={{marginLeft:'29%'}}>
     <tr style={{cellspacing:'30%'}}>

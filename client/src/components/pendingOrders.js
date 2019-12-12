@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col,
   Table, TabContent, TabPane, Modal, ModalHeader,  ModalBody, Form,
   FormGroup, Label, Input} from 'reactstrap'
-
 import {loadUser,mybookings, payment} from '../actions/authActions'
 import {addReview} from '../actions/reviewActions'
 import ReactTimeout from "react-timeout";
@@ -20,7 +19,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import AppNavbar from './AppNavbar'
 import Footer from './Footer'
-
+import Container1 from './Container1'
 class pendingOrders extends Component{
 
   constructor(props)
@@ -35,7 +34,8 @@ class pendingOrders extends Component{
       modal_toggle:{},
       order_list:[],
       check_reviews:[],
-      check_reviews_bool:{}
+      check_reviews_bool:{},
+      isLoading:true
       }
 
   }
@@ -59,6 +59,7 @@ class pendingOrders extends Component{
   async componentDidMount(){
     await this.props.loadUser()
     this.props.setTimeout(this.myBookings, 200);
+    this.props.setTimeout(()=>{this.setState({isLoading:false})},1000)
   }
 
   onChange=(e)=>{
@@ -99,6 +100,10 @@ if (this.state.flag){
   return <Redirect to="/location" />;
 }
 // console.log('hlooooooooooooo')
+if(this.state.isLoading){
+  return <Container1/>
+}
+
 return(
 <div>
 <AppNavbar/>
