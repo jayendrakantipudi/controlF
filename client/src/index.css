@@ -65,6 +65,32 @@ code {
   margin-left: 5%;
  }
 
+ .profile1{
+   margin-left: 0%;
+
+ }
+
+ .profile2{
+   margin-left: 10%;
+
+ }
+
+.update_btn1{
+    margin-left:0%;
+ }
+ .update_btn2{
+   margin-left: 45%;
+ }
+
+.update_btn{
+
+    font-size: 75%;
+    width: 100%;
+}
+
+.update_profile{
+
+}
 .email{
     font-size: 75%;
     padding-top: 0px;
@@ -294,18 +320,60 @@ code {
 .search_btn:hover{
   opacity: 0.8;
 }
-
+/*
 .slot_select{
   border: 2px solid gray;
   padding: 15px 15px;
   cursor: pointer;
   margin-left: 2%;
   margin-top: 2%;
+  text-align: center;
+}
+*/
+.admin_data:hover{
+  box-shadow: 5px 10px 8px 10px #888888
 }
 
-.slot_select:hover{
-  border: 2px solid black;
-  background-color: #d9d5f7;
+.service_card{
+  width: 800px;
+  height: 250px;
+  border: 1px solid black;
+  padding: 15px 15px;
+  margin-top: 8%;
+  cursor:pointer
+}
+ .service_card:hover{
+
+     box-shadow: 5px 10px 8px 10px #888888;
+ }
+.service_type{
+  width: 80px;
+  height:60px;
+  border: 1px solid black;
+  margin-top: 8%;
+ text-align:center;
+ padding-bottom: 1%;
+ padding-top: 1%
+
+}
+
+.city{
+  width: 80px;
+  height:60px;
+  border: 1px solid black;
+margin-top: 8%;
+ text-align:center;
+ padding: 15px 15px;
+}
+
+.slot_select{
+  width: 80px;
+  height:60px;
+  border: 1px solid black;
+margin-top: 8%;
+ text-align:center;
+ padding: 15px 15px;
+
 }
 .date_select{
   border: 2px solid gray;
@@ -365,4 +433,8 @@ code {
 
 .mybooks_row:hover{
   background-color: #EDE8FF;
+}
+
+.but_disp:hover{
+  box-shadow: 5px 5px 15px #888888;
 }

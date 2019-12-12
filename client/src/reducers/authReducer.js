@@ -8,6 +8,7 @@ LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
 MY_BOOKINGS,
+EDIT_PROFILE,
 ORDER_PAYMENT
 } from '../actions/types'
 
@@ -33,6 +34,8 @@ export default function(state=initialState,action){
         isLoading:false,
         user:action.payload
       }
+      case EDIT_PROFILE:
+        return state
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
     localStorage.setItem('token',action.payload.token)

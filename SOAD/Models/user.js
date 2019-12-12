@@ -20,6 +20,18 @@ isAdmin:{
   type:Boolean,
   default:false
 },
+about:{
+  type:String,
+  default:'Nothing to show.Update your profile.'
+},
+contact:{
+  type:Number,
+  default:null
+},
+address:{
+  type:String,
+  default:null
+},
 profilepic: {
     type: String,
     required: true,

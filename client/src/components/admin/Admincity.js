@@ -162,7 +162,7 @@ class Admincity extends Component{
   <br/>
   <Row>
   <Col md="12">
-    <Col md="8" style={{marginLeft:'20%'}}>
+    <Col md="8">
 
         <Container>
           <Row>
@@ -171,9 +171,9 @@ class Admincity extends Component{
               cities?
 
               cities.map((item) => (
-            <Col md="3" className="slot_select" >
+            <Col md={{size:3, offset:1}} className="city" >
 
-                <span>{item.city}  </span>
+                {item.city}
 
 
             </Col>

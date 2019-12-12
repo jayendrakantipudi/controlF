@@ -11,6 +11,7 @@ REGISTER_SUCCESS,
 REGISTER_FAIL,
 CLEAR_PROFESSIONAL,
 MY_BOOKINGS,
+EDIT_PROFILE,
 ORDER_PAYMENT
 } from './types'
 
@@ -122,7 +123,25 @@ export const mybookings = (id) => dispatch => {
       .catch(err =>console.log(err.response))
 }
 
-export const payment = (order_id, user_id, total_cost) => dispatch => {
+
+export const editProfile = (id,about,contact,email,address) => dispatch => {
+  const config={
+    headers:{
+      'Content-Type':'application/json'
+    }
+  }
+  const body=JSON.stringify({id,about,contact,email,address})
+  axios
+    .post('/api/users/updateprofile',body,config)
+    .then(res =>
+      dispatch({
+        type: EDIT_PROFILE,
+        payload:res.data
+      }))
+      .catch(err =>console.log(err.response))
+}
+
+ export const payment = (order_id, user_id, total_cost) => dispatch => {
   const config={
     headers:{
       'Content-Type':'application/json'
