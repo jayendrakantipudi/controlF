@@ -15,17 +15,20 @@ import PropTypes from 'prop-types'
 class States extends Component{
 
    state= {
-     flag:null
-
+     flag:null,
+     city:null,
+     lat:null,
+     lng:null
    }
 
   componentDidMount(){
      this.props.getCities()
   }
 
-  bookslot =  (city,lat,lng) => {
-    this.props.setLocation(city,lat,lng);
-    this.setState({flag:true})
+  bookslot =  (city1,lat1,lng1) => {
+    
+    this.props.setLocation(city1,lat1,lng1);
+    this.setState({flag:true,city:city1,lat:lat1,lng:lng1})
   }
 
 render(){
@@ -35,7 +38,10 @@ if (!this.props.token) {
     }
 
 if (this.state.flag){
-  return <Redirect to="/marker" />;
+  return <Redirect to={{
+    pathname:"/marker",
+    state:{ order_id: this.props.order,city:this.state.city,lat:this.state.lat,lng:this.state.lng}
+  }} />;
 }
 return(
 
@@ -86,6 +92,7 @@ return(
 }
 
 States.propTypes={
+  order:PropTypes.object.isRequired,
   token:PropTypes.string,
   getCities:PropTypes.func.isRequired,
   all_cities:PropTypes.string.isRequired,
@@ -94,6 +101,7 @@ States.propTypes={
 
 const mapStateToProps=state=>({
 token:state.auth.token,
-cities:state.booking.all_cities
+cities:state.booking.all_cities,
+order:state.order.order_id
 })
 export default connect(mapStateToProps,{getCities, setLocation})(States)

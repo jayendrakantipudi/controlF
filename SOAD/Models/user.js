@@ -16,7 +16,10 @@ password:{
   type:String,
   required:true,
 },
-isAdmin:Boolean,
+isAdmin:{ 
+  type:Boolean,
+  default:false
+},
 profilepic: {
     type: String,
     required: true,
