@@ -65,10 +65,10 @@ if (this.state.flag){
   return <Redirect to="/location" />;
 }
 
-if(this.props.Slots.isLoading){
-  return <Container1/>
-}
-else{
+// if(this.props.Slots.isLoading){
+//   return <Container1/>
+// }
+// else{
 return(
 
 <div >
@@ -141,7 +141,7 @@ return(
 </Footer>
 </div>
 )}
-}
+//}
 }
 
 Slot.propTypes={

@@ -6,7 +6,9 @@ IS_PROFESSIONAL_FALSE,
 CLEAR_PROFESSIONAL,
 GET_PROFESSIONS,
 PROF_LOCATION,
-MY_ORDERS
+MY_ORDERS,
+IS_AVAILABLE,
+UPDATE_AVAILABLE
 } from '../actions/types'
 
 const initialState={
@@ -14,7 +16,8 @@ const initialState={
   isProfessional:null,
   isLoading: false,
   professions:null,
-  my_orders:null
+  my_orders:null,
+  is_available:null
 }
 
 export default function(state=initialState,action){
@@ -50,6 +53,16 @@ export default function(state=initialState,action){
       return {
         ...state,
         my_orders:action.payload,
+      }
+    case IS_AVAILABLE:
+      return {
+        ...state,
+        is_available:action.payload
+      }
+    case UPDATE_AVAILABLE:
+      return {
+        ...state,
+        is_available:action.payload,  
       }
       default:
       return state

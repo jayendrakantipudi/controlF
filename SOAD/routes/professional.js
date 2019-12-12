@@ -57,6 +57,31 @@ router.get('/isProfessional',auth,async(req,res)=>{
   res.send(fact)
 })
 
+router.get('/isAdmin',auth,async(req,res)=>{
+  const fact= req.user._isAdmin? true: false
+  res.send(fact)
+})
+
+router.get('/isAvailable',auth,async(req,res)=>{
+  let professional = await Professional.findOne({"user._id":req.user._id})
+  if(professional){
+    const fact= professional.is_available? true: false
+    res.send(fact)
+  }
+  res.send('No Professional')
+  
+})
+
+
+router.post('/updateAvailable',async(req,res)=>{
+  const user = await  User.findById(req.body.id)
+  const professional = await Professional.findOne({"user._id":user._id})
+  professional.is_available = professional.is_available ? false : true
+  await professional.save()
+  res.send(professional.is_available)
+})
+
+
 
 router.get('/professions',async(req,res)=>{
   const professions=await Service.find().select('service_worker')
