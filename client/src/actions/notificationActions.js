@@ -51,7 +51,6 @@ export const newNotifications = (user_id) => dispatch =>{
     type:NEW_NOTIFICATIONS,
     payload:res.data
   })
-  console.log(res.data)
   })
 
 }

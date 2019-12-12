@@ -1,5 +1,6 @@
 import {getserviceType,addServiceType} from '../../actions/adminActions'
 import React,{Component} from 'react'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 import {connect} from 'react-redux'
 import {
   Button,
@@ -31,6 +32,7 @@ class Adminservicetype extends Component{
 
    state= {
      flag:null,
+     flag2:null,
      modal:false,
      service_type:null,
      cost:null,
@@ -51,7 +53,9 @@ class Adminservicetype extends Component{
       msg2:null
     })
   }
-
+  goBack=()=>{
+    this.setState({flag2:true})
+  }
   onChange=(e)=>{
     this.setState({[e.target.name]:e.target.value})
     // console.log(e.target.value)
@@ -91,12 +95,16 @@ class Adminservicetype extends Component{
 
   render(){
       const service_types = this.props.service_types?this.props.service_types:null;
-
+      if(this.state.flag2){
+        return <Redirect  to='/admin/services' />
+      }
       return(
         <div>
         <AppNavbar />
           <br/>
             <Button onClick={this.toggle}>Add Service Type</Button>
+            <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
+            
             <Modal
         isOpen={this.state.modal}
         toggle={this.toggle}

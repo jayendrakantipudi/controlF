@@ -17,17 +17,41 @@ import PropTypes from 'prop-types'
 class Slot extends Component{
 
    state= {
-     flag:null
+     flag:null,
+     all_dates:[],
+     select_date:0,
+     date_border:['3px solid black', '2px solid gray', '2px solid gray'],
+     date_back:['#dbdbdb', '', '']
    }
+
 
   componentDidMount(){
      this.props.getSlots()
+     this.getDates();
+  }
+
+  getDates(){
+    fetch('http://localhost:3000/api/slot/dates')
+		 .then(response => response.json())
+     .then(data => this.setState({ all_dates: data }))
+  }
+
+  setDate = (value) => {
+    //console.log('selected date')
+    this.setState({select_date:value})
+    var temp_array = ['2px solid gray', '2px solid gray', '2px solid gray']
+    var temp_back = ['', '', '']
+    temp_array[value] = '3px solid black'
+    temp_back[value] = '#dbdbdb'
+    this.setState({date_border:temp_array})
+    this.setState({date_back:temp_back})
   }
 
   bookslot = async(e) =>{
     console.log('in booking slot...........')
+    const {select_date} = this.state
     console.log(e, this.props.order)
-    const slottter = await this.props.bookSlot(e,this.props.order);
+    const slottter = await this.props.bookSlot(e,this.props.order,select_date);
     this.setState({flag:true})
   }
 
@@ -50,6 +74,31 @@ return(
 <div >
 <AppNavbar />
 <Container>
+<br/><br/>
+<Row>
+    <Col md="12">
+      <h1>Choose a Date</h1>
+    </Col>
+  </Row>
+  <Row>
+  <Col md="12">
+    <Col md="8" style={{marginLeft:'20%'}}>
+    <Container>
+      <Row>
+    <Col md="3" style={{border:this.state.date_border[0], backgroundColor: this.state.date_back[0]}}  onClick={()=>{this.setDate(0)}} className="date_select">
+    Today   
+    </Col>
+    <Col md="3" style={{border:this.state.date_border[1], backgroundColor: this.state.date_back[1]}} onClick={()=>{this.setDate(1)}} className="date_select">
+     {this.state.all_dates[1]}   
+    </Col>
+    <Col md="3" style={{border:this.state.date_border[2], backgroundColor: this.state.date_back[2]}} onClick={()=>{this.setDate(2)}} className="date_select">
+     {this.state.all_dates[2]}   
+    </Col>
+    </Row>
+    </Container>
+    </Col>
+    </Col>
+  </Row>
 <br/><br/>
   <Row>
     <Col md="12">
