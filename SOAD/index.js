@@ -19,6 +19,9 @@ const slot = require('./routes/slot');
 const location = require('./routes/location');
 const booking = require('./routes/Booking');
 const reviews = require('./routes/reviews')
+// const {route} = require('./routes/payments');
+const pay = require('./routes/pay')
+const {webhook} = require('./routes/webhook')
 app.use(cors());
 
 
@@ -43,6 +46,9 @@ app.use('/api/slot',slot);
 app.use('/api/location',location);
 app.use('/api/booking',booking);
 app.use('/api/reviews',reviews);
+app.use('/api/payments/',pay);
+app.use('/paytm/webhook',webhook)
+
 
 
 

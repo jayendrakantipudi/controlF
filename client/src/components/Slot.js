@@ -2,7 +2,9 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, ListGroup, ListGroupItem, Button, Row, Col, Table, TabContent, TabPane} from 'reactstrap'
 import {getSlots,bookSlot} from '../actions/slotActions'
-
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import Container1 from './Container1'
 import {
   Redirect
 } from "react-router-dom";
@@ -62,10 +64,15 @@ if (!this.props.token) {
 if (this.state.flag){
   return <Redirect to="/location" />;
 }
+
+if(this.props.Slots.isLoading){
+  return <Container1/>
+}
+else{
 return(
 
 <div >
-
+<AppNavbar />
 <Container>
 <br/><br/>
 <Row>
@@ -129,8 +136,11 @@ return(
     </Col>
   </Row>
 </Container>
+<Footer>
+<Footer/>
+</Footer>
 </div>
-)
+)}
 }
 }
 

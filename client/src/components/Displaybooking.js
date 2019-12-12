@@ -1,5 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 import {Container, ListGroup, ListGroupItem, Button, Modal,
   ModalHeader, Row, Col, Table,
@@ -15,12 +17,13 @@ import PropTypes from 'prop-types'
 
 import ReactTimeout from "react-timeout";
 import {FaUserAlt} from "react-icons/fa"
-
+import Container1 from './Container1'
 
 class DisplayBooking extends Component{
   state = {
     flag:null,
-    modal:true
+    modal:true,
+    isLoading:true
   }
 
 
@@ -31,6 +34,7 @@ class DisplayBooking extends Component{
 
  async componentDidMount(){
   this.props.setTimeout(this.myBookings, 200);
+  this.props.setTimeout(()=>{this.setState({isLoading:false})},2000)
 }
 
 
@@ -55,6 +59,7 @@ class DisplayBooking extends Component{
     const message="hello"
     this.props.sendMessage(user_id,professional_id,message)
     this.props.messageNotification(user_id,professional_id,"/chatpage",this.props.location.state.order_id)
+    this.props.messageNotification(professional_id,user_id,"/chatpage",this.props.location.state.order_id)
   }
 
 render(){
@@ -87,9 +92,11 @@ if(this.state.flag===1){
   if(this.state.flag===2){
     return <Redirect to="/slots" />;
   }
-console.log(services_chosen)
 
-
+if(this.state.isLoading){
+    return <Container1/>
+  }
+else{
 if(professional===null)
 {
   return (
@@ -108,8 +115,10 @@ if(professional===null)
   );
 }
 
+
 return(
 <div>
+<AppNavbar />
 <div style={{fontSize:'200%'}}>
   Your Booking<br/><br/>
 </div>
@@ -200,17 +209,6 @@ return(
     </Col>
   </Row>
   <br/>
-  <Row style={{textAlign:'center'}}>
-    <Col md="5">
-    <Button style={{align:"left"}} onClick={()=>this.closebutton()}>Ok</Button>
-    <Link to={{
-              pathname: "/chatpage",
-              state: { order_id: this.props.location.state.order_id }
-          }}
-    ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
-
-    </Col>
-  </Row>
   <br/><br/>
 </Container>
 </Col>
@@ -230,9 +228,12 @@ return(
           state: { order_id: this.props.location.state.order_id }
       }}
 ><Button style={{align:"right"}} onClick={()=>this.sendhello(user_id,professional_id)}>SEND HELLO</Button></Link>
-
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
+}
 }
 }
 
@@ -241,11 +242,13 @@ DisplayBooking.propTypes={
   order:PropTypes.object.isRequired,
   token:PropTypes.string,
   sendMessage:PropTypes.func.isRequired,
-  messageNotification:PropTypes.func.isRequired
+  messageNotification:PropTypes.func.isRequired,
+  isLoading:PropTypes.bool.isRequired
 }
 
 const mapStateToProps=state=>({
 order:state.booking.order_details,
 token:state.auth.token,
+isLoading:state.booking.isLoading
 })
 export default ReactTimeout(connect(mapStateToProps,{getOrder,sendMessage,messageNotification})(DisplayBooking))

@@ -68,12 +68,10 @@ router.post('/booking',async(req,res)=>{
             let professional = await Professional.findById(type.professional)
             var notification=new Notifications({from:type.user_id,notification:"You have been alotted a new work!",url:'/displayorder',order_id:type._id,to:professional.user._id,new:true})
             await notification.save()
-           
             res.send(type._id)
             return;
         }
     }
-
     if (flag===0) return res.status(400).send('slot not found')
 
 
@@ -81,13 +79,13 @@ router.post('/booking',async(req,res)=>{
 
 
 router.post('/messagenotification',async(req,res)=>{
-	var notification=new Notifications({from:req.body.user_id,notification:"A user is saying Helloo....",order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
+	const user= await User.findOne({_id:req.body.user_id})
+	var notification=new Notifications({from:req.body.user_id,notification: `You can contact ${user.name} here`,order_id:req.body.order_id,to:req.body.professional_id,url:req.body.url,new:true})
 	await notification.save()
 	res.send(notification.id)
 })
 
 router.post('/addorganisation',async(req,res)=>{
-   
     org_name = req.body.org_name;
     email1 = req.body.email;
     const seruser = new Serviceuser({
@@ -205,6 +203,7 @@ router.get('/service/bulkbooking',async(req,res)=>{
             await order.save()
             var booked_professional = await Professional.findById(bookings[i][prof])
             to_send_date.push(booked_professional)
+
         }
         to_send[dates[i].date]=to_send_date;
     }
@@ -228,7 +227,6 @@ router.get('/service/orderbooking',async(req,res)=>{
     var username = req.query.username;
     var address = req.query.address;
     var city = req.query.city;
-    
     var order = new Serviceorder({
         token:res_token,
         service_name:service.name,
@@ -242,8 +240,7 @@ router.get('/service/orderbooking',async(req,res)=>{
     order.order_date.month=order_month;
     order.order_date.date=order_date;
 
-    const proffs = await Professional.find({profession:service_worker,'locality.3':city})
-   
+    const proffs = await Professional.find({profession:service_worker,'locality.3':city})   
     const all_slots = await Slot.find()
     
     var k = null;var s = null;
@@ -274,7 +271,6 @@ router.get('/service/orderbooking',async(req,res)=>{
 
 
 router.post('/notification',async(req,res)=>{
-
 	const notifications= await Notifications.find({to:req.body.id}).select('notification order_id url');
 	const a=notifications.map(noti=>{temp={}; temp['notification']=noti.notification;temp['order_id']=noti.order_id;temp['url']=noti.url; return temp})
 	res.send(a.reverse());

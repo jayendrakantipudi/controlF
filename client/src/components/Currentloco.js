@@ -7,7 +7,9 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import PropTypes from 'prop-types'
 import { geolocated } from "react-geolocated";
 import { connect } from 'react-redux'
- 
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+
 import {
   Redirect
 } from "react-router-dom";
@@ -74,6 +76,7 @@ class Currentloco extends React.Component {
       }
     return (
       <div>
+      <AppNavbar />
         <br/><br/>
 
         <Container>
@@ -117,7 +120,9 @@ class Currentloco extends React.Component {
           </Row>
         </Container>
 
-
+        <Footer>
+        <Footer/>
+        </Footer>
 
 
       </div>

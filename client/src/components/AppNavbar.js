@@ -9,6 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap'
+import Container1 from './Container1'
 import NotificationAlert from "react-notification-alert";
 import '../styles/homepage.css'
 import {connect} from 'react-redux'
@@ -118,13 +119,13 @@ getNoti=(id)=>{
     const extraNavbar=(
     <Navbar style={{marginTop:'-2%'}}>
     <Container>
-    <table style={{marginLeft:'30%'}}>
+    <table style={{marginLeft:'29%'}}>
     <tr style={{cellspacing:'30%'}}>
       <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Home </NavbarBrand></Link></td>
 
       <td><Link to="/servicesdisplay"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Service </NavbarBrand></Link></td>
-      <td><Link to="/"><NavbarBrand className="cool-link" style={extraNavbarstyles}>ServiceArea </NavbarBrand></Link></td>
       <td><Link to="/mybookings"><NavbarBrand className="cool-link" style={extraNavbarstyles}>My Bookings </NavbarBrand></Link></td>
+      <td><Link to="/mypendingorders"><NavbarBrand className="cool-link" style={extraNavbarstyles}>Pending Payments </NavbarBrand></Link></td>
     </tr>
     </table>
     </Container>
@@ -133,6 +134,7 @@ getNoti=(id)=>{
   // if(!this.props.auth.token){
   //   return <Redirect to="/"/>
   // }
+
     return(
       <div  className='navBar' style={{backgroundColor:'white',boxShadow:'5px 5px 5px #dddddd'}}>
       <NotificationAlert ref={this.notificationAlert} />
@@ -152,7 +154,6 @@ getNoti=(id)=>{
       </div>
 
     )
-
   }
 }
 const mapStateToProps = state => ({

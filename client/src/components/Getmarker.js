@@ -4,13 +4,15 @@ import { Container,Button,Form,FormGroup,Label,Input, Row, Col } from 'reactstra
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {bookSlot} from '../actions/locationAction'
-
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
+import Container1 from './Container1'
 import {
   Redirect
 } from "react-router-dom";
+import ReactTimeout from "react-timeout";
 
-
-class Getmarker extends React.Component {
+class Getmarker extends Component {
 
 onChange=(e)=>{
   this.setState({[e.target.name]:e.target.value})
@@ -41,8 +43,15 @@ sendAddress(markers,address){
             lng: null
           }
         }
-      ]
+      ],
+      isLoading:true
     };
+
+
+      componentDidMount(){
+       this.props.setTimeout(()=>{this.setState({isLoading:false})},2000)
+      }
+
 
     onMarkerDragEnd = (coord, index) => {
       const { latLng } = coord;
@@ -82,8 +91,13 @@ sendAddress(markers,address){
       }}
          />;
       }
+      if(this.state.isLoading){
+        return <Container1/>
+      }
+      else{
       return (
         <div>
+        <AppNavbar />
         <br/><br/><br/>
         <Container>
         <Row>
@@ -140,10 +154,13 @@ sendAddress(markers,address){
         </Col>
       </Row>
       </Container>
-
+      <Footer>
+      <Footer/>
+      </Footer>
 
         </div>
       );
+    }
     }
   }
 
@@ -160,6 +177,6 @@ order:state.order,
 initial_center:state.booking.initial_center,
 order_id:state.booking.order
 })
-export default connect(mapStateToProps,{bookSlot})( GoogleApiWrapper({
+export default ReactTimeout(connect(mapStateToProps,{bookSlot})( GoogleApiWrapper({
   apiKey: ('AIzaSyBM9hBBwzMOrDHqOB9harB9AqXS6HZdiX8'),
-})(Getmarker))
+})(Getmarker)))

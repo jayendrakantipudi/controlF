@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 
 import PropTypes from 'prop-types'
+import AppNavbar from'./AppNavbar';
+import Footer from './Footer'
 
 
 class Myorders extends Component{
@@ -66,6 +68,7 @@ if (this.state.flag){
 }
 return(
 <div>
+<AppNavbar />
 <h1>My Orders</h1>
 <div style={{marginLeft:'35%'}}>
 <ButtonToolbar> <Button  variant="outline-dark" onClick={()=>{this.setPage('ctrlf')}}>From CtrlF</Button>
@@ -246,6 +249,10 @@ return(
 </div>
 :null
 }
+
+<Footer>
+<Footer/>
+</Footer>
 </div>
 )
 }

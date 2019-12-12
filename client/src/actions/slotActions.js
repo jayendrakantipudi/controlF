@@ -1,8 +1,9 @@
 import axios from 'axios'
-import {GET_SLOTS,BOOK_SLOT} from './types'
+import {GET_SLOTS,BOOK_SLOT,SLOTS_LOADING} from './types'
 
 export const getSlots = () => dispatch => {
-  
+
+  dispatch({type:SLOTS_LOADING})
   axios
     .get('/api/slot/allslots')
     .then(res =>

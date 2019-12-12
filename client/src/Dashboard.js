@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import AppNavbar from'./components/AppNavbar';
+import Footer from './components/Footer'
+
 import {CTX,sendChatAction} from './actions/chatActions';
 const useStyles = makeStyles(theme => ({
     root: {

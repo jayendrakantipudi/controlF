@@ -13,7 +13,8 @@ import {
   Input,
   Alert,
   } from 'reactstrap'
-
+  import AppNavbar from '../AppNavbar'
+  import Footer from '../Footer'
 import {getSlots} from '../../actions/slotActions'
 import {addSlot} from '../../actions/adminActions'
 import {Container,  Row, Col, Table, TabContent, TabPane} from 'reactstrap'
@@ -43,11 +44,11 @@ class AdminSlots extends Component{
   }
 
   toggle=()=>{
-    
+
     this.setState({
       modal: !this.state.modal,
       msg:null,
-      
+
     })
   }
   goBack=()=>{
@@ -58,7 +59,7 @@ class AdminSlots extends Component{
     var k =null;
     var all_slots = this.props.slots
     if(e.target.name==='start'){
-    
+
       for (k in all_slots)
       {
         if (all_slots[k]["start_time"] === e.target.value)
@@ -73,8 +74,8 @@ class AdminSlots extends Component{
         else{
           this.setState({msg:null})
         }
-      }      
-    
+      }
+
     }
     if(e.target.name==='end'){
       for (k in all_slots)
@@ -91,7 +92,7 @@ class AdminSlots extends Component{
         else{
           this.setState({msg:null})
         }
-      }  
+      }
 
     }
 
@@ -109,7 +110,7 @@ class AdminSlots extends Component{
      }
  }
 
- 
+
   render(){
       const slots = this.props.slots?this.props.slots:null;
       if(this.state.flag2){
@@ -117,6 +118,7 @@ class AdminSlots extends Component{
       }
       return(
         <div>
+        <AppNavbar/>
           <br/>
             <Button onClick={this.toggle}>Add Slot</Button>
             <Button style={{marginLeft:'85%'}} onClick={this.goBack}><FaArrowCircleLeft/></Button>
@@ -128,10 +130,10 @@ class AdminSlots extends Component{
         <ModalHeader toggle={this.toggle}>Enter the slot details</ModalHeader>
         <ModalBody>
         {this.state.msg?<Alert color="danger">{this.state.msg}</Alert> : null}
-       
+
         <Form onSubmit={this.onSubmit}>
           <FormGroup>
-         
+
             <Label for="Slot">Start Time</Label>
             <Input
               type="string"
@@ -149,7 +151,7 @@ class AdminSlots extends Component{
               placeholder ="end time"
               onChange={this.onChange}
             />
-            
+
             {(this.state.msg)?' ':
             <Button color="dark" block>
             Add Slot
@@ -184,7 +186,7 @@ class AdminSlots extends Component{
                 <span>{item.start_time} - </span>
                 <span>{item.end_time}</span>
 
-                
+
             </Col>
 
           ))
@@ -199,7 +201,9 @@ class AdminSlots extends Component{
     </Col>
   </Row>
 </Container>
-
+<Footer>
+<Footer/>
+</Footer>
             </div>
       )
   }
@@ -215,6 +219,6 @@ addSlot:PropTypes.func.isRequired
 const mapStateToProps=state=>({
 slots:state.slots.all_slots
 })
-    
+
 
 export default connect(mapStateToProps,{getSlots,addSlot})(AdminSlots)

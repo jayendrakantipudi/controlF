@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import AppNavbar from'./components/AppNavbar';
 import ShowProfile from './components/ShowProfile';
 import ShowProfessional from './components/ShowProfessional';
 import Service from './components/Service';
@@ -12,6 +11,7 @@ import {loadUser} from './actions/authActions'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg';
 import './App.css';
+import AppNavbar from'./components/AppNavbar';
 import Footer from './components/Footer'
 import Dashboard from './Dashboard';
 import HomePage from  './components/HomePage'
@@ -39,7 +39,6 @@ import Dummy from './components/Dummy'
 import Mybookings from './components/Mybookings'
 import Myorders from './components/Myorders'
 import {connect} from 'react-redux'
-
 import PropTypes from 'prop-types'
 
 import ChatPage from './components/ChatPage'
@@ -50,6 +49,7 @@ import AdminSlots from './components/admin/AdminSlots'
 import Admincity from './components/admin/Admincity'
 import Adminservicetype from './components/admin/Adminservicetype'
 import Displayorder from './components/Displayorder'
+import pendingOrders from './components/pendingOrders'
 class App extends Component{
 
   constructor(props) {
@@ -59,11 +59,11 @@ class App extends Component{
       user: null,
     };
 
-    store.subscribe(() => {
-      this.setState({
-        user: store.getState().auth.user
-      });
-    });
+    // store.subscribe(() => {
+    //   this.setState({
+    //     user: store.getState().auth.user
+    //   });
+    // });
   }
   componentDidMount(){
     store.dispatch(loadUser())
@@ -76,13 +76,10 @@ class App extends Component{
         <div className="App">
 
 
-          <AppNavbar/>
-
           <Switch>
         <Route exact path='/' component={HomePageContent}/>
         <Route exact path='/servicesdisplay' component={ServicesDisplay}/>
         <Route exact path='/contact' component={ContactUS}/>
-        <Route exact path='/chat' component={Dashboard}/>
         <Route exact path='/admin' component={admin}/>
 		    <Route exact path='/service/:name' component={Service}/>
         <Route exact path='/service/:name/services' component={ServiceTypes}/>
@@ -99,6 +96,7 @@ class App extends Component{
         <Route exact path='/professional/marker' component={ProfGetmarker}/>
         <Route exact path='/displaybooking' component={DisplayBooking}/>
         <Route exact path='/mybookings'  component={Mybookings}/>
+        <Route exact path='/mypendingorders'  component={pendingOrders}/>
         <Route exact path='/myorders'  component={Myorders}/>
         <Route exact path='/chatpage' component={ChatPage}/>
         <Route exact path='/notifications' component={Notifications}/>
@@ -119,12 +117,6 @@ class App extends Component{
               </div>
               </Router>
           <div className='App'>
-          <br/><br/>
-          <br/><br/>
-
-          <Footer>
-          <Footer/>
-          </Footer>
             </div>
       </Provider>
     )
